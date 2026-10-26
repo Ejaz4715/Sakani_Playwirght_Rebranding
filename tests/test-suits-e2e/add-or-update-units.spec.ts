@@ -10,7 +10,6 @@ const readEnvironments = () => DataHelper.readData().environments;
 
 test.describe('Add, update or delete the units of an offplan project through SAPA portal', () => {
   test('TC-01 Developer adds new unit to the project', { annotation: [{ product: 'Marketplace', type: 'non-critical' }] as any }, async ({ page }) => {
-    test.setTimeout(0);
     await logStep('Step 00: Read data from json relative to the service');
     const environment = readEnvironments();
     const data = readServiceData();
@@ -18,12 +17,12 @@ test.describe('Add, update or delete the units of an offplan project through SAP
     const projectName = data.projectName;
     const developerUserId = data.developerUserId;
     const sapaPortalUrl = environment.sapaPortalUrl;
+
     const filePath = path.join(process.cwd(), 'src', 'data', 'add-unit.xlsx');
 
     await logStep('Step 01: Login as developer to sapa portal and open the project');
     await app.partnersLoginPage.gotoAuth(sapaPortalUrl);
-    // await app.partnersLoginPage.loginToSapaPortal(developerUserId);
-    await page.pause();
+    await app.commonMethods.unifiedSakaniLogin(developerUserId);
     await app.partnersLoginPage.switchRoleToDeveloper();
 
     await logStep('Step 02: Search for project');

@@ -1,4 +1,5 @@
 import { expect, Locator, Page } from '@playwright/test';
+import { DeveloperObjects } from '@objects/DeveloperObjects';
 type Element =
   | { readonly xpath: string }
   | {
@@ -88,5 +89,44 @@ export class CommonMethods {
   async uploadFile(inputField: Element, file: Parameters<Locator['setInputFiles']>[0]) {
     const input = this.getElement(inputField);
     await input.setInputFiles(file);
+  }
+
+  async unifiedSakaniLogin(nationalId: string) {
+    const loginButton = this.page.locator(DeveloperObjects.loginButton.xpath);
+    await loginButton.waitFor({ state: 'visible', timeout: 20000 });
+    await loginButton.click();
+
+    const acceptCookiesButton = this.page.getByRole(DeveloperObjects.acceptCookiesButton.role, { name: DeveloperObjects.acceptCookiesButton.name }).first();
+    await acceptCookiesButton.waitFor({ state: 'visible', timeout: 20000 });
+    await acceptCookiesButton.click();
+
+    // The cookie modal fades out; wait for it and its backdrop so they don't block the next click
+    await this.page
+      .locator(DeveloperObjects.acceptCookiesModal)
+      .waitFor({ state: 'hidden', timeout: 15000 })
+      .catch(() => {});
+    await this.page
+      .locator('.modal-backdrop')
+      .waitFor({ state: 'detached', timeout: 15000 })
+      .catch(() => {});
+
+    const usernameInput = this.page.locator(DeveloperObjects.usernameInput.xpath);
+    await usernameInput.waitFor({ state: 'visible', timeout: 20000 });
+    await usernameInput.fill(nationalId);
+
+    const loginToButton = this.page.locator(DeveloperObjects.loginToButton.xpath);
+    await loginToButton.waitFor({ state: 'visible', timeout: 20000 });
+    await loginToButton.click();
+
+    const continueButton = this.page.locator(DeveloperObjects.continueButton.xpath);
+    await continueButton.waitFor({ state: 'visible', timeout: 20000 });
+    await continueButton.click();
+
+    const nafathModal = this.page.locator('//app-nafath-login-modal');
+    await nafathModal.waitFor({ state: 'visible', timeout: 10000 }).catch(() => {});
+
+    while (await nafathModal.isVisible().catch(() => false)) {
+      await this.page.waitForTimeout(3000);
+    }
   }
 }

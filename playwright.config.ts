@@ -21,7 +21,7 @@ export default defineConfig({
 
     // Per-product environment mapping
     environments: {
-      Sakani: process.env.MARKETPLACE_ENV || 'Pre-Prod',
+      Sakani: process.env.MARKETPLACE_ENV || 'Pre-Prod-beta',
       Digitar: process.env.DIGITAR_ENV || 'STG',
       Sayal: process.env.SAYAL_ENV || 'Pre-Prod',
     },
