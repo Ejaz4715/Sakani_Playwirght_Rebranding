@@ -6,6 +6,13 @@ export const LoginObjects = {
   },
   closeCookiesModal: '.svg-icon.icon-close-dark',
   loginButton: "//span[contains (text(), 'تسجيل الدخول')]/parent::a",
+  preBetaLoginButton: "//button[contains(text(),' تسجيل الدخول ')]",
+  preBetaUsernameField: 'input#username',
+  preBetaNafathIdField: '.cdk-overlay-container input',
+  preBetaNafathContinueButton: "//div[contains(@class,'cdk-overlay-container')]//button[contains(text(),' المتابعة ')]",
+  // The privacy policy dialog is rendered under an aria-hidden backdrop, so getByRole can't see it
+  preBetaPrivacyPolicyContinueButton: "//div[contains(@class,'cdk-overlay-container')]//button[contains(.,'موافقة واستمرار')]",
+
   continueWithNafathButton: {
     role: 'button',
     name: 'المتابعة مع نفاذ',

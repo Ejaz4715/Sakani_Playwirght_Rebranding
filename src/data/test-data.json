@@ -4,7 +4,7 @@
     "userPortalUrl": "https://pre-sakani.housingapps.sa",
     "adminPortalUrl": "https://pre-sakani-admin.housingapps.sa/auth",
     "sayalUrl": "https://test-sayal.housingapps.sa/auth/Login",
-    "pre-beta": {
+    "preBeta": {
       "userPortalUrl": "https://pre-beta-sakani.housingapps.sa/"
     }
   },
@@ -339,6 +339,11 @@
       "adminUsername": "super_admin@test1-admin-sakani.housingapps.sa",
       "adminPassword": "admin",
       "tagName": "Tag 13a"
+    },
+    "market-exploring": {
+      "sakaniUserId": "1300070834",
+      "filterOption": "فيلا",
+      "sortOption": "السعر من الأدنى إلى الأعلى"
     }
   }
 }
