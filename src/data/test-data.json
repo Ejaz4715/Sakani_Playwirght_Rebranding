@@ -5,7 +5,7 @@
     "adminPortalUrl": "https://pre-sakani-admin.housingapps.sa/auth",
     "sayalUrl": "https://test-sayal.housingapps.sa/auth/Login",
     "pre-beta": {
-      "sakaniUser": "https://pre-beta-sakani.housingapps.sa/"
+      "userPortalUrl": "https://pre-beta-sakani.housingapps.sa/"
     }
   },
   "services": {
