@@ -97,7 +97,6 @@ test.describe('Market Exploring', () => {
 
       await logStep('Step 01: Navigate to user portal > Login');
       await app.loginPage.gotoHomePage(userPortalUrl);
-      //await app.loginPage.acceptCookies();
       await app.loginPage.openPreBetaLogin();
       await app.loginPage.preBetaLoginWithNafath(data.sakaniUserId);
       await app.loginPage.waitForNafathPromptToDisappear();
