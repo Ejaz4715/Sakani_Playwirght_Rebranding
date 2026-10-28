@@ -67,6 +67,12 @@ export class CommonMethods {
     await expect(element).toBeVisible();
   }
 
+  async verifyElementNotVisible(elementObject: Element) {
+    const element = this.getElement(elementObject);
+
+    await expect(element).toBeHidden();
+  }
+
   async verifyEitherElementVisible(firstElement: Element, secondElement: Element) {
     const first = this.getElement(firstElement);
     const second = this.getElement(secondElement);

@@ -252,4 +252,24 @@ export class FlexiblePaymentPage {
     });
     await this.page.locator(FlexiblePaymentObjects.cashPaymentPopUpAcceptButton.xpath).click();
   }
+  //Rebranding:
+  async verifyFlexibleSchedulePaymentIsVisible(value: string) {
+    const flexibleSchedulePayment = this.page.locator(FlexiblePaymentObjects.flexibleSchedulePayment.xpath).getByText(value).first();
+
+    await expect(flexibleSchedulePayment).toBeVisible({ timeout: DEFAULT_TIMEOUT });
+  }
+
+  async clickViewDetailsForFlexibleSchedule(value: string) {
+    const scheduleText = this.page.getByText(value, { exact: true }).first();
+    const scheduleContainer = scheduleText.locator("xpath=ancestor::div[.//button[normalize-space(.)='عرض التفاصيل']][1]");
+    const viewDetailsButton = this.page.locator(FlexiblePaymentObjects.viewDetailsButton.xpath).and(scheduleContainer.getByRole('button', { name: 'عرض التفاصيل', exact: true }));
+
+    await expect(viewDetailsButton).toBeVisible({ timeout: DEFAULT_TIMEOUT });
+    await viewDetailsButton.click();
+  }
+  async verifyTheInstallmentsDetailsIsPresent() {
+    const installmentsDetails = this.page.locator(FlexiblePaymentObjects.installmentsDetails.xpath);
+
+    await expect(installmentsDetails).toBeVisible({ timeout: 90000 });
+  }
 }

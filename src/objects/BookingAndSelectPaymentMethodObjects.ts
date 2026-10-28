@@ -3,10 +3,10 @@ export const BookingAndSelectPaymentMethodObjects = {
     xpath: "//button[contains(text(),'موافقة واستمرار')]",
   },
   payBookingFeesButton: {
-    xpath: "//button/span[contains(text(),'دفع رسوم الحجز')]",
+    xpath: "//button[contains(text(),'دفع رسوم الحجز')]",
   },
   termsCheckbox: {
-    xpath: "//input[@formcontrolname='accepted_term']",
+    xpath: "//input[@id='agreeTerms']",
   },
   unitCode: {
     xpath: '//app-offplan-comprehensive-information/descendant::h2',
@@ -27,7 +27,7 @@ export const BookingAndSelectPaymentMethodObjects = {
     xpath: "//button[contains(text(), 'حفظ ومتابعة')]",
   },
   signContractButton: {
-    xpath: "//button[contains(text(), 'توقيع العقد')]",
+    xpath: "//a[contains(text(), 'توقيع العقد')]",
   },
   bookingDetailsButton: {
     xpath: "//button[contains(text(), 'تفاصيل الحجز')]",

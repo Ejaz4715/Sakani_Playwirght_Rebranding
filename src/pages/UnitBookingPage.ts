@@ -61,7 +61,27 @@ export class UnitBookingPage {
     await this.page.waitForTimeout(7000);
     await this.page.getByRole('button', { name: 'إغلاق' }).click();
   }
-
+  async clickOnApproveButton() {
+    const approveButton = this.page.locator(UnitBookingObjects.approveButton.xpath);
+    await expect(approveButton).toBeVisible({ timeout: 90000 });
+    await approveButton.click();
+  }
+  async enterOtp(otp = ['1', '2', '3', '4']) {
+    const otpCode = this.page.locator(UnitBookingObjects.otpCode.xpath);
+    for (let index = 0; index < otp.length; index++) {
+      await otpCode.nth(index).fill(otp[index]);
+    }
+  }
+  async clickOnVerifyButton() {
+    const verifyButton = this.page.locator(UnitBookingObjects.verifyButton.xpath);
+    await expect(verifyButton).toBeVisible({ timeout: 90000 });
+    await verifyButton.click();
+  }
+  async clickOnDoneButton() {
+    const doneButton = this.page.locator(UnitBookingObjects.doneButton.xpath);
+    await expect(doneButton).toBeVisible({ timeout: 90000 });
+    await doneButton.click();
+  }
   async expectSalesContractSuccess() {
     const { expect } = require('@playwright/test');
     await expect(this.page.getByRole('heading', { name: 'تهانينا' })).toBeVisible();

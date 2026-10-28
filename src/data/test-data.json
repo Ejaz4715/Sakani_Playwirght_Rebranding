@@ -10,7 +10,7 @@
   },
   "services": {
     "offplan-booking": {
-      "projectName": "Automation Project Offplan 20261006143505",
+      "projectName": "Automation Project Offplan 20261028073956",
       "adminUsername": "super_admin@test1-admin-sakani.housingapps.sa",
       "adminPassword": "admin",
       "developerUserId": "1023129537",
@@ -92,7 +92,7 @@
       "developerUserId": "1023129537",
       "advertiserId": "1023129537",
       "lastAdLicenseCounter": 8986749517,
-      "AdLicenseNumber": "20261008141610"
+      "AdLicenseNumber": "20261027144641"
     },
     "offPlan-basket-multiple-booking": {
       "adminUsername": "super_admin@test1-admin-sakani.housingapps.sa",
@@ -232,15 +232,20 @@
     "flexible-payment-schedule": {
       "projectName": "Automation Project P_003",
       "developerUserId": "1023129537",
-      "scheduleTitleAr": "جدول دفع مرن لخدمات أتمتة الاختبارات 20261012104113",
-      "scheduleTitleEn": "Automation Flexible Payment Schedule 20261012104113"
+      "scheduleTitleAr": "جدول دفع مرن لخدمات أتمتة الاختبارات 20261028121358",
+      "scheduleTitleEn": "Automation Flexible Payment Schedule 20261012104113",
+      "userId": "1441376098",
+      "bookedUnitCode": "02-01-0149-15-111"
     },
     "generate-reports": {
       "projectName": "Automation Project P_003",
       "developerUserId": "1023129537"
     },
     "registration": {
-      "newUserId": "1119888076"
+      "newUserId": "1110004013",
+      "userId": "1110004013",
+      "nonSaudiUserId": "2467349060",
+      "projectName": "Automation Project Discount 20260930104008"
     },
     "developer-unit-reservation": {
       "sakaniUserIdEligible": "1330042042",
@@ -331,7 +336,7 @@
       "adminUsername": "super_admin@test1-admin-sakani.housingapps.sa",
       "adminPassword": "admin",
       "developerUserId": "1023129537",
-      "projectName": "Automation Project Offplan 20261018083235",
+      "projectName": "Automation Project Offplan 20261027144417",
       "sakaniUserId": "1441376098",
       "bookedUnitCode": "01-01-0728-6-102"
     },

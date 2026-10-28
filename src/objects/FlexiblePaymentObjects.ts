@@ -124,4 +124,16 @@ export const FlexiblePaymentObjects = {
   benefitPercenategValue: {
     xpath: "//span[normalize-space() = 'نسبة الفائدة']/following-sibling::span",
   },
+
+  //Rebranding
+
+  flexibleSchedulePayment: {
+    xpath: '//app-cash-payment-schedule-tpl-v6/descendant::div',
+  },
+  viewDetailsButton: {
+    xpath: "//app-cash-payment-schedule-tpl-v6/descendant::div/button[text()=' عرض التفاصيل ']",
+  },
+  installmentsDetails: {
+    xpath: "//div[contains(@class,'payment-schedule-details-content')]",
+  },
 } as const;

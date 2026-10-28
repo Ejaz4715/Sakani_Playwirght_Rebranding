@@ -1,7 +1,9 @@
 export const PaymentConfirmationObjects = {
   closeButton: {
-    role: 'button',
-    name: 'إغلاق',
+    xpath: "//button[text()=' إلغاء ']",
   },
-  successMessage: 'h4',
+  //h4
+  successMessage: {
+    xpath: "//p[text()='تهانينا!']",
+  },
 } as const;

@@ -1,7 +1,7 @@
 export const ProjectUnitsObjects = {
   propertyText: 'شقة',
   landUnitCard: '//app-dx-project-unit-card',
-  unitCard: "//app-marketplace-unit-card/descendant::span[text() ='SAR']",
+  unitCard: "//app-marketplace-unit-card-v6/descendant::span[text() ='SAR']",
   unitCardApartmentNumber(apartmentNumber: string | number) {
     return `//span[normalize-space() = 'شقة ${apartmentNumber}']`;
   },

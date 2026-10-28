@@ -11,7 +11,7 @@ const readServiceData = () => DataHelper.readData().services[SERVICE];
 const readEnvironments = () => DataHelper.readData().environments;
 
 test.describe('Payment tracking - completion percentage', () => {
-  test('TC-01 Admin adds new offplan project for payment tracking (completion percenatge)', { annotation: [{ product: 'Marketplace', type: 'critical' }] as any }, async ({ page }) => {
+  test('TC-01 Admin adds new offplan project for payment tracking (completion percentages)', { annotation: [{ product: 'Marketplace', type: 'critical' }] as any }, async ({ page }) => {
     test.setTimeout(120000);
     await logStep('Step 00: Read data from json relative to the service');
     const environment = readEnvironments();
@@ -244,7 +244,7 @@ test.describe('Payment tracking - completion percentage', () => {
     await app.developerProjectPage.loginDeveloper(developerUserId);
     await app.developerProjectPage.switchRoleToDeveloper();
 
-    await logStep('Step 02: Navigate to felxible payment schedules');
+    await logStep('Step 02: Navigate to flexible payment schedules');
     await app.flexiblePaymentPage.clickOnFinancialManagement();
     await app.flexiblePaymentPage.clickOnPaymentSchedules();
 
@@ -270,7 +270,7 @@ test.describe('Payment tracking - completion percentage', () => {
     await app.flexiblePaymentPage.verifyTheSuccessfulMessage();
   });
 
-  test('TC-06 User books the unit, pay the fees and selects payment method (completion percenatage)', { annotation: [{ product: 'Marketplace', type: 'critical' }] as any }, async ({ page }) => {
+  test('TC-06 User books the unit, pay the fees and selects payment method (completion percentage)', { annotation: [{ product: 'Marketplace', type: 'critical' }] as any }, async ({ page }) => {
     test.setTimeout(0);
     await logStep('Step 00: Read data from json relative to the service');
     const app = new WebApp(page);
@@ -326,7 +326,7 @@ test.describe('Payment tracking - completion percentage', () => {
     await bookingApp.page.waitForTimeout(10000);
   });
 
-  test('TC-07  Verify same payment schedle in payment tracking and booking details', { annotation: [{ product: 'Marketplace', type: 'critical' }] as any }, async ({ page }) => {
+  test('TC-07  Verify same payment schedule in payment tracking and booking details', { annotation: [{ product: 'Marketplace', type: 'critical' }] as any }, async ({ page }) => {
     test.setTimeout(0);
     await logStep('Step 00: Read data from json relative to the service');
     const environment = readEnvironments();

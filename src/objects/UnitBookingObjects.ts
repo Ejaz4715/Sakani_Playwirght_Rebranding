@@ -1,5 +1,5 @@
 export const UnitBookingObjects = {
-  termsCheckbox: "//input[@formcontrolname='accepted_term']",
+  termsCheckbox: "//input[@id='agreeTerms']",
   confirmButton: {
     role: 'button',
     name: 'تأكيد',
@@ -10,5 +10,17 @@ export const UnitBookingObjects = {
   },
   madaPaymentTitle: {
     title: 'الدفع بواسطة مدى',
+  },
+  approveButton: {
+    xpath: "//button[contains(text(), 'اعتماد')]",
+  },
+  otpCode: {
+    xpath: '//skn-otp-input-v6/descendant::input',
+  },
+  verifyButton: {
+    xpath: "//button[contains(text(), 'تحقق')]",
+  },
+  doneButton: {
+    xpath: "(//button[contains(text(), 'تم')])[2]",
   },
 } as const;
