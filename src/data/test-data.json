@@ -339,6 +339,13 @@
       "adminUsername": "super_admin@test1-admin-sakani.housingapps.sa",
       "adminPassword": "admin",
       "tagName": "Tag 13a"
+    },
+    "unit-model-card-favorites": {
+      "sakaniUserId": "1119880072",
+      "projectName": "Automation Project P_003"
+    },
+    "register-interest-filters": {
+      "sakaniUserId": "1119880072"
     }
   }
 }

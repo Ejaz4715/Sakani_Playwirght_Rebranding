@@ -47,6 +47,7 @@ import { LoyaltyAdminDealsPage } from '@pages/LoyaltyAdminDealsPage';
 import { MetaverseManagementPage } from '@pages/MetaverseManagementPage';
 import { RecommendationsPage } from '@pages/RecommendationsPage';
 import { FavoritesPage } from '@pages/FavoritesPage';
+import { WebProfilePage } from '@pages/WebProfilePage';
 import { VoucherManagementPage } from '@pages/VoucherManagementPage';
 import { UserManagementPage } from '@pages/UserManagementPage';
 import { CreatingAnAdvertisingCampaignPage } from '@pages/CreatingAnAdvertisingCampaignPage';
@@ -99,6 +100,7 @@ export class WebApp {
   metaverseManagementPage: InstanceType<typeof MetaverseManagementPage>;
   recommendationsPage: InstanceType<typeof RecommendationsPage>;
   favoritesPage: InstanceType<typeof FavoritesPage>;
+  webProfilePage: InstanceType<typeof WebProfilePage>;
 
   voucherManagementPage: InstanceType<typeof VoucherManagementPage>;
   realEstateTaxExemptionPage: InstanceType<typeof RealEstateTaxExemptionPage>;
@@ -205,6 +207,7 @@ export class WebApp {
     this.metaverseManagementPage = new MetaverseManagementPage(page);
     this.recommendationsPage = new RecommendationsPage(page);
     this.favoritesPage = new FavoritesPage(page);
+    this.webProfilePage = new WebProfilePage(page);
     this.voucherManagementPage = new VoucherManagementPage(page);
     this.realEstateTaxExemptionPage = new RealEstateTaxExemptionPage(page);
     this.loyaltyAdminDealsPage = new LoyaltyAdminDealsPage(page);
