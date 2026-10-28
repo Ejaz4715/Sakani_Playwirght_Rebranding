@@ -373,8 +373,9 @@ export class AdminProjectPage {
   }
 
   async clickUploadButton() {
-    await this.page.locator(AdminObjects.uploadButton).click();
     await this.page.waitForTimeout(2000);
+    await this.page.locator(AdminObjects.uploadButton).click();
+    await this.page.waitForTimeout(25000);
   }
 
   async selectDisplayMethod(option: string) {

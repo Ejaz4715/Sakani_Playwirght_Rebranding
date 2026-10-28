@@ -1,14 +1,19 @@
 import { Page } from '@playwright/test';
 import { DataHelper } from '@helpers/DataHelper';
+import { BookingCancellationObjects } from '@objects/BookingCancellationObjects';
 import { LoginObjects } from '@objects/LoginObjects';
 import { RegistrationObjects } from '@objects/RegistrationObjects';
+import { CommonMethods } from '@pages/utils/CommonMethods';
 
 export class RegistrationPage {
   page: Page;
+
+  readonly commonMethod: CommonMethods;
+
   constructor(page: Page) {
     this.page = page;
+    this.commonMethod = new CommonMethods(page);
   }
-
   async incrementNewUserId() {
     const registrationData = DataHelper.readData().services?.registration;
     const currentUserId: string = registrationData?.newUserId ?? '';
@@ -201,5 +206,24 @@ export class RegistrationPage {
     const button = this.page.getByRole(RegistrationObjects.submitButton.role, { name: RegistrationObjects.submitButton.name });
     await button.waitFor({ state: 'visible' });
     await button.click();
+  }
+  async verifyYouHaveActiveMessage() {
+    await this.commonMethod.verifyElementVisible(RegistrationObjects.youHaveActiveBookingMessage);
+  }
+  async verifyFanaticalAdvisoryButtonNotPresent() {
+    await this.commonMethod.verifyElementNotVisible(RegistrationObjects.financialAdvisoryLink);
+  }
+  async isViewDetailsButtonVisible(): Promise<boolean> {
+    const bookingDetailsButton = this.page.locator(BookingCancellationObjects.bookingDetailsButton.xpath);
+
+    try {
+      await bookingDetailsButton.waitFor({ state: 'visible', timeout: 5000 });
+      return true;
+    } catch (error) {
+      if (error instanceof Error && error.name === 'TimeoutError') {
+        return false;
+      }
+      throw error;
+    }
   }
 }

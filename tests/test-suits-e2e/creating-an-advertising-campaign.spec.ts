@@ -21,7 +21,7 @@ test.describe('Creating an advertising campaign', () => {
 
     await logStep('Step 01: Login as developer to sapa portal');
     await app.partnersLoginPage.gotoAuth(sapaPortalUrl);
-    await app.partnersLoginPage.loginToSapaPortal(developerUserId);
+    // await app.partnersLoginPage.loginToSapaPortal(developerUserId);
     await app.partnersLoginPage.switchRoleToDeveloper();
 
     await logStep('Step 02: Navigate to create an advistisng campaign  > Select WhatsApp channel');

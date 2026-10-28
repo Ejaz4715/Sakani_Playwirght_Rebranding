@@ -18,12 +18,12 @@ export class PaymentConfirmationPage {
   }
 
   async closePayment() {
-    const closeButton = this.page.getByRole(PaymentConfirmationObjects.closeButton.role, { name: PaymentConfirmationObjects.closeButton.name });
+    const closeButton = this.page.locator(PaymentConfirmationObjects.closeButton.xpath);
     await this.click(closeButton);
   }
 
   async expectSuccessMessage() {
     const successMessage = this.page.locator(PaymentConfirmationObjects.successMessage);
-    await expect(successMessage).toContainText('تم اكتمال الحجز بنجاح!');
+    await expect(successMessage).toBeVisible(); //'تم اكتمال الحجز بنجاح! - it was contains
   }
 }

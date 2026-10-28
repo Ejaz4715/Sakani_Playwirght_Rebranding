@@ -65,8 +65,8 @@ export class BookingAndSelectPaymentMethodPage {
 
   async clickOnSignContractButton() {
     const signContractButton = this.page.locator(BookingAndSelectPaymentMethodObjects.signContractButton.xpath);
-
-    await this.clickVisibleButton(signContractButton);
+    await expect(signContractButton).toBeVisible({ timeout: 90000 });
+    await signContractButton.click();
   }
 
   async clickOnBookingDetailsButton() {

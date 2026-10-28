@@ -16,15 +16,12 @@ export class MarketplaceLandingPage {
     await locator.check();
   }
   async openSearch() {
-    const searchButton = this.page.getByRole(MarketplaceLandingObjects.searchButton.role, {
-      name: MarketplaceLandingObjects.searchButton.name,
-      exact: MarketplaceLandingObjects.searchButton.exact,
-    });
+    const searchButton = this.page.locator(MarketplaceLandingObjects.searchButton.xpath);
     await this.click(searchButton);
   }
 
   async searchForProject(projectName) {
-    const searchInput = this.page.getByRole(MarketplaceLandingObjects.searchInput.role, { name: MarketplaceLandingObjects.searchInput.name });
+    const searchInput = this.page.locator(MarketplaceLandingObjects.searchInput.xpath);
     await searchInput.fill(projectName);
     const projectResult = this.page.locator(MarketplaceLandingObjects.projectResultModal).getByText(projectName, { exact: true });
     await this.click(projectResult);
@@ -45,7 +42,7 @@ export class MarketplaceLandingPage {
     await readyMadeUnitCard.click();
   }
   async openResidentialUnit() {
-    const unit = this.page.locator("//app-marketplace-project-card-template/descendant::span[text() ='SAR']").first();
+    const unit = this.page.locator("//app-marketplace-unit-model-card-v6/descendant::span[text() ='SAR']").first();
     await unit.waitFor({ state: 'visible', timeout: 30000 });
     await unit.click();
   }

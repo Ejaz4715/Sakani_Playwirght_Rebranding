@@ -57,11 +57,7 @@ export class BookingPage {
   }
 
   async openBookingDetails() {
-    const bookingDetailsButton = this.page
-      .getByRole(BookingCancellationObjects.bookingDetailsButton.role, {
-        name: BookingCancellationObjects.bookingDetailsButton.name,
-      })
-      .first();
+    const bookingDetailsButton = this.page.locator(BookingCancellationObjects.bookingDetailsButton.xpath).first();
     await this.click(bookingDetailsButton);
   }
 
@@ -71,7 +67,7 @@ export class BookingPage {
   }
 
   async getBookedUnitCode() {
-    const unitCode = this.page.locator("(//div[text() = 'رمز الوحدة']/following-sibling::div/child::div)[1]");
+    const unitCode = this.page.locator("(//div[text() = ' رمز الوحدة ']/following-sibling::div/child::div)[1]");
     await unitCode.waitFor({ state: 'visible', timeout: 30000 });
     return (await unitCode.textContent())?.trim();
   }

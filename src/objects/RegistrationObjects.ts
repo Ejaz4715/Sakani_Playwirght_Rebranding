@@ -44,20 +44,20 @@ export const RegistrationObjects = {
   },
   shaqraOption: { role: 'option', name: 'شقراء' },
 
-  perefferdRegion: {
+  preferredRegion: {
     xpath: "//app-label[@label='ELIGIBILITY.ADDITIONAL_QUESTIONS_FORM.LABEL.PREFERRED_REGION']/parent::div/descendant::ng-select",
   },
   makkahOption: { role: 'option', name: 'مكة المكرمة' },
 
-  prefferedCity: {
+  preferredCity: {
     xpath: "//app-label[@label='ELIGIBILITY.ADDITIONAL_QUESTIONS_FORM.LABEL.PREFERRED_CITY']/parent::div/descendant::ng-select",
   },
   jeddahOption: { role: 'option', name: 'جدة' },
 
-  perefferedDistruct: {
+  preferredDistrict: {
     xpath: "//app-label[@label='ELIGIBILITY.ADDITIONAL_QUESTIONS_FORM.LABEL.PREFERRED_DISTRICT']/parent::div/descendant::ng-select",
   },
-  distructOption: { role: 'option', name: 'البلد' },
+  districtOption: { role: 'option', name: 'البلد' },
 
   currentLivingStatus: {
     xpath: "//app-dropdown[@formcontrolname='living_situation']/descendant::ng-select",
@@ -90,14 +90,14 @@ export const RegistrationObjects = {
   },
   //Financial Advisory
   financialAdvisoryLink: {
-    xpath: "(//a[contains(., 'المستشار العقاري')])[3]",
+    xpath: "//span[text()=' المستشار العقاري ']",
   },
   startNowButton: { role: 'button', name: 'ابدأ الآن' },
-  startServiceLink: { role: 'link', name: 'بدء الخدمة' },
+  startServiceLink: { role: 'button', name: 'بدء الخدمة' },
   readyUnitsFromMarketText: 'الوحدات الجاهزة من السوق',
   readyUnitsCheckbox: { role: 'checkbox' },
   submitButton: { role: 'button', name: 'إرسال' },
-  typeOfWorkDropdwonList: {
+  typeOfWorkDropdownList: {
     xpath: "//app-label[@label='ELIGIBILITY.ADDITIONAL_QUESTIONS_FORM.LABEL.TYPE_OF_WORK']/parent::div/descendant::ng-select",
   },
   typeOfWorkOption: { role: 'option', name: 'مدني – قطاع حكومي' },
@@ -125,5 +125,8 @@ export const RegistrationObjects = {
   },
   monthRemainingInputfield: {
     xpath: "//input[@formcontrolname='num_months_remaining']",
+  },
+  youHaveActiveBookingMessage: {
+    text: 'يوجد لديك حجز نشط!',
   },
 } as const;
