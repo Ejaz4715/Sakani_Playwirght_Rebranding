@@ -1,5 +1,4 @@
 // @ts-nocheck
-import { ProfileManagementObjects } from '@objects/ProfileManagementObjects';
 const path = require('path');
 import { expect, Page } from '@playwright/test';
 import { MarketplaceLandingObjects } from '@objects/MarketplaceLandingObjects';
@@ -207,5 +206,111 @@ export class MarketplaceLandingPage {
   async expectUpdateProjectNameIsVisible(name: string) {
     const bankName = await this.page.locator('#financing').getByText(name, { exact: true });
     await expect(bankName, 'The update bank is not present in the project details page').toBeVisible({ timeout: 20000 });
+  }
+
+  async isDestinationSectionVisible() {
+    await this.page.locator(MarketplaceLandingObjects.destinationSection).waitFor({ state: 'visible', timeout: this.DEFAULT_TIMEOUT });
+    return await this.page.locator(MarketplaceLandingObjects.destinationSection).isVisible();
+  }
+
+  async isInsightsAndTrendsSectionVisible() {
+    await this.page.locator(MarketplaceLandingObjects.insightsAndTrendsSection).waitFor({ state: 'visible', timeout: this.DEFAULT_TIMEOUT });
+    return await this.page.locator(MarketplaceLandingObjects.insightsAndTrendsSection).isVisible();
+  }
+
+  async clickOnTheFirstDestinationCard() {
+    await this.page.locator(MarketplaceLandingObjects.firstDestinationCard).waitFor({ state: 'visible', timeout: this.DEFAULT_TIMEOUT });
+    await this.page.locator(MarketplaceLandingObjects.firstDestinationCard).click();
+  }
+
+  async getFirstDestinationCardName() {
+    await this.page.locator(MarketplaceLandingObjects.firstDestinationCardName).waitFor({ state: 'visible', timeout: this.DEFAULT_TIMEOUT });
+    return (await this.page.locator(MarketplaceLandingObjects.firstDestinationCardName).innerText()).trim();
+  }
+
+  async getActiveDestinationCardName() {
+    await this.page.locator(MarketplaceLandingObjects.activeDestinationCardName).waitFor({ state: 'visible', timeout: this.DEFAULT_TIMEOUT });
+    return (await this.page.locator(MarketplaceLandingObjects.activeDestinationCardName).innerText()).trim();
+  }
+
+  async getFirstDestinationCardUrl() {
+    return await this.page.locator(MarketplaceLandingObjects.firstDestinationCardLink).getAttribute('href');
+  }
+
+  async openFirstDestinationCardInNewTab() {
+    const context = this.page.context();
+    const pagesBefore = context.pages().length;
+    const marketplaceUrl = this.page.url();
+
+    const [newTab] = await Promise.all([context.waitForEvent('page', { timeout: this.DEFAULT_TIMEOUT }), this.clickOnTheFirstDestinationCard()]);
+    await newTab.waitForLoadState('domcontentloaded');
+
+    expect(context.pages().length, 'Exactly one new tab should be opened').toBe(pagesBefore + 1);
+    expect(this.page.url(), 'The marketplace tab should stay on the same page').toBe(marketplaceUrl);
+    return newTab;
+  }
+
+  async isProjectVisibleInTab(tab: Page, projectName: string) {
+    const projectTitle = tab.getByText(projectName).first();
+    await projectTitle.waitFor({ state: 'visible', timeout: this.DEFAULT_TIMEOUT });
+    return await projectTitle.isVisible();
+  }
+
+  async closeTab(tab: Page) {
+    const context = this.page.context();
+    const pagesBefore = context.pages().length;
+    await tab.close();
+    expect(context.pages().length, 'The project tab should be closed').toBe(pagesBefore - 1);
+    await this.page.bringToFront();
+  }
+
+  async slideToLeft() {
+    await this.page.locator(MarketplaceLandingObjects.leftSliderIcon).waitFor({ state: 'visible', timeout: this.DEFAULT_TIMEOUT });
+    await this.page.locator(MarketplaceLandingObjects.leftSliderIcon).click();
+    await this.page.waitForTimeout(3000);
+  }
+
+  async slideToRight() {
+    await this.page.locator(MarketplaceLandingObjects.rightSliderIcon).waitFor({ state: 'visible', timeout: this.DEFAULT_TIMEOUT });
+    await this.page.locator(MarketplaceLandingObjects.rightSliderIcon).click();
+    await this.page.waitForTimeout(3000);
+  }
+
+  async filterProjectsBy(option: string) {
+    await this.page.getByRole(MarketplaceLandingObjects.filterResultsButton.role, { name: MarketplaceLandingObjects.filterResultsButton.name }).click();
+    const filterDialog = this.page.getByRole('dialog');
+    await filterDialog.getByRole('button', { name: option, exact: true }).click();
+    await filterDialog.getByRole(MarketplaceLandingObjects.filterSearchButton.role, { name: MarketplaceLandingObjects.filterSearchButton.name }).click();
+    await filterDialog.waitFor({ state: 'hidden', timeout: this.DEFAULT_TIMEOUT });
+  }
+
+  async getProjectCardsCount() {
+    await this.page.locator(MarketplaceLandingObjects.projectCard).first().waitFor({ state: 'visible', timeout: this.DEFAULT_TIMEOUT });
+    return await this.page.locator(MarketplaceLandingObjects.projectCard).count();
+  }
+
+  async getProjectCardsText() {
+    await this.page.locator(MarketplaceLandingObjects.projectCard).first().waitFor({ state: 'visible', timeout: this.DEFAULT_TIMEOUT });
+    return await this.page.locator(MarketplaceLandingObjects.projectCard).allInnerTexts();
+  }
+
+  async isFilterApplied(option: string) {
+    const filterChip = this.page.getByRole('button', { name: option, exact: true }).first();
+    await filterChip.waitFor({ state: 'visible', timeout: this.DEFAULT_TIMEOUT });
+    return await filterChip.isVisible();
+  }
+
+  async sortProjectsBy(option: string) {
+    await this.page.getByRole(MarketplaceLandingObjects.sortByButton.role, { name: MarketplaceLandingObjects.sortByButton.name }).click();
+    await this.page.getByText(option, { exact: true }).click();
+  }
+
+  async isSortOptionSelected(option: string) {
+    await this.page.getByRole(MarketplaceLandingObjects.sortByButton.role, { name: MarketplaceLandingObjects.sortByButton.name }).click();
+    const sortOption = this.page.locator('button', { hasText: option });
+    await sortOption.waitFor({ state: 'visible', timeout: this.DEFAULT_TIMEOUT });
+    const isSelected = (await sortOption.getAttribute('aria-selected')) === 'true';
+    await this.page.keyboard.press('Escape');
+    return isSelected;
   }
 }
