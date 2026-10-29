@@ -1,0 +1,200 @@
+'use strict';
+Object.defineProperty(exports, '__esModule', { value: true });
+const test_1 = require('@playwright/test');
+const web_app_1 = require('@base-class/web-app');
+const LogSteps_1 = require('@helpers/LogSteps');
+const DataHelper_1 = require('@helpers/DataHelper');
+const RegistrationObjects_1 = require('@objects/RegistrationObjects');
+const SERVICE = 'registration';
+const readServiceData = () => DataHelper_1.DataHelper.readData().services[SERVICE];
+const readEnvironments = () => DataHelper_1.DataHelper.readData().environments;
+test_1.test.describe('User registration and check eligibility', () => {
+  (0, test_1.test)('TC-01 New user register', { annotation: [{ product: 'Shared Product', type: 'critical' }] }, async ({ page }) => {
+    await (0, LogSteps_1.logStep)('Step 00: Read data from json relative to the service');
+    const environment = readEnvironments();
+    const data = readServiceData();
+    const app = new web_app_1.WebApp(page);
+    const userPortalUrl = environment.userPortalUrl;
+    await (0, LogSteps_1.logStep)('Step 01: Open the user portal and login as new user');
+    await app.loginPage.gotoHomePage(userPortalUrl);
+    await app.loginPage.acceptCookies();
+    await app.loginPage.openLogin();
+    await app.registrationPage.incrementNewUserId();
+    await app.registrationPage.clickContinueButton();
+    await app.loginPage.waitForNafathPromptToDisappear();
+    await app.registrationPage.clickContinueButton();
+    await (0, LogSteps_1.logStep)('Step 02: Fill new phone and email > Continue');
+    await app.registrationPage.fillRandomMobilePhone();
+    await app.registrationPage.fillRandomEmail();
+    await app.registrationPage.checkTermsAndConditions();
+    await app.registrationPage.clickContinueButton();
+    await app.registrationPage.fillOtp('1234');
+    await app.registrationPage.isNewUserContinueButtonVisible();
+  });
+  (0, test_1.test)('TC-02 Check the eligibility for the user', { annotation: [{ product: 'Gov Support', type: 'critical' }] }, async ({ page }) => {
+    await (0, LogSteps_1.logStep)('Step 00: Read data from json relative to the service');
+    const environment = readEnvironments();
+    const data = readServiceData();
+    const app = new web_app_1.WebApp(page);
+    const userPortalUrl = environment.userPortalUrl;
+    const newUserId = data.newUserId;
+    await (0, LogSteps_1.logStep)('Step 01: Open the user portal and login');
+    await app.loginPage.gotoHomePage(userPortalUrl);
+    await app.loginPage.acceptCookies();
+    await app.loginPage.openLogin();
+    await app.loginPage.loginWithNafath(newUserId);
+    await app.loginPage.waitForNafathPromptToDisappear();
+    await app.loginPage.continueNewUserPopup();
+    await app.loginPage.handlePushNotificationPopup();
+    await (0, LogSteps_1.logStep)('Step 02: Navigate to user profile > Click on check eligibility');
+    await app.marketplaceLandingPage.openProfileManagement();
+    await app.registrationPage.clickEligibilityCheckButton();
+    await app.registrationPage.checkEligibilityTerms();
+    await app.registrationPage.clickAcceptTermsButton();
+    await app.registrationPage.checkAdditionalEligibilityCheckboxes();
+    await app.registrationPage.clickContinueButton();
+    await (0, LogSteps_1.logStep)('Step 03: Select current region and city> Select preferred region, city and district');
+    await app.registrationPage.selectDropdownOption(RegistrationObjects_1.RegistrationObjects.currentRegion, RegistrationObjects_1.RegistrationObjects.riyadhOption);
+    await app.registrationPage.selectDropdownOption(RegistrationObjects_1.RegistrationObjects.currentCity, RegistrationObjects_1.RegistrationObjects.shaqraOption);
+    await app.registrationPage.selectDropdownOption(RegistrationObjects_1.RegistrationObjects.preferredRegion, RegistrationObjects_1.RegistrationObjects.makkahOption);
+    await app.registrationPage.selectDropdownOption(RegistrationObjects_1.RegistrationObjects.preferredCity, RegistrationObjects_1.RegistrationObjects.jeddahOption);
+    await app.registrationPage.selectDropdownOption(RegistrationObjects_1.RegistrationObjects.preferredDistrict, RegistrationObjects_1.RegistrationObjects.districtOption);
+    await (0, LogSteps_1.logStep)('Step 04: Select current living status - rent');
+    await app.registrationPage.selectDropdownOption(RegistrationObjects_1.RegistrationObjects.currentLivingStatus, RegistrationObjects_1.RegistrationObjects.rentalHouseOption);
+    await (0, LogSteps_1.logStep)('Step 05: Enter family Ids and DOBs if exist');
+    await app.registrationPage.fillAllMatchingFields(RegistrationObjects_1.RegistrationObjects.guardianId, '1000239030');
+    await app.registrationPage.fillAllMatchingFields(RegistrationObjects_1.RegistrationObjects.guardianDob, '14000210');
+    await app.registrationPage.fillAllMatchingFields(RegistrationObjects_1.RegistrationObjects.fatherId, '1000233030');
+    await app.registrationPage.fillAllMatchingFields(RegistrationObjects_1.RegistrationObjects.fatherDob, '13800210');
+    await app.registrationPage.fillAllMatchingFields(RegistrationObjects_1.RegistrationObjects.motherId, '1000239030');
+    await app.registrationPage.fillAllMatchingFields(RegistrationObjects_1.RegistrationObjects.motherDob, '13900210');
+    await app.registrationPage.clickConfirmButton();
+    await (0, LogSteps_1.logStep)('Step 06: Verify the eligibility status');
+    await app.registrationPage.getEligibilityResult();
+  });
+  (0, test_1.test)('TC-03 Submit financial advisory', { annotation: [{ product: 'Gov Support', type: 'critical' }] }, async ({ page }) => {
+    await (0, LogSteps_1.logStep)('Step 00: Read data from json relative to the service');
+    const environment = readEnvironments();
+    const data = readServiceData();
+    const app = new web_app_1.WebApp(page);
+    const userPortalUrl = environment.userPortalUrl;
+    const newUserId = data.newUserId;
+    await (0, LogSteps_1.logStep)('Step 01: Open the user portal and login');
+    await app.loginPage.gotoHomePage(userPortalUrl);
+    await app.loginPage.acceptCookies();
+    await app.loginPage.openLogin();
+    await app.loginPage.loginWithNafath(newUserId);
+    await app.loginPage.waitForNafathPromptToDisappear();
+    await app.loginPage.continueNewUserPopup();
+    await app.loginPage.handlePushNotificationPopup();
+    await (0, LogSteps_1.logStep)('Step 02: Navigate to user profile > Click on financial advisory');
+    await app.marketplaceLandingPage.openProfileManagement();
+    await app.registrationPage.clickFinancialAdvisoryLink();
+    await (0, LogSteps_1.logStep)('Step 03: Start the service > Fill the required information');
+    await app.registrationPage.clickStartNowButton();
+    await app.registrationPage.clickStartServiceLink();
+    await app.registrationPage.selectDropdownOption(RegistrationObjects_1.RegistrationObjects.typeOfWorkDropdownList, RegistrationObjects_1.RegistrationObjects.typeOfWorkOption);
+    await app.registrationPage.selectDropdownOption(RegistrationObjects_1.RegistrationObjects.bankDropdownList, RegistrationObjects_1.RegistrationObjects.bankOption);
+    await app.registrationPage.fillInputField(RegistrationObjects_1.RegistrationObjects.monthlySalaryInputfield, 5000);
+    await app.registrationPage.fillInputField(RegistrationObjects_1.RegistrationObjects.homeAllowanceInputfield, 3000);
+    await app.registrationPage.fillInputField(RegistrationObjects_1.RegistrationObjects.additionalIncomeInputfield, 2500);
+    await app.registrationPage.fillInputField(RegistrationObjects_1.RegistrationObjects.personalSavingsInputfield, 5000);
+    await app.registrationPage.fillInputField(RegistrationObjects_1.RegistrationObjects.downPaymentAmountInputfield, 2500);
+    await app.registrationPage.fillInputField(RegistrationObjects_1.RegistrationObjects.monthlyObligationsInputfield, 5000);
+    await app.registrationPage.fillInputField(RegistrationObjects_1.RegistrationObjects.monthRemainingInputfield, 6);
+    await app.registrationPage.clickReadyUnitsFromMarketText();
+    await app.registrationPage.checkReadyUnitsCheckbox();
+    await (0, LogSteps_1.logStep)('Step 04: Submit then verify the success message');
+    await app.registrationPage.clickSubmitButton();
+    await app.auctionPage.validateCongratulationsMessage();
+  });
+  (0, test_1.test)('TC-04 Verify that if no active booking then book', { annotation: [{ product: 'Rebranding', type: 'critical' }] }, async ({ page }) => {
+    await (0, LogSteps_1.logStep)('Step 00: Read data from json relative to the service');
+    const data = readServiceData();
+    const environments = readEnvironments();
+    const app = new web_app_1.WebApp(page);
+    const userId = data.userId;
+    const preBeta = environments['pre-beta'].userPortalUrl;
+    const projectName = data.projectName;
+    await (0, LogSteps_1.logStep)('Step 01: Open the user portal and login');
+    await app.loginPage.gotoHomePage(preBeta);
+    await app.commonMethods.unifiedSakaniLogin(userId);
+    // await app.loginPage.openPreBetaLogin();
+    // await app.loginPage.preBetaLoginWithNafath(userId);
+    // await app.loginPage.waitForNafathPromptToDisappear();
+    // await app.loginPage.continuePreBetaNewUserPopup();
+    // await app.loginPage.handlePushNotificationPopup();
+    await (0, LogSteps_1.logStep)('Step 02: Navigate to user profile > Open active booking then check if any active booking available');
+    await app.bookingPage.openActiveBookings();
+    test_1.test.skip(await app.registrationPage.isViewDetailsButtonVisible(), 'User already has an active booking; booking flow is not applicable');
+    await (0, LogSteps_1.logStep)('Step 02: Find the project and open its unit model');
+    await app.marketplaceLandingPage.openSearch();
+    await app.marketplaceLandingPage.searchForProject(projectName);
+    await app.projectDetailsPage.openUnitsAndScroll();
+    await (0, LogSteps_1.logStep)('Step 03: Open a unit and start the booking');
+    const page1Promise = page.waitForEvent('popup');
+    await app.marketplaceLandingPage.openResidentialUnit();
+    const page1 = await page1Promise;
+    const page2Promise = page1.waitForEvent('popup');
+    {
+      const unitApp = new web_app_1.WebApp(page1);
+      await unitApp.projectUnitsPage.openUnitInPopup(1);
+    }
+    const page2 = await page2Promise;
+    {
+      let bookingPage = page2;
+      let bookingApp = new web_app_1.WebApp(bookingPage);
+      await (0, LogSteps_1.logStep)('Step 04: Confirm terms and conditions');
+      await bookingApp.unitDetailsPage.reserveUnit();
+      // await bookingApp.unitBookingPage.acceptTermsAndConfirm();
+      await bookingApp.bookingAndSelectPaymentMethodPage.checkOnTermAndCondition();
+      await bookingApp.bookingAndSelectPaymentMethodPage.clickOnApproveAndContinueIfVisible();
+      await bookingApp.bookingAndSelectPaymentMethodPage.clickOnPayBookingFeesButton();
+      await (0, LogSteps_1.logStep)('Step 05: Pay booking fees and validate payment success');
+      await bookingApp.paymentGatewayPage.fillCardDetails();
+      await bookingApp.paymentConfirmationPage.closePayment();
+      await bookingApp.paymentConfirmationPage.expectSuccessMessage();
+    }
+  });
+  (0, test_1.test)(
+    'TC-05 Verify that the financial advisory service displays Active Booking Detected when the user has an active booking',
+    { annotation: [{ product: 'Rebranding', type: 'critical' }] },
+    async ({ page }) => {
+      await (0, LogSteps_1.logStep)('Step 00: Read data from json relative to the service');
+      const data = readServiceData();
+      const environments = readEnvironments();
+      const app = new web_app_1.WebApp(page);
+      const userId = data.userId;
+      const preBeta = environments['pre-beta'].userPortalUrl;
+      await (0, LogSteps_1.logStep)('Step 01: Open the user portal and login');
+      await app.loginPage.gotoHomePage(preBeta);
+      await app.commonMethods.unifiedSakaniLogin(userId);
+      await (0, LogSteps_1.logStep)('Step 02: Navigate to user profile > Click on financial advisory');
+      await app.marketplaceLandingPage.expandProfileDropDownMenu();
+      await app.marketplaceLandingPage.openProfileManagement();
+      await app.registrationPage.clickFinancialAdvisoryLink();
+      await (0, LogSteps_1.logStep)('Step 03: Start the service > Verify you have active message is present');
+      await app.registrationPage.clickStartNowButton();
+      await app.registrationPage.clickStartServiceLink();
+      await app.registrationPage.verifyYouHaveActiveMessage();
+    }
+  );
+  (0, test_1.test)(
+    'TC-06 Verify That the Financial Advisory Service Displays the Saudi Citizen Only Notice for Non-Saudi Users',
+    { annotation: [{ product: 'Rebranding', type: 'critical' }] },
+    async ({ page }) => {
+      await (0, LogSteps_1.logStep)('Step 00: Read data from json relative to the service');
+      const data = readServiceData();
+      const environments = readEnvironments();
+      const app = new web_app_1.WebApp(page);
+      const nonSaudiUserId = data.nonSaudiUserId;
+      const preBeta = environments['pre-beta'].userPortalUrl;
+      await (0, LogSteps_1.logStep)('Step 01: Open the user portal and login');
+      await app.loginPage.gotoHomePage(preBeta);
+      await app.commonMethods.unifiedSakaniLogin(nonSaudiUserId);
+      await (0, LogSteps_1.logStep)('Step 02: Navigate to user profile > Verify financial advisory option not present');
+      await app.marketplaceLandingPage.openProfileManagement();
+      await app.registrationPage.verifyFanaticalAdvisoryButtonNotPresent();
+    }
+  );
+});

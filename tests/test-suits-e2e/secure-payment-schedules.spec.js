@@ -1,0 +1,36 @@
+'use strict';
+Object.defineProperty(exports, '__esModule', { value: true });
+const test_1 = require('@playwright/test');
+const web_app_1 = require('@base-class/web-app');
+const LogSteps_1 = require('@helpers/LogSteps');
+const DataHelper_1 = require('@helpers/DataHelper');
+const BookingCancellationObjects_1 = require('@objects/BookingCancellationObjects');
+const SERVICE = 'secure-payment-schedules';
+const readServiceData = () => DataHelper_1.DataHelper.readData().services[SERVICE];
+const readEnvironments = () => DataHelper_1.DataHelper.readData().environments;
+test_1.test.describe('Secure Payment Schedules', () => {
+  (0, test_1.test)('TC-01 Verify user viewing payment schedules', { annotation: [{ product: 'Marketplace', type: 'critical' }] }, async ({ page }) => {
+    test_1.test.setTimeout(0);
+    await (0, LogSteps_1.logStep)('Step 00: Read data from json relative to the service');
+    const environment = readEnvironments();
+    const data = readServiceData();
+    const app = new web_app_1.WebApp(page);
+    const sakaniUserId = data.sakaniUserId;
+    const userPortalUrl = environment.userPortalUrl;
+    const projectName = data.projectName;
+    await (0, LogSteps_1.logStep)('Step 01: Open the user portal and login');
+    await app.loginPage.gotoHomePage(userPortalUrl);
+    await app.loginPage.acceptCookies();
+    await app.loginPage.openLogin();
+    await app.loginPage.loginWithNafath(sakaniUserId);
+    await app.loginPage.waitForNafathPromptToDisappear();
+    await app.loginPage.continueNewUserPopup();
+    await app.loginPage.handlePushNotificationPopup();
+    await (0, LogSteps_1.logStep)('Step 02: Navigate to project > Verify payment schedules is present');
+    await app.marketplaceLandingPage.openSearch();
+    await app.marketplaceLandingPage.clickSearchedResultIfTextMatches(projectName);
+    await app.bookingPage.verifyElementVisibility(BookingCancellationObjects_1.BookingCancellationObjects.onlineLinding, true);
+    await app.bookingPage.clickOnViewDetailsButton();
+    await app.bookingPage.verifyElementVisibility(BookingCancellationObjects_1.BookingCancellationObjects.paymentDetailsPopup, true);
+  });
+});

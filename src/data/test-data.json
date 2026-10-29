@@ -4,7 +4,7 @@
     "userPortalUrl": "https://pre-sakani.housingapps.sa",
     "adminPortalUrl": "https://pre-sakani-admin.housingapps.sa/auth",
     "sayalUrl": "https://test-sayal.housingapps.sa/auth/Login",
-    "pre-beta": {
+    "preBeta": {
       "userPortalUrl": "https://pre-beta-sakani.housingapps.sa/"
     }
   },
@@ -350,6 +350,32 @@
       "adminPassword": "admin",
       "sakaniUserId": "1083703320",
       "comments": "appeal request"
+    },
+    "market-exploring": {
+      "sakaniUserId": "1300070834",
+      "filterOption": "فيلا",
+      "sortOption": "السعر من الأدنى إلى الأعلى"
+    },
+    "sakani-offers": {
+      "sakaniUserId": "1300070834",
+      "sortOptions": ["من الأحدث إلى الأقدم", "من الأقدم إلى الأحدث"],
+      "filterOptions": [
+        "الخدمات المنزلية",
+        "التسوق",
+        "عروض الهدايا والإكسسوارات",
+        "الترفيه",
+        "الموضة",
+        "الصحة والجمال",
+        "المأكولات والمشروبات",
+        "السفر والسياحة",
+        "خدمات السيارات",
+        "التعليم",
+        "الأعمال",
+        "أونلاين",
+        "في الفروع",
+        "المستفيد فقط",
+        "عروض حصرية"
+      ]
     }
   }
 }

@@ -1,0 +1,44 @@
+'use strict';
+Object.defineProperty(exports, '__esModule', { value: true });
+const test_1 = require('@playwright/test');
+const web_app_1 = require('@base-class/web-app');
+const LogSteps_1 = require('@helpers/LogSteps');
+const DataHelper_1 = require('@helpers/DataHelper');
+const BookingCancellationObjects_1 = require('@objects/BookingCancellationObjects');
+const readEnvironments = () => DataHelper_1.DataHelper.readData().environments;
+test_1.test.describe('Marketplace Units', () => {
+  (0, test_1.test)('TC-01 Verify user filter for a unit', { annotation: [{ product: 'Marketplace', type: 'critical' }] }, async ({ page }) => {
+    test_1.test.setTimeout(0);
+    await (0, LogSteps_1.logStep)('Step 00: Read data from json relative to the service');
+    const environment = readEnvironments();
+    const app = new web_app_1.WebApp(page);
+    const userPortalUrl = environment.userPortalUrl;
+    await (0, LogSteps_1.logStep)('Step 01: Navigate to user portal > Login');
+    await app.loginPage.gotoHomePage(userPortalUrl);
+    await app.loginPage.acceptCookies();
+    await app.filtersPage.clickOnPropertiesForSaleButton();
+    await app.filtersPage.clickOnReadyMadeUnits();
+    await (0, LogSteps_1.logStep)('Step 02: Filter for unit > Verify the unit is present');
+    await app.bookingPage.selectPropertyType();
+    await app.bookingPage.clickOnSaveButton();
+    const unitDetailsPagePromise = page.waitForEvent('popup');
+    await app.bookingPage.clickUnitResultCard();
+    const unitDetailsPage = await unitDetailsPagePromise;
+    await (0, test_1.expect)(unitDetailsPage.locator(BookingCancellationObjects_1.BookingCancellationObjects.unitResultDetailsPage.xpath)).toBeVisible();
+  });
+  (0, test_1.test)('TC-02 Verify user filter by register of interest', { annotation: [{ product: 'Marketplace', type: 'critical' }] }, async ({ page }) => {
+    test_1.test.setTimeout(0);
+    await (0, LogSteps_1.logStep)('Step 00: Read data from json relative to the service');
+    const environment = readEnvironments();
+    const app = new web_app_1.WebApp(page);
+    const userPortalUrl = environment.userPortalUrl;
+    await (0, LogSteps_1.logStep)('Step 01: Navigate to user portal > Login');
+    await app.loginPage.gotoHomePage(userPortalUrl);
+    await app.loginPage.acceptCookies();
+    await app.filtersPage.clickOnPropertiesForSaleButton();
+    await app.filtersPage.clickOnOffPlanSaleUnits();
+    await (0, LogSteps_1.logStep)('Step 02: Filter by register of interest > Verify the unit is present');
+    await app.bookingPage.clickOnRegisterOfInterest();
+    await app.bookingPage.verifyElementVisibility(BookingCancellationObjects_1.BookingCancellationObjects.unitResultCard, true);
+  });
+});
