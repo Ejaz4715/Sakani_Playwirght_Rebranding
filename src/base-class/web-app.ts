@@ -51,6 +51,7 @@ import { VoucherManagementPage } from '@pages/VoucherManagementPage';
 import { UserManagementPage } from '@pages/UserManagementPage';
 import { CreatingAnAdvertisingCampaignPage } from '@pages/CreatingAnAdvertisingCampaignPage';
 import { SelfConstructionPage } from '@pages/SelfConstructionPage';
+import { AppealRequestPage } from '@pages/AppealRequestPage';
 import { OffersPage } from '@pages/OffersPage';
 
 export class WebApp {
@@ -100,7 +101,6 @@ export class WebApp {
   metaverseManagementPage: InstanceType<typeof MetaverseManagementPage>;
   recommendationsPage: InstanceType<typeof RecommendationsPage>;
   favoritesPage: InstanceType<typeof FavoritesPage>;
-
   voucherManagementPage: InstanceType<typeof VoucherManagementPage>;
   realEstateTaxExemptionPage: InstanceType<typeof RealEstateTaxExemptionPage>;
   loyaltyAdminDealsPage: InstanceType<typeof LoyaltyAdminDealsPage>;
@@ -108,6 +108,7 @@ export class WebApp {
   creatingAnAdvertisingCampaignPage: InstanceType<typeof CreatingAnAdvertisingCampaignPage>;
   commonMethods: InstanceType<typeof CommonMethods>;
   selfConstructionPage: InstanceType<typeof SelfConstructionPage>;
+  appealRequestPage: InstanceType<typeof AppealRequestPage>;
   offersPage: InstanceType<typeof OffersPage>;
 
   constructor(page: Page) {
@@ -214,6 +215,7 @@ export class WebApp {
     this.creatingAnAdvertisingCampaignPage = new CreatingAnAdvertisingCampaignPage(page);
     this.commonMethods = new CommonMethods(page);
     this.selfConstructionPage = new SelfConstructionPage(page);
+    this.appealRequestPage = new AppealRequestPage(page);
     this.offersPage = new OffersPage(page);
   }
 }

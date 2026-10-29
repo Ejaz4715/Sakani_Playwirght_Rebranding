@@ -99,7 +99,7 @@
       "adminPassword": "admin",
       "developerUserId": "1023129537",
       "projectName": "Automation Project 20261006094237",
-      "sakaniUserId": "1300070834",
+      "sakaniUserId": "1083703320",
       "unit1Code": "01-01-0713-6-102",
       "unit2Code": "01-01-0713-5-101"
     },
@@ -344,6 +344,12 @@
       "adminUsername": "super_admin@test1-admin-sakani.housingapps.sa",
       "adminPassword": "admin",
       "tagName": "Tag 13a"
+    },
+    "appeal-request": {
+      "adminUsername": "super_admin@test1-admin-sakani.housingapps.sa",
+      "adminPassword": "admin",
+      "sakaniUserId": "1083703320",
+      "comments": "appeal request"
     },
     "market-exploring": {
       "sakaniUserId": "1300070834",
