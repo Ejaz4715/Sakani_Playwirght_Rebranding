@@ -95,11 +95,15 @@ export class LoginPage {
     const loginButton = this.page.locator(LoginObjects.preBetaLoginButton).first();
     const continueWithNafathButton = this.page.getByRole(LoginObjects.continueWithNafathButton.role, { name: LoginObjects.continueWithNafathButton.name });
 
-    // The header button can be clicked before the page finishes loading and do nothing, so retry until the login page opens
     await expect(async () => {
       await this.click(loginButton);
-      await expect(continueWithNafathButton).toBeVisible({ timeout: 10000 });
-    }).toPass({ timeout: 60000 });
+      try {
+        await expect(continueWithNafathButton).toBeVisible({ timeout: 15000 });
+      } catch (error) {
+        await this.page.reload();
+        throw error;
+      }
+    }).toPass({ timeout: 120000 });
 
     await this.click(continueWithNafathButton);
   }

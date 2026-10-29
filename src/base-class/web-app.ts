@@ -52,6 +52,7 @@ import { UserManagementPage } from '@pages/UserManagementPage';
 import { CreatingAnAdvertisingCampaignPage } from '@pages/CreatingAnAdvertisingCampaignPage';
 import { SelfConstructionPage } from '@pages/SelfConstructionPage';
 import { OffersPage } from '@pages/OffersPage';
+import { ConveyancePage } from '@pages/ConveyancePage';
 
 export class WebApp {
   page: Page;
@@ -109,6 +110,7 @@ export class WebApp {
   commonMethods: InstanceType<typeof CommonMethods>;
   selfConstructionPage: InstanceType<typeof SelfConstructionPage>;
   offersPage: InstanceType<typeof OffersPage>;
+  conveyancePage: InstanceType<typeof ConveyancePage>;
 
   constructor(page: Page) {
     this.page = page;
@@ -215,5 +217,6 @@ export class WebApp {
     this.commonMethods = new CommonMethods(page);
     this.selfConstructionPage = new SelfConstructionPage(page);
     this.offersPage = new OffersPage(page);
+    this.conveyancePage = new ConveyancePage(page);
   }
 }
