@@ -2,6 +2,7 @@
 import { Page, expect, Locator } from '@playwright/test';
 const path = require('path');
 import { DeveloperObjects } from '@objects/DeveloperObjects';
+import { LoginPage } from '@pages/LoginPage';
 
 export class PartnersLoginPage {
   page: Page;
@@ -94,8 +95,7 @@ export class PartnersLoginPage {
   }
 
   async loginToSapaPortal(nationalId: string) {
-    await this.fillNationalId(nationalId);
-    await this.clickContinueButton();
+    await new LoginPage(this.page).loginToPartnersWithNafath(nationalId);
     await this.confirmIdentityIfRequired();
     await this.waitForProfileIcon();
     await this.page.waitForTimeout(3000);

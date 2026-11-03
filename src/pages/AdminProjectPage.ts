@@ -238,6 +238,39 @@ export class AdminProjectPage {
     ).toBeVisible({ timeout: 30000 });
   }
 
+  // Turns on the multiple booking switches (Sakani and partners), only the ones that are off, a click on a switch that is on turns it off
+  async enableMultipleBooking() {
+    const multipleBookingSakaniSwitch = this.page.getByRole(AdminObjects.multipleBookingSakaniSwitch.role, { name: AdminObjects.multipleBookingSakaniSwitch.name });
+    await expect(multipleBookingSakaniSwitch).toBeVisible({ timeout: 30000 });
+    if (!(await multipleBookingSakaniSwitch.isChecked())) {
+      await multipleBookingSakaniSwitch.click();
+      await expect(multipleBookingSakaniSwitch).toBeChecked();
+    }
+
+    const multipleBookingPartnersSwitch = this.page.getByRole(AdminObjects.multipleBookingPartnersSwitch.role, { name: AdminObjects.multipleBookingPartnersSwitch.name });
+    if (!(await multipleBookingPartnersSwitch.isChecked())) {
+      await multipleBookingPartnersSwitch.click();
+      await expect(multipleBookingPartnersSwitch).toBeChecked();
+    }
+  }
+
+  // Selects all the banks (البنوك) and verifies they are checked, the click can be ignored while the table is refreshing, so retry it
+  async selectAllFinancingEntities() {
+    const selectAllRowsCheckbox = this.page.getByRole(AdminObjects.selectAllRowsCheckbox.role, {
+      name: AdminObjects.selectAllRowsCheckbox.name,
+    });
+    await expect(async () => {
+      if (!(await selectAllRowsCheckbox.isChecked())) {
+        await selectAllRowsCheckbox.click();
+      }
+      await expect(selectAllRowsCheckbox).toBeChecked({ timeout: 3000 });
+    }).toPass({ timeout: 60000 });
+  }
+
+  async expectFinancingEntitiesRowsLoaded() {
+    await expect(this.page.locator(AdminObjects.financingEntitiesRow).first()).toBeVisible({ timeout: 30000 });
+  }
+
   async clickSelectAllRows() {
     await this.page
       .getByRole(AdminObjects.selectAllRowsCheckbox.role, {
@@ -315,14 +348,26 @@ export class AdminProjectPage {
     while (!completed) {
       await this.page.reload();
       await this.page.waitForTimeout(3000);
-      completed = await this.page
+      const importCompleteVisible = await this.page
         .getByText(AdminObjects.importCompleteMessage.text)
         .isVisible()
         .catch(() => false);
+      // تم الاستيراد بواسطة is displayed while the status is still تحت الإجراء, so also wait until the status changes
+      const importInProgressVisible = await this.page
+        .getByText(AdminObjects.importInProgressStatus.text)
+        .first()
+        .isVisible()
+        .catch(() => false);
+      completed = importCompleteVisible && !importInProgressVisible;
       if (!completed) {
         await this.page.waitForTimeout(3000);
       }
     }
+  }
+
+  // The units import step is done: the status is تم إكمال الإجراء
+  async expectUnitImportDone() {
+    await expect(this.page.getByText(AdminObjects.importDoneStatus.text, { exact: true }).first()).toBeVisible({ timeout: 30000 });
   }
 
   async clickApproveButton() {

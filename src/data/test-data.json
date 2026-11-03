@@ -10,7 +10,7 @@
   },
   "services": {
     "offplan-booking": {
-      "projectName": "Automation Project Offplan 20261006143505",
+      "projectName": "Automation Project Offplan Doctortest 20261015084302",
       "adminUsername": "super_admin@test1-admin-sakani.housingapps.sa",
       "adminPassword": "admin",
       "developerUserId": "1023129537",
@@ -98,16 +98,29 @@
       "adminUsername": "super_admin@test1-admin-sakani.housingapps.sa",
       "adminPassword": "admin",
       "developerUserId": "1023129537",
-      "projectName": "Automation Project 20261006094237",
+      "projectName": "Doctor test 20261103134612",
       "sakaniUserId": "1300070834",
+      "beneUser": "1021110364",
+      "nonBeneUser": "1300061195",
+      "unitBasketUser": "1300061207",
+      "companyBeneUser": "1001234342",
+      "companyBeneCR": "7001234342",
+      "companyNonBeneUser": "1000000002",
+      "companyNonBeneCR": "7001234342",
+      "beneProjectName": "Automation Project 20261006094237",
+      "beneBookingFees": "8,855",
+      "beneBookingFeesOnCheckout": "8855.00",
       "unit1Code": "01-01-0713-6-102",
-      "unit2Code": "01-01-0713-5-101"
+      "unit2Code": "01-01-0713-5-101",
+      "scheduleTitleAr": "جدول دفع مرن لخدمات أتمتة الاختبارات 20261103135041",
+      "scheduleTitleEn": "Automation Flexible Payment Schedule 20261103135041",
+      "companyUnitCode": "01-01-0823-5-101"
     },
     "selling-to-companies": {
       "adminUsername": "super_admin@test1-admin-sakani.housingapps.sa",
       "adminPassword": "admin",
       "developerUserId": "1023129537",
-      "projectName": "Automation Project 20261006110013",
+      "projectName": "Automation Project 20261102191842",
       "companyUser": "1001234342",
       "companyCR": "7001234342",
       "companyUnitCode": "01-01-0702-7-103"

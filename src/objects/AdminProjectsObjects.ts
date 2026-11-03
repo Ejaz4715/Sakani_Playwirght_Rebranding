@@ -158,6 +158,17 @@ export const AdminObjects = {
     role: 'checkbox',
     name: 'Select all rows',
   },
+  // Bank rows in the financing entities table, "Select all rows" selects nothing until they load
+  financingEntitiesRow: 'datatable-body-row',
+  // Project settings: multiple booking switches, the maximum bookings per non-beneficiary is readonly until they are on
+  multipleBookingSakaniSwitch: {
+    role: 'switch',
+    name: 'تفعيل الحجز المتعدد في سكني (الويب، تطبيقات الهاتف المحمول)',
+  },
+  multipleBookingPartnersSwitch: {
+    role: 'switch',
+    name: 'تفعيل الحجز المتعدد في بوابة شركاء',
+  },
   banksCheckboxesValue: {
     xpath: '//datatable-body-row',
   },
@@ -186,6 +197,14 @@ export const AdminObjects = {
   importInProgressMessage: "//div[text() = 'الرمز المرجعي للعملية']",
   importCompleteMessage: {
     text: 'تم الاستيراد بواسطة',
+  },
+  // The import status while it is still processing (تم الاستيراد بواسطة is already displayed at this time)
+  importInProgressStatus: {
+    text: 'تحت الإجراء ...',
+  },
+  // The import status when the units import is done
+  importDoneStatus: {
+    text: 'تم إكمال الإجراء',
   },
   approveButton: {
     role: 'button',

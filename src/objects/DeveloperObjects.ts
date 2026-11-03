@@ -136,12 +136,31 @@ export const DeveloperObjects = {
   projectNameOptionSelector: "div[role='listbox'] span",
   confirmBookingButton: "//button[contains(text(), ' تأكيد ')]",
   bookingListButton: "//button[contains(text(),'عرض قوائم الحجز')]",
+  // After confirming a new booking, the booking details page opens on the حجوزات tab
+  bookingDetailsTab: {
+    role: 'tab',
+    name: 'حجوزات',
+  },
+  // Or the booking confirmed popup (تأكيد الحجز) opens with the next steps and حجز جديد / عرض التفاصيل
+  bookingConfirmedNewBookingButton: {
+    role: 'button',
+    name: 'حجز جديد',
+  },
   companyBookings: "//span[contains(text(),'حجوزات الشركة')]/../..",
   companyCRField: "//h5[contains(text(),' البحث عن شركة')]/../..//input",
   companyUserId: "//h5[contains(text(),'ممثل الشركة')]/../..//input",
   continueBookingButton: "//button[contains(text(),' مواصلة الحجز')]",
+  // Booking list "show details" button in the new UI (the old UI was إظهار التفاصيل)
+  viewBookingDetailsButtonV6: {
+    role: 'button',
+    name: 'عرض التفاصيل',
+  },
+  // Unit checkbox in the company booking units table
+  companyUnitCheckbox(row: number) {
+    return `//datatable-row-wrapper[${row}]/datatable-body-row/div[3]/datatable-body-cell/div/div/app-sapa-checkbox-v2/div/div/input/..`;
+  },
   bankSelector: "app-bank-list-dropdown-control input[role='combobox']",
-  crmBankSelector: "//span[contains(text(),'CRM Bank Test')]",
+  crmBankSelector: "//span[contains(text(),'CRM Bank')]",
   confirmCompanyBooking: "//span[contains(text(),'تأكيد')]/..",
   showBookingDetailsButton: "//button[contains(text(),'عرض التفاصيل')]",
   cancelButtonOnPopUp: {

@@ -10,6 +10,11 @@ export const LoginObjects = {
   // The button's text is in a child element, so it has no accessible name for getByRole
   preBetaContinueWithNafathButton: "//button[contains(.,'المتابعة مع نفاذ')]",
   preBetaUsernameField: 'input#username',
+  // Partners landing page login link (opens /auth, which redirects to the pre-beta login page)
+  partnersLandingLoginLink: {
+    role: 'link',
+    name: 'تسجيل الدخول',
+  },
   preBetaNafathIdField: '.cdk-overlay-container input',
   preBetaNafathContinueButton: "//div[contains(@class,'cdk-overlay-container')]//button[contains(text(),' المتابعة ')]",
   // The privacy policy dialog is rendered under an aria-hidden backdrop, so getByRole can't see it

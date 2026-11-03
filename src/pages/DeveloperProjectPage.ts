@@ -1,5 +1,6 @@
 import { Page, expect, Locator } from '@playwright/test';
 import { DeveloperObjects } from '@objects/DeveloperObjects';
+import { LoginPage } from '@pages/LoginPage';
 
 const DEFAULT_TIMEOUT = 30_000;
 const LONG_TIMEOUT = 90_000;
@@ -29,23 +30,7 @@ export class DeveloperProjectPage {
   }
 
   async loginDeveloper(nationalId: string) {
-    const usernameInput = this.page.getByRole(DeveloperObjects.usernameInput.role, { name: DeveloperObjects.usernameInput.name });
-    await this.waitForVisible(usernameInput);
-    await usernameInput.fill(nationalId);
-
-    const continueButton = this.page.getByRole(DeveloperObjects.continueButton.role, {
-      name: DeveloperObjects.continueButton.name,
-      exact: DeveloperObjects.continueButton.exact,
-    });
-    await this.waitForVisible(continueButton);
-    await continueButton.click();
-
-    const nafathModal = this.page.locator('//app-nafath-login-modal');
-    await nafathModal.waitFor({ state: 'visible', timeout: 10000 }).catch(() => {});
-
-    while (await nafathModal.isVisible().catch(() => false)) {
-      await this.page.waitForTimeout(3000);
-    }
+    await new LoginPage(this.page).loginToPartnersWithNafath(nationalId);
     await this.page.waitForTimeout(3000);
     const verificationButton = this.page.getByRole('button', { name: 'تحقق' });
     if (await verificationButton.isVisible({ timeout: 15000 }).catch(() => false)) {
@@ -341,14 +326,16 @@ export class DeveloperProjectPage {
   }
 
   async confirmCompanyBooking(unitCode: string) {
-    // 1. Navigate to the manage reservations and individual booking section
-    await this.navigateToIndividualBookings();
+    // 1. Navigate to the manage reservations and company bookings section (company bookings are not listed in the individual bookings)
+    await this.waitAndClick(this.page.locator(DeveloperObjects.manageReservationsButton));
+    await this.waitAndClick(this.page.locator(DeveloperObjects.companyBookings));
 
     // 2. Search for the specific unit using the provided unit code parameter
     await this.searchBookingByUnitCode(unitCode);
 
-    // 3. Open the booking details and switch to the bookings tab
-    await this.page.locator(DeveloperObjects.viewBookingDetails).click();
+    // 3. Open the booking details (عرض التفاصيل in the new UI, إظهار التفاصيل in the old UI) and switch to the bookings tab
+    const viewDetailsButton = this.page.getByRole(DeveloperObjects.viewBookingDetailsButtonV6.role, { name: DeveloperObjects.viewBookingDetailsButtonV6.name });
+    await this.waitAndClick(viewDetailsButton.or(this.page.locator(DeveloperObjects.viewBookingDetails)).first());
     await this.page.getByRole(DeveloperObjects.bookingsTab.role, { name: DeveloperObjects.bookingsTab.name }).click();
 
     // 4. Locate and click the confirm booking buttons (handling both first and last instances)
@@ -406,7 +393,8 @@ export class DeveloperProjectPage {
     await this.page.waitForTimeout(3000);
     await this.page.locator(DeveloperObjects.projectNameField).fill(projectName);
     await this.page.waitForTimeout(2000);
-    await this.page.locator(DeveloperObjects.projectNameOptionSelector).click();
+    // The list can still show other projects while filtering, so click the option with the project name
+    await this.waitAndClick(this.page.locator(DeveloperObjects.projectNameOptionSelector).filter({ hasText: projectName }).first());
   }
 
   async bookUnitsForCustomersUsingUnitCode(nationalIdentity: string, unitCode: string) {
@@ -444,15 +432,59 @@ export class DeveloperProjectPage {
     await this.page.waitForTimeout(3000);
     await this.page.locator(DeveloperObjects.projectNameField).fill(projectName);
     await this.page.waitForTimeout(2000);
-    await this.page.locator(DeveloperObjects.projectNameOptionSelector).click();
+    // The list can still show other projects while filtering, so click the option with the project name
+    await this.waitAndClick(this.page.locator(DeveloperObjects.projectNameOptionSelector).filter({ hasText: projectName }).first());
   }
 
   async clickOnNextButton() {
     await this.waitAndClick(this.page.locator(DeveloperObjects.nextButton));
   }
 
+  // Selects the first unit that is not taken: a taken unit shows التحديد والاستمرار instead of مواصلة الحجز, then unselect it and try the next unit
+  async selectAvailableCompanyUnitAndKeepBooking(maxUnits = 10) {
+    const keepBookingButton = this.page.locator(DeveloperObjects.continueBookingButton);
+    const selectAndContinueButton = this.page.getByRole(DeveloperObjects.selectAndContinueButton.role, { name: DeveloperObjects.selectAndContinueButton.name });
+
+    for (let row = 1; row <= maxUnits; row++) {
+      const unitCheckbox = this.page.locator(DeveloperObjects.companyUnitCheckbox(row));
+      await this.waitAndClick(unitCheckbox);
+      await this.clickOnNextButton();
+      await expect(keepBookingButton.or(selectAndContinueButton)).toBeVisible({ timeout: LONG_TIMEOUT });
+
+      if (await keepBookingButton.isVisible()) {
+        await keepBookingButton.click();
+        return;
+      }
+
+      // The unit is already taken: close the message and unselect the unit
+      await selectAndContinueButton.click();
+      const takenUnitDialog = this.page.getByRole('dialog');
+      if (await takenUnitDialog.isVisible()) {
+        await takenUnitDialog.click();
+      }
+      await this.waitAndClick(unitCheckbox);
+    }
+
+    throw new Error(`No available unit found in the first ${maxUnits} units of the company booking`);
+  }
+
   async clickOnKeepBooking() {
     await this.waitAndClick(this.page.locator(DeveloperObjects.continueBookingButton));
+  }
+
+  // A single unit booking has the financial details step (bank), a unit basket goes straight to the summary (تأكيد)
+  // The additions popup (اضافة الاضافات) can be displayed first, then click مواصلة الحجز
+  async isBankStepDisplayed() {
+    const bankDropdown = this.page.locator(DeveloperObjects.bankSelector);
+    const confirmButton = this.page.getByRole(DeveloperObjects.confirmButton.role, { name: DeveloperObjects.confirmButton.name });
+    const keepBookingButton = this.page.locator(DeveloperObjects.continueBookingButton);
+    await expect(bankDropdown.or(confirmButton).or(keepBookingButton).first()).toBeVisible({ timeout: LONG_TIMEOUT });
+
+    if (await keepBookingButton.isVisible()) {
+      await keepBookingButton.click();
+      await expect(bankDropdown.or(confirmButton).first()).toBeVisible({ timeout: LONG_TIMEOUT });
+    }
+    return await bankDropdown.isVisible();
   }
 
   async clickOnBankDropdown() {
@@ -482,6 +514,14 @@ export class DeveloperProjectPage {
   async isBookingListButtonVisible() {
     await this.page.locator(DeveloperObjects.bookingListButton).waitFor({ state: 'visible', timeout: 90000 });
     return await this.page.locator(DeveloperObjects.bookingListButton).isVisible();
+  }
+
+  // The booking is created when the booking list button or the new booking details page is displayed
+  async verifyBookingCreated() {
+    const bookingListButton = this.page.locator(DeveloperObjects.bookingListButton);
+    const bookingDetailsTab = this.page.getByRole(DeveloperObjects.bookingDetailsTab.role, { name: DeveloperObjects.bookingDetailsTab.name });
+    const bookingConfirmedPopup = this.page.getByRole(DeveloperObjects.bookingConfirmedNewBookingButton.role, { name: DeveloperObjects.bookingConfirmedNewBookingButton.name });
+    await expect(bookingListButton.or(bookingDetailsTab).or(bookingConfirmedPopup).first()).toBeVisible({ timeout: 90000 });
   }
 
   async openTheFirstExistingProject() {

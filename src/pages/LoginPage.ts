@@ -1,4 +1,5 @@
 import { LoginObjects } from '@objects/LoginObjects';
+import { FavoritesObjects } from '@objects/FavoritesObjects';
 import { expect, Page } from '@playwright/test';
 export class LoginPage {
   page: Page;
@@ -104,6 +105,35 @@ export class LoginPage {
 
     await this.acceptPreBetaCookies();
     await this.click(continueWithNafathButton);
+  }
+
+  // After coming back from the payment gateway the pre-beta session can be lost: the header shows تسجيل الدخول instead of the profile button
+  async isPreBetaLoggedOut() {
+    const loginButton = this.page.locator(LoginObjects.preBetaLoginButton).first();
+    const profileButton = this.page.getByRole(FavoritesObjects.profileButton.role, { name: FavoritesObjects.profileButton.name }).first();
+    await expect(loginButton.or(profileButton).first()).toBeVisible({ timeout: 60000 });
+    return await loginButton.isVisible();
+  }
+
+  // The partners portal redirects to the pre-beta unified login page, so login with Nafath there
+  async loginToPartnersWithNafath(nationalId: string) {
+    await this.openLoginFromPartnersLandingPage();
+    await this.openPreBetaLogin();
+    await this.preBetaLoginWithNafath(nationalId);
+    await this.waitForNafathPromptToDisappear();
+    // The updated privacy policy popup (موافقة واستمرار) can be displayed after the login
+    await this.continuePreBetaNewUserPopup();
+  }
+
+  // The partners portal opens either its landing page or the pre-beta login page, so click تسجيل الدخول only on the landing page
+  async openLoginFromPartnersLandingPage() {
+    const landingLoginLink = this.page.getByRole(LoginObjects.partnersLandingLoginLink.role, { name: LoginObjects.partnersLandingLoginLink.name });
+    const continueWithNafathButton = this.page.locator(LoginObjects.preBetaContinueWithNafathButton).first();
+
+    await expect(landingLoginLink.or(continueWithNafathButton)).toBeVisible({ timeout: 60000 });
+    if (await landingLoginLink.isVisible()) {
+      await this.click(landingLoginLink);
+    }
   }
 
   // The cookies banner opens a moment after the login page and blocks clicks on it, so wait for it, accept it and wait until it closes
