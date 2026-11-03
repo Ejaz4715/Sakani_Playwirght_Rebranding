@@ -99,7 +99,7 @@
       "adminPassword": "admin",
       "developerUserId": "1023129537",
       "projectName": "Automation Project 20261006094237",
-      "sakaniUserId": "1300070834",
+      "sakaniUserId": "1083703320",
       "unit1Code": "01-01-0713-6-102",
       "unit2Code": "01-01-0713-5-101"
     },
@@ -345,6 +345,12 @@
       "adminPassword": "admin",
       "tagName": "Tag 13a"
     },
+    "appeal-request": {
+      "adminUsername": "super_admin@test1-admin-sakani.housingapps.sa",
+      "adminPassword": "admin",
+      "sakaniUserId": "1083703320",
+      "comments": "appeal request"
+    },
     "market-exploring": {
       "sakaniUserId": "1300070834",
       "filterOption": "فيلا",
@@ -387,9 +393,24 @@
         "isBeneficiary": false
       },
       "formulaScenarios": [
-        { "propertyPrice": 500000, "downPaymentAmount": 80000, "annualInterestRate": 4, "fundingPeriodYears": 5 },
-        { "propertyPrice": 750000, "downPaymentAmount": 150000, "annualInterestRate": 5.5, "fundingPeriodYears": 25 },
-        { "propertyPrice": 1200000, "downPaymentAmount": 300000, "annualInterestRate": 3.75, "fundingPeriodYears": 30 }
+        {
+          "propertyPrice": 500000,
+          "downPaymentAmount": 80000,
+          "annualInterestRate": 4,
+          "fundingPeriodYears": 5
+        },
+        {
+          "propertyPrice": 750000,
+          "downPaymentAmount": 150000,
+          "annualInterestRate": 5.5,
+          "fundingPeriodYears": 25
+        },
+        {
+          "propertyPrice": 1200000,
+          "downPaymentAmount": 300000,
+          "annualInterestRate": 3.75,
+          "fundingPeriodYears": 30
+        }
       ],
       "debtBurdenInput": {
         "monthlyIncome": 5000,
@@ -406,6 +427,9 @@
         "downPaymentRangePrefix": "يجب أن تكون القيمة بين",
         "downPaymentExceedsPrice": "لا يجوز أن يتجاوز مبلغ الدفعة المقدمة سعر العقار"
       }
+    },
+    "business-landing-page": {
+      "userId": "1023129537"
     }
   }
 }

@@ -28,6 +28,19 @@ export class CommonMethods {
             exact: elementObject.exact,
           });
   }
+
+  private async getFirstVisibleMatch(elementObject: Element, description: string): Promise<Locator> {
+    const visibleMatches = this.getElement(elementObject).filter({ visible: true });
+    await expect(visibleMatches.first(), `Expected at least one visible ${description}`).toBeVisible();
+
+    const visibleCount = await visibleMatches.count();
+    if (visibleCount === 0) {
+      throw new Error(`No visible ${description} found`);
+    }
+
+    return visibleMatches.first();
+  }
+
   /**
    * Clicks on a locator if it is visible.
    * @param elementObject The page object describing the element to click.
@@ -134,5 +147,49 @@ export class CommonMethods {
     while (await nafathModal.isVisible().catch(() => false)) {
       await this.page.waitForTimeout(3000);
     }
+  }
+  async fillAllMatchingFields(fieldObject: { readonly xpath: string }, value: string | readonly string[]) {
+    const fields = this.page.locator(fieldObject.xpath);
+    const fieldCount = await fields.count();
+
+    if (fieldCount === 0) {
+      throw new Error(`No fields found for selector: ${fieldObject.xpath}`);
+    }
+
+    if (Array.isArray(value) && value.length !== fieldCount) {
+      throw new Error(`Expected ${fieldCount} values for matching fields, received ${value.length}`);
+    }
+
+    for (let index = 0; index < fieldCount; index++) {
+      const field = fields.nth(index);
+      await field.waitFor({ state: 'visible' });
+      await field.fill(Array.isArray(value) ? value[index] : value);
+    }
+    return fieldCount;
+  }
+  async selectDropdownOption(dropdownObject: Element, optionObject: Element | readonly Element[]) {
+    const dropdowns = this.getElement(dropdownObject).filter({ visible: true });
+    await expect(dropdowns.first(), 'Expected at least one visible dropdown').toBeVisible();
+    const dropdownCount = await dropdowns.count();
+
+    if (dropdownCount === 0) {
+      throw new Error('No visible dropdowns found');
+    }
+
+    if (Array.isArray(optionObject) && optionObject.length !== dropdownCount) {
+      throw new Error(`Expected ${dropdownCount} dropdown options, received ${optionObject.length}`);
+    }
+
+    for (let index = 0; index < dropdownCount; index++) {
+      const dropdown = dropdowns.nth(index);
+      await dropdown.waitFor({ state: 'visible' });
+      await dropdown.click();
+
+      const selectedOptionObject = Array.isArray(optionObject) ? optionObject[index] : optionObject;
+      const option = await this.getFirstVisibleMatch(selectedOptionObject, 'dropdown option');
+      await option.click();
+    }
+
+    return dropdownCount;
   }
 }
