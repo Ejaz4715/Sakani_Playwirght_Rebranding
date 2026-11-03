@@ -53,6 +53,7 @@ import { CreatingAnAdvertisingCampaignPage } from '@pages/CreatingAnAdvertisingC
 import { SelfConstructionPage } from '@pages/SelfConstructionPage';
 import { OffersPage } from '@pages/OffersPage';
 import { ConveyancePage } from '@pages/ConveyancePage';
+import { NewMortgageCalculatorPage } from '@pages/NewMortgageCalculatorPage';
 
 export class WebApp {
   page: Page;
@@ -111,6 +112,7 @@ export class WebApp {
   selfConstructionPage: InstanceType<typeof SelfConstructionPage>;
   offersPage: InstanceType<typeof OffersPage>;
   conveyancePage: InstanceType<typeof ConveyancePage>;
+  newMortgageCalculatorPage: InstanceType<typeof NewMortgageCalculatorPage>;
 
   constructor(page: Page) {
     this.page = page;
@@ -218,5 +220,6 @@ export class WebApp {
     this.selfConstructionPage = new SelfConstructionPage(page);
     this.offersPage = new OffersPage(page);
     this.conveyancePage = new ConveyancePage(page);
+    this.newMortgageCalculatorPage = new NewMortgageCalculatorPage(page);
   }
 }

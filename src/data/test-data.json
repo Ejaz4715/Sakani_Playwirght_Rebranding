@@ -374,6 +374,38 @@
     "conveyance-service": {
       "sakaniUserId": "1300070834",
       "requestsTabs": ["الكل", "قيد المراجعة", "مقبول", "مرفوض"]
+    },
+    "new-mortgage-calculator": {
+      "validInput": {
+        "propertyPrice": 500000,
+        "annualInterestRate": 4,
+        "monthlyIncome": 25000,
+        "monthlyLiabilities": 2000,
+        "fundingPeriodYears": 20,
+        "homeType": "first",
+        "downPaymentAmount": 80000,
+        "isBeneficiary": false
+      },
+      "formulaScenarios": [
+        { "propertyPrice": 500000, "downPaymentAmount": 80000, "annualInterestRate": 4, "fundingPeriodYears": 5 },
+        { "propertyPrice": 750000, "downPaymentAmount": 150000, "annualInterestRate": 5.5, "fundingPeriodYears": 25 },
+        { "propertyPrice": 1200000, "downPaymentAmount": 300000, "annualInterestRate": 3.75, "fundingPeriodYears": 30 }
+      ],
+      "debtBurdenInput": {
+        "monthlyIncome": 5000,
+        "monthlyLiabilities": 2000
+      },
+      "minimumDownPaymentPercentage": {
+        "first": 10,
+        "second": 30
+      },
+      "incomeRange": { "min": 2000, "max": 500000 },
+      "errors": {
+        "required": "الحقل مطلوب",
+        "incomeRange": "يجب أن تكون القيمة بين 2000 و 500000",
+        "downPaymentRangePrefix": "يجب أن تكون القيمة بين",
+        "downPaymentExceedsPrice": "لا يجوز أن يتجاوز مبلغ الدفعة المقدمة سعر العقار"
+      }
     }
   }
 }
