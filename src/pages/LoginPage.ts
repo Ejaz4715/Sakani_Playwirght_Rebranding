@@ -93,8 +93,14 @@ export class LoginPage {
     const loginButton = this.page.locator(LoginObjects.preBetaLoginButton).first();
     const continueWithNafathButton = this.page.locator(LoginObjects.preBetaContinueWithNafathButton).first();
 
+    // Wait until the page is loaded before any click
+    await this.page.waitForLoadState('load');
+    await this.page.waitForLoadState('networkidle', { timeout: 60000 }).catch(() => {});
+
     // The header button can be clicked before the page finishes loading and do nothing, so retry until the login page opens
     await expect(async () => {
+      // The cookies banner covers the page and blocks the clicks (it is displayed again after clearing the login session)
+      await this.acceptCookiesIfVisible();
       // Only click the header button while the login page hasn't opened yet
       if (!(await continueWithNafathButton.isVisible())) {
         await loginButton.click({ timeout: 10000 });
@@ -105,6 +111,38 @@ export class LoginPage {
 
     await this.acceptPreBetaCookies();
     await this.click(continueWithNafathButton);
+  }
+
+  // Logs out of all the portals before the next user logs in on the same page: the pre-beta Nafath login is shared by the admin, partners and Sakani portals,
+  // so clear the cookies and the local/session storage of each portal
+  async clearLoginSession(portalUrls: string[]) {
+    await this.page.context().clearCookies();
+    for (const portalUrl of portalUrls) {
+      await this.page.goto(portalUrl);
+      await this.page.evaluate(() => {
+        localStorage.clear();
+        sessionStorage.clear();
+      });
+    }
+    await this.page.context().clearCookies();
+  }
+
+  // Pre-beta (Sakani) login with Nafath: تسجيل الدخول > المتابعة مع نفاذ > national ID > close the popups
+  async loginToPreBetaWithNafath(nationalId: string) {
+    await this.openPreBetaLogin();
+    await this.preBetaLoginWithNafath(nationalId);
+    await this.waitForNafathPromptToDisappear();
+    await this.continuePreBetaNewUserPopup();
+    await this.handlePushNotificationPopup();
+  }
+
+  // Back to Sakani (pre-beta) after the payment gateway or signing: open it, refresh the page and login again only when the session is lost
+  async openPreBetaAndLoginIfLoggedOut(url: string, nationalId: string) {
+    await this.gotoHomePage(url);
+    await this.page.reload();
+    if (await this.isPreBetaLoggedOut()) {
+      await this.loginToPreBetaWithNafath(nationalId);
+    }
   }
 
   // After coming back from the payment gateway the pre-beta session can be lost: the header shows تسجيل الدخول instead of the profile button
@@ -130,6 +168,9 @@ export class LoginPage {
     const landingLoginLink = this.page.getByRole(LoginObjects.partnersLandingLoginLink.role, { name: LoginObjects.partnersLandingLoginLink.name });
     const continueWithNafathButton = this.page.locator(LoginObjects.preBetaContinueWithNafathButton).first();
 
+    // Wait until the page is loaded before any click
+    await this.page.waitForLoadState('load');
+    await this.page.waitForLoadState('networkidle', { timeout: 60000 }).catch(() => {});
     await expect(landingLoginLink.or(continueWithNafathButton)).toBeVisible({ timeout: 60000 });
     if (await landingLoginLink.isVisible()) {
       await this.click(landingLoginLink);
@@ -146,15 +187,20 @@ export class LoginPage {
       // Banner not shown (already accepted); continue with the flow.
       return;
     }
-    await this.click(acceptCookiesButton);
-    await acceptCookiesButton.waitFor({ state: 'hidden', timeout: 15000 });
+    // The banner can re-render while the page is still loading (not stable / detached), so retry the click until it closes
+    await expect(async () => {
+      if (await acceptCookiesButton.isVisible()) {
+        await acceptCookiesButton.click({ timeout: 10000 });
+      }
+      await expect(acceptCookiesButton).toBeHidden({ timeout: 5000 });
+    }).toPass({ timeout: 60000 });
   }
 
   // Accepts the cookies banner only if it is showing, so it is safe to call when it was already accepted
   async acceptCookiesIfVisible() {
     const acceptCookiesButton = this.page.getByRole(LoginObjects.acceptCookiesButton.role, { name: LoginObjects.acceptCookiesButton.name });
     if (await acceptCookiesButton.isVisible()) {
-      await this.click(acceptCookiesButton);
+      await acceptCookiesButton.click({ timeout: 10000 }).catch(() => {});
     }
   }
 

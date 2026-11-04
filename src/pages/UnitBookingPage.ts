@@ -52,14 +52,40 @@ export class UnitBookingPage {
 
   async signSalesContract(otp = ['1', '2', '3', '4']) {
     await this.page.waitForTimeout(9000);
-    await this.page.getByRole('button', { name: 'اعتماد' }).click();
-    const otpInputs = this.page.getByRole('textbox');
-    for (let index = 0; index < otp.length; index++) {
-      await otpInputs.nth(index).fill(otp[index]);
+    // Wait until the sales contract page is loaded (the contract document is loaded and اعتماد is enabled) before approving
+    await this.page.waitForLoadState('load');
+    await this.page.waitForLoadState('networkidle', { timeout: 60000 }).catch(() => {});
+    const approveButton = this.page.getByRole('button', { name: 'اعتماد' });
+    await expect(approveButton).toBeVisible({ timeout: 90000 });
+    // The contract can fail to load (لا يمكن للنظام تحميل عقد البيع، يرجى تحديث الصفحة) and اعتماد stays disabled, so refresh the page until it is enabled
+    for (let attempt = 0; attempt < 5 && !(await approveButton.isEnabled()); attempt++) {
+      if (await this.page.getByText(UnitBookingObjects.contractLoadErrorText).isVisible()) {
+        await this.page.reload();
+        await this.page.waitForLoadState('networkidle', { timeout: 60000 }).catch(() => {});
+      }
+      await expect(approveButton)
+        .toBeEnabled({ timeout: 30000 })
+        .catch(() => {});
     }
-    await this.page.getByRole('button', { name: 'تحقق', exact: true }).click();
+    await expect(approveButton).toBeEnabled({ timeout: 30000 });
+    await approveButton.click();
+    const otpInputs = this.page.getByRole('textbox');
+    await otpInputs.first().waitFor({ state: 'visible', timeout: 30000 });
+    // On pre-beta the OTP can be filled and verified automatically (the inputs are disabled), then don't type it again
+    if (await otpInputs.first().isEditable()) {
+      for (let index = 0; index < otp.length; index++) {
+        await otpInputs.nth(index).fill(otp[index]);
+      }
+      await this.page.getByRole('button', { name: 'تحقق', exact: true }).click();
+    }
     await this.page.waitForTimeout(7000);
-    await this.page.getByRole('button', { name: 'إغلاق' }).click();
+    // Wait until the page is loaded after verifying the OTP
+    await this.page.waitForLoadState('networkidle', { timeout: 60000 }).catch(() => {});
+    // The page can show خطأ تقني instead of the success popup while the contract is signed, then there is no إغلاق button
+    const closeButton = this.page.getByRole('button', { name: 'إغلاق' });
+    if (await closeButton.isVisible()) {
+      await closeButton.click();
+    }
   }
 
   async expectSalesContractSuccess() {

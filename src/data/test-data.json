@@ -94,14 +94,14 @@
       "lastAdLicenseCounter": 8986749517,
       "AdLicenseNumber": "20261008141610"
     },
-    "offPlan-basket-multiple-booking": {
+    "FlexiblePaymentPhase3": {
       "adminUsername": "super_admin@test1-admin-sakani.housingapps.sa",
       "adminPassword": "admin",
       "developerUserId": "1023129537",
-      "projectName": "Doctor test 20261103134612",
+      "projectName": "Doctor test 20261104115900",
       "sakaniUserId": "1300070834",
-      "beneUser": "1021110364",
-      "nonBeneUser": "1300061195",
+      "beneUser": "1300061216",
+      "nonBeneUser": "1300061006",
       "unitBasketUser": "1300061207",
       "companyBeneUser": "1001234342",
       "companyBeneCR": "7001234342",
@@ -112,9 +112,10 @@
       "beneBookingFeesOnCheckout": "8855.00",
       "unit1Code": "01-01-0713-6-102",
       "unit2Code": "01-01-0713-5-101",
-      "scheduleTitleAr": "جدول دفع مرن لخدمات أتمتة الاختبارات 20261103135041",
-      "scheduleTitleEn": "Automation Flexible Payment Schedule 20261103135041",
-      "companyUnitCode": "01-01-0823-5-101"
+      "scheduleTitleAr": "جدول دفع مرن لخدمات أتمتة الاختبارات 20261104130449",
+      "scheduleTitleEn": "Automation Flexible Payment Schedule 20261104130449",
+      "companyUnitCode": "01-01-0823-5-101",
+      "companyProjectName": "Doctor test 20261104125743"
     },
     "selling-to-companies": {
       "adminUsername": "super_admin@test1-admin-sakani.housingapps.sa",

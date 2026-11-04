@@ -72,6 +72,8 @@ export class AdminProjectPage {
 
   async selectRegion(region: string) {
     await this.page.locator(AdminObjects.regionDropdown).click();
+    // Type the region to filter the list, the option can be out of the displayed part of the list when another region is selected
+    await this.page.locator(AdminObjects.regionSearchInput).fill(region);
     const regionOption = await AdminObjects.regionOption(region);
     await this.page.waitForTimeout(2000);
     await this.page.locator(regionOption).click();
@@ -238,6 +240,25 @@ export class AdminProjectPage {
     ).toBeVisible({ timeout: 30000 });
   }
 
+  // Project settings > turn on multiple booking > set the maximum bookings per non-beneficiary > save > verify the value is saved
+  async enableMultipleBookingForNonBeneficiary(maximumBookings: string) {
+    await this.page.keyboard.press('PageDown');
+    const projectSettingsSection = this.page.locator(AdminObjects.projectSettingsSection);
+    await projectSettingsSection.waitFor({ state: 'visible', timeout: 30000 });
+    await projectSettingsSection.click();
+
+    await this.enableMultipleBooking();
+
+    const maximumBookingInput = this.page.locator(AdminObjects.maximumBookingPerNonBeneficiaryInput);
+    await maximumBookingInput.waitFor({ state: 'visible', timeout: 30000 });
+    await maximumBookingInput.fill(maximumBookings);
+
+    await this.page.keyboard.press('PageDown');
+    await this.clickSaveButton();
+    await this.validateProjectSavedToastMessage();
+    await expect(maximumBookingInput).toHaveValue(maximumBookings);
+  }
+
   // Turns on the multiple booking switches (Sakani and partners), only the ones that are off, a click on a switch that is on turns it off
   async enableMultipleBooking() {
     const multipleBookingSakaniSwitch = this.page.getByRole(AdminObjects.multipleBookingSakaniSwitch.role, { name: AdminObjects.multipleBookingSakaniSwitch.name });
@@ -313,12 +334,16 @@ export class AdminProjectPage {
     this.page.waitForTimeout(3000);
   }
 
+  // The dropdown can be clicked before it is ready and not open, so retry until the apartment option is displayed
   async openResidentialUnitTypeDropdown() {
-    await this.page
-      .getByRole(AdminObjects.residentialUnitType.role, {
-        name: AdminObjects.residentialUnitType.name,
-      })
-      .click();
+    const residentialUnitTypeDropdown = this.page.getByRole(AdminObjects.residentialUnitType.role, {
+      name: AdminObjects.residentialUnitType.name,
+    });
+    const apartmentOption = this.page.getByRole(AdminObjects.apartmentOption.role, { name: AdminObjects.apartmentOption.name });
+    await expect(async () => {
+      await residentialUnitTypeDropdown.click();
+      await expect(apartmentOption).toBeVisible({ timeout: 5000 });
+    }).toPass({ timeout: 60000 });
   }
 
   async selectApartmentUnitType() {
@@ -400,6 +425,27 @@ export class AdminProjectPage {
 
   async clickProjectMediaTab() {
     await this.page.locator(AdminObjects.visualContentTab.selector).filter({ hasText: AdminObjects.visualContentTab.text }).first().click();
+  }
+
+  // After approving the units import: رجوع can be clicked before the import page is ready and stay on it, so click it until the project media tab is displayed
+  async backToProjectFromUnitsImport() {
+    const backButton = this.page.getByRole(AdminObjects.backButton.role, { name: AdminObjects.backButton.name });
+    const projectMediaTab = this.page.locator(AdminObjects.visualContentTab.selector).filter({ hasText: AdminObjects.visualContentTab.text }).first();
+    await expect(async () => {
+      if (await backButton.isVisible()) {
+        await backButton.click();
+      }
+      await expect(projectMediaTab).toBeVisible({ timeout: 10000 });
+    }).toPass({ timeout: 120000 });
+  }
+
+  // The request media approval button is displayed only after reloading the page and saving the project media again
+  async reloadAndSaveProjectMediaAgain() {
+    await this.page.waitForTimeout(3000);
+    await this.page.reload();
+    await this.clickProjectMediaTab();
+    await this.clickMediaSaveButton();
+    await this.page.waitForTimeout(3000);
   }
 
   async uploadBannerImage(filePath: string) {

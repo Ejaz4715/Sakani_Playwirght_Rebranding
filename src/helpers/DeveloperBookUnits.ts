@@ -31,14 +31,9 @@ export async function developerBooksUnits(page: Page, service: string, unitsCoun
     await checkbox.click();
   }
 
-  await logStep('Step 04: Financial details > Select the bank (single unit only) > Confirm the booking > Verify booking list is visible');
+  await logStep('Step 04: Financial details > Select the bank (single unit only) > Confirm the booking > Verify the booking is created');
   await app.developerProjectPage.clickOnNextButton();
-  if (await app.developerProjectPage.isBankStepDisplayed()) {
-    await app.developerProjectPage.clickOnBankDropdown();
-    await app.developerProjectPage.selectCRMBank();
-    await app.developerProjectPage.clickOnNextButton();
-  }
+  await app.developerProjectPage.selectCRMBankIfBankStepDisplayed();
   await app.developerProjectPage.clickOnConfirmationButton();
-
   await app.developerProjectPage.verifyBookingCreated();
 }

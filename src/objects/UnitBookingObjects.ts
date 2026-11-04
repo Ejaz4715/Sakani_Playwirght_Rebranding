@@ -11,4 +11,5 @@ export const UnitBookingObjects = {
   madaPaymentTitle: {
     title: 'الدفع بواسطة مدى',
   },
+  contractLoadErrorText: 'لا يمكن للنظام تحميل عقد البيع',
 } as const;

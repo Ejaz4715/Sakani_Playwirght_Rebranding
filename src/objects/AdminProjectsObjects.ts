@@ -63,6 +63,8 @@ export const AdminObjects = {
     return `//mat-option/child::span[normalize-space() ='${text}']`;
   },
   regionDropdown: "//ng-select[@formcontrolname='region_id']",
+  // Search input inside the region dropdown, typing the region filters the options list
+  regionSearchInput: "//ng-select[@formcontrolname='region_id']//input",
   async regionOption(text: string) {
     return `//div[@role='option']/child::span[normalize-space() ='${text}']`;
   },
@@ -160,6 +162,9 @@ export const AdminObjects = {
   },
   // Bank rows in the financing entities table, "Select all rows" selects nothing until they load
   financingEntitiesRow: 'datatable-body-row',
+  // Project settings section and the maximum bookings per non-beneficiary field
+  projectSettingsSection: "//span[contains(text(), 'إعدادات المشاريع')]",
+  maximumBookingPerNonBeneficiaryInput: "input[formcontrolname='maximum_booking_per_non_beneficiary']",
   // Project settings: multiple booking switches, the maximum bookings per non-beneficiary is readonly until they are on
   multipleBookingSakaniSwitch: {
     role: 'switch',

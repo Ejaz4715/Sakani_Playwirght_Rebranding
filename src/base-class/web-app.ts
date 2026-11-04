@@ -52,6 +52,7 @@ import { VoucherManagementPage } from '@pages/VoucherManagementPage';
 import { UserManagementPage } from '@pages/UserManagementPage';
 import { CreatingAnAdvertisingCampaignPage } from '@pages/CreatingAnAdvertisingCampaignPage';
 import { SelfConstructionPage } from '@pages/SelfConstructionPage';
+import { PaymentFlexiblePhase3Page } from '@pages/paymentflexiblepase3';
 
 export class WebApp {
   page: Page;
@@ -109,6 +110,7 @@ export class WebApp {
   creatingAnAdvertisingCampaignPage: InstanceType<typeof CreatingAnAdvertisingCampaignPage>;
   commonMethods: InstanceType<typeof CommonMethods>;
   selfConstructionPage: InstanceType<typeof SelfConstructionPage>;
+  paymentFlexiblePhase3Page: InstanceType<typeof PaymentFlexiblePhase3Page>;
 
   constructor(page: Page) {
     this.page = page;
@@ -215,5 +217,6 @@ export class WebApp {
     this.creatingAnAdvertisingCampaignPage = new CreatingAnAdvertisingCampaignPage(page);
     this.commonMethods = new CommonMethods(page);
     this.selfConstructionPage = new SelfConstructionPage(page);
+    this.paymentFlexiblePhase3Page = new PaymentFlexiblePhase3Page(page);
   }
 }

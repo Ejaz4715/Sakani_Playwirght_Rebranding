@@ -487,6 +487,15 @@ export class DeveloperProjectPage {
     return await bankDropdown.isVisible();
   }
 
+  // Financial details step: select CRM Bank > التالي (a single unit booking only, a unit basket has no bank step)
+  async selectCRMBankIfBankStepDisplayed() {
+    if (await this.isBankStepDisplayed()) {
+      await this.clickOnBankDropdown();
+      await this.selectCRMBank();
+      await this.clickOnNextButton();
+    }
+  }
+
   async clickOnBankDropdown() {
     await this.waitAndClick(this.page.locator(DeveloperObjects.bankSelector));
   }
