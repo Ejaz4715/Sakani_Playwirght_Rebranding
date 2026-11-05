@@ -110,4 +110,51 @@ export class LoginPage {
       // Notification popup not present; continue with the flow.
     }
   }
+  async openPreBetaLogin() {
+    const loginButton = this.page
+      .locator(LoginObjects.preBetaLoginButton)
+      .first();
+    const continueWithNafathButton = this.page.getByRole(
+      LoginObjects.continueWithNafathButton.role,
+      { name: LoginObjects.continueWithNafathButton.name },
+    );
+
+    await expect(async () => {
+      await this.click(loginButton);
+      try {
+        await expect(continueWithNafathButton).toBeVisible({ timeout: 15000 });
+      } catch (error) {
+        await this.page.reload();
+        throw error;
+      }
+    }).toPass({ timeout: 120000 });
+
+    await this.click(continueWithNafathButton);
+  }
+
+  async preBetaLoginWithNafath(nationalId: string) {
+    await this.page
+      .locator(LoginObjects.preBetaNafathIdField)
+      .waitFor({ state: "visible", timeout: 30_000 });
+    await this.page.locator(LoginObjects.preBetaNafathIdField).fill(nationalId);
+
+    await this.page
+      .locator(LoginObjects.preBetaNafathContinueButton)
+      .waitFor({ state: "visible", timeout: 30_000 });
+    await this.page.locator(LoginObjects.preBetaNafathContinueButton).click();
+  }
+
+  async continuePreBetaNewUserPopup() {
+    const newUserContinueButton = this.page.locator(
+      LoginObjects.preBetaPrivacyPolicyContinueButton,
+    );
+
+    try {
+      await newUserContinueButton.waitFor({ state: "visible", timeout: 30000 });
+      await newUserContinueButton.click();
+      await newUserContinueButton.waitFor({ state: "hidden", timeout: 30000 });
+    } catch {
+      // Privacy policy popup not present; continue with the flow.
+    }
+  }
 }

@@ -51,8 +51,10 @@ import { VoucherManagementPage } from "@pages/VoucherManagementPage";
 import { UserManagementPage } from "@pages/UserManagementPage";
 import { CreatingAnAdvertisingCampaignPage } from "@pages/CreatingAnAdvertisingCampaignPage";
 import { SelfConstructionPage } from "@pages/SelfConstructionPage";
-import { AppealRequestPage } from "@pages/AppealRequestPage";
 import { OffersPage } from "@pages/OffersPage";
+import { ConveyancePage } from "@pages/ConveyancePage";
+import { NewMortgageCalculatorPage } from "@pages/NewMortgageCalculatorPage";
+import { AppealRequestPage } from "@pages/AppealRequestPage";
 import { BusinessLandingPagePage } from "@pages/BusinessLandingPagePage";
 
 export class WebApp {
@@ -123,8 +125,10 @@ export class WebApp {
   >;
   commonMethods: InstanceType<typeof CommonMethods>;
   selfConstructionPage: InstanceType<typeof SelfConstructionPage>;
-  appealRequestPage: InstanceType<typeof AppealRequestPage>;
   offersPage: InstanceType<typeof OffersPage>;
+  conveyancePage: InstanceType<typeof ConveyancePage>;
+  newMortgageCalculatorPage: InstanceType<typeof NewMortgageCalculatorPage>;
+  appealRequestPage: InstanceType<typeof AppealRequestPage>;
   businessLandingPage: InstanceType<typeof BusinessLandingPagePage>;
 
   constructor(page: Page) {
@@ -249,5 +253,7 @@ export class WebApp {
     this.appealRequestPage = new AppealRequestPage(page);
     this.offersPage = new OffersPage(page);
     this.businessLandingPage = new BusinessLandingPagePage(page);
+    this.conveyancePage = new ConveyancePage(page);
+    this.newMortgageCalculatorPage = new NewMortgageCalculatorPage(page);
   }
 }
