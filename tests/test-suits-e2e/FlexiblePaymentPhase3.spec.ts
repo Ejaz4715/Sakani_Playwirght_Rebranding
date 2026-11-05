@@ -45,7 +45,6 @@ async function createProjectSteps(page: Page) {
   await app.paymentTrackingPage.verifySaveSuccessToast();
 }
 
-// Individual user (bene, non-bene or unit basket) on the project saved by TC-01: userKey = the user key in test-data.json, unitsCount = units booked by the developer
 async function individualUserBookingSteps(page: Page, userKey: string, unitsCount: number) {
   const data = DataHelper.readData().services[SERVICE];
   const environments = DataHelper.readData().environments;
@@ -92,7 +91,6 @@ async function individualUserBookingSteps(page: Page, userKey: string, unitsCoun
   await app.paymentFlexiblePhase3Page.verifyPaymentScheduleDisplayed();
 }
 
-// Company project (TC-03 only): creates the project with company units and saves it as companyProjectName, the next company test case uses the same project
 async function createCompanyProjectSteps(page: Page) {
   const data = DataHelper.readData().services[SERVICE];
   const environments = DataHelper.readData().environments;
@@ -130,8 +128,6 @@ async function createCompanyProjectSteps(page: Page) {
   DataHelper.updateServiceData(SERVICE, 'projectName', individualProjectName);
 }
 
-// Company user (company bene or non-bene): starts from Pre-condition 05 on the company project (companyProjectName in test-data.json)
-// userKey / crKey = the company user and company unified number (CR) keys in test-data.json
 async function companyUserBookingSteps(page: Page, userKey: string, crKey: string) {
   const data = DataHelper.readData().services[SERVICE];
   const environments = DataHelper.readData().environments;
@@ -192,18 +188,17 @@ async function companyUserBookingSteps(page: Page, userKey: string, crKey: strin
 // ===================================================== Test cases =====================================================
 
 test(
-  'TC-01 End-to-End Booking, Payment, and Status Update Flow Using Fixed Payment Schedule for a Bene User Without Addition',
+  'TC-01 End-to-End Booking, Payment, and Status Update Flow Using Fixed Payment Schedule for a Bene User With Addition',
   { annotation: [{ product: 'Sakani _Rebranding', type: 'critical' }] as any },
   async ({ page }) => {
     test.setTimeout(0);
-    // TC-01 creates the project, the next test cases use the same project (projectName in test-data.json)
     await createProjectSteps(page);
     await individualUserBookingSteps(page, 'beneUser', 1);
   }
 );
 
 test(
-  'TC-02 End-to-End Booking, Payment, and Status Update Flow Using Fixed Payment Schedule for a Non-Bene User Without Addition',
+  'TC-02 End-to-End Booking, Payment, and Status Update Flow Using Fixed Payment Schedule for a Non-Bene User With Addition',
   { annotation: [{ product: 'Sakani _Rebranding', type: 'critical' }] as any },
   async ({ page }) => {
     test.setTimeout(0);
@@ -212,18 +207,17 @@ test(
 );
 
 test(
-  'TC-03 End-to-End Booking, Payment, and Status Update Flow Using Fixed Payment Schedule for a Company Bene User Without Addition',
+  'TC-03 End-to-End Booking, Payment, and Status Update Flow Using Fixed Payment Schedule for a Company Bene User With Addition',
   { annotation: [{ product: 'Sakani _Rebranding', type: 'critical' }] as any },
   async ({ page }) => {
     test.setTimeout(0);
-    // TC-03 creates the company project, TC-04 uses the same project (companyProjectName in test-data.json)
     await createCompanyProjectSteps(page);
     await companyUserBookingSteps(page, 'companyBeneUser', 'companyBeneCR');
   }
 );
 
 test(
-  'TC-04 End-to-End Booking, Payment, and Status Update Flow Using Fixed Payment Schedule for a Company Non-Bene User Without Addition',
+  'TC-04 End-to-End Booking, Payment, and Status Update Flow Using Fixed Payment Schedule for a Company Non-Bene User With Addition',
   { annotation: [{ product: 'Sakani _Rebranding', type: 'critical' }] as any },
   async ({ page }) => {
     test.setTimeout(0);
