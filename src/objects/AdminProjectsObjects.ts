@@ -188,6 +188,14 @@ export const AdminProjectObjects = {
   importCompleteMessage: {
     text: "تم الاستيراد بواسطة",
   },
+
+  importInProgressStatus: {
+    text: "تحت الإجراء ...",
+  },
+  importDoneStatus: {
+    text: "تم إكمال الإجراء",
+  },
+
   approveButton: {
     role: "button",
     name: "اعتماد",

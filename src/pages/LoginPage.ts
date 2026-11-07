@@ -144,6 +144,18 @@ export class LoginPage {
     await this.page.locator(LoginObjects.preBetaNafathContinueButton).click();
   }
 
+  async clearLoginSession(portalUrls: string[]) {
+    await this.page.context().clearCookies();
+    for (const portalUrl of portalUrls) {
+      await this.page.goto(portalUrl);
+      await this.page.evaluate(() => {
+        localStorage.clear();
+        sessionStorage.clear();
+      });
+    }
+    await this.page.context().clearCookies();
+  }
+
   async continuePreBetaNewUserPopup() {
     const newUserContinueButton = this.page.locator(
       LoginObjects.preBetaPrivacyPolicyContinueButton,
