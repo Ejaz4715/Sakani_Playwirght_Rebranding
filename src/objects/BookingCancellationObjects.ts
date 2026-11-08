@@ -1,91 +1,122 @@
 export const BookingCancellationObjects = {
   userProfileButton: "//button[@aria-label='Search']/following::button[2]",
   myBookingsLink: "//span[contains (text(), 'حجوزاتي')]",
-  manageProfile: "//div[@aria-labelledby='profile-dropdown']/descendant::span[contains (text(), 'إدارة الملف الشخصي')]",
+  manageProfile:
+    "//div[@aria-labelledby='profile-dropdown']/descendant::span[contains (text(), 'إدارة الملف الشخصي')]",
   activeBookingsTab: {
-    role: 'tab',
-    name: 'نشطة',
+    role: "tab",
+    name: "نشطة",
+  },
+  unitCode: {
+    xpath:
+      "(//div[text() = ' رمز الوحدة ']/following-sibling::div/child::div)[1]",
   },
   completedBookingsTab: {
-    role: 'tab',
-    name: 'مكتملة',
+    role: "tab",
+    name: "مكتملة",
+  },
+  cancelledBookingsTab: {
+    role: "tab",
+    name: "ملغاة",
   },
   bookingDetailsButton: {
     xpath: "(//button[text()=' عرض التفاصيل '])[1]",
   },
-  cancelBookingText: {
-    text: 'إلغاء الحجز',
+  cancelBookingButton: {
+    xpath: "//button[contains(text(),'إلغاء الحجز')]",
   },
   continueButton: {
-    role: 'button',
-    name: 'المتابعة',
+    xpath: "//button[contains(text(),'متابعة إلغاء الحجز')]",
   },
-  projectLocationRadio: {
-    role: 'radio',
-    name: 'موقع المشروع',
+  othersRadioButton: {
+    xpath: "//input[@value='others']/parent::label",
+  },
+  othersTextArea: {
+    xpath: "//textarea[@formcontrolname='other_reason']",
+  },
+  saveAndContinueButton: {
+    xpath: "//button[contains(text(),' حفظ ومتابعة ')]",
   },
   confirmCancelButton: {
-    role: 'button',
-    name: 'تأكيد الإلغاء',
+    role: "button",
+    name: "تأكيد الإلغاء",
   },
   yesButton: {
-    role: 'button',
-    name: 'نعم',
+    role: "button",
+    name: "نعم",
   },
   cancellationSuccessHeading: {
-    role: 'heading',
-    name: 'تم إلغاء الحجز بنجاح!',
+    text: "تم إلغاء الحجز بنجاح!",
+  },
+  rejectButton: {
+    xpath: "//button[contains(text(),'رفض')]",
+  },
+  rejectReasonTextArea: {
+    xpath: "//textarea[@formcontrolname='reject_reason']",
+  },
+  confirmRejectButton: {
+    xpath: "//button[contains(text(),'تأكيد الرفض')]",
+  },
+  rejectionSuccessHeading: {
+    text: "تم رفض العرض بنجاح!",
+  },
+  myBookingsButton: {
+    xpath: "//button[contains(text(),'حجوزاتي')]",
   },
   refudedStatus: {
-    xpath: "//app-booking-refund-fee-badge/descendant::div[contains(text(),'المبلغ المسترد')]",
+    xpath:
+      "//app-booking-refund-fee-badge/descendant::div[contains(text(),'المبلغ المسترد')]",
   },
-  bookedUnitCode: "//div[text() = 'رمز الوحدة']/following-sibling::div/child::div",
+  bookedUnitCode:
+    "//div[text() = 'رمز الوحدة']/following-sibling::div/child::div",
   viewPriceQuotationButton: {
-    xpath: "//div[text()='عرض السعر']/parent::div//following-sibling::app-pdf-viewer/descendant::span",
+    xpath:
+      "//div[text()='عرض السعر']/parent::div//following-sibling::app-pdf-viewer/descendant::span",
   },
   compeltiopnPercentageProgress: {
     xpath: "//div[text()='تقدم']",
   },
   noBanksAvailableMessage: {
-    xpath: "//app-dx-project-participating-banks/descendant::div[text()=' لا توجد بيانات ']",
+    xpath:
+      "//app-dx-project-participating-banks/descendant::div[text()=' لا توجد بيانات ']",
   },
 
   //ReadyMade View project and unit
   //project + some in unit
   projectInfoSection: {
-    xpath: 'app-dx-project-information-tpl',
+    xpath: "app-dx-project-information-tpl",
   },
   brochureAndMasterplanSection: {
-    xpath: '//app-dx-brochure-masterplan-tpl',
+    xpath: "//app-dx-brochure-masterplan-tpl",
   },
   projectUnitsTypesSection: {
-    xpath: '//app-dx-project-unit-types',
+    xpath: "//app-dx-project-unit-types",
   },
   projectFacilitiesSection: {
-    xpath: '//app-dx-project-facilities',
+    xpath: "//app-dx-project-facilities",
   },
   projectInsightSection: {
-    xpath: '//app-dx-insight-project-wrapper',
+    xpath: "//app-dx-insight-project-wrapper",
   },
   participatinBanksSection: {
-    xpath: '//app-dx-project-participating-banks',
+    xpath: "//app-dx-project-participating-banks",
   },
   projectContactsSection: {
-    xpath: '//app-dx-project-contacts-tpl',
+    xpath: "//app-dx-project-contacts-tpl",
   },
   projectUnitsSection: {
-    xpath: '//app-dx-project-units',
+    xpath: "//app-dx-project-units",
   },
 
   //unit page
   licenseAndAdvertismentSection: {
-    xpath: '//app-dx-advertisement-license-tpl',
+    xpath: "//app-dx-advertisement-license-tpl",
   },
   unitDetailsSection: {
-    xpath: '//app-dx-propery-unit-details-tpl',
+    xpath: "//app-dx-propery-unit-details-tpl",
   },
   husngAssistancentSection: {
-    xpath: '//app-dx-housing-assistance-tpl',
+    xpath: "//app-dx-housing-assistance-tpl",
   },
   brochureCard: {
     xpath: "//span[text()='الكتيب']",
@@ -102,10 +133,10 @@ export const BookingCancellationObjects = {
     xpath: "(//button/span[text()=' مشاركة '])[1]",
   },
   locationSection: {
-    xpath: '//app-dx-project-map',
+    xpath: "//app-dx-project-map",
   },
   schdualePaymentSection: {
-    xpath: '//app-dx-cash-payment-schedule-tpl',
+    xpath: "//app-dx-cash-payment-schedule-tpl",
   },
   callButton: {
     xpath: "//button/span[text()='اتصال']",
@@ -114,7 +145,7 @@ export const BookingCancellationObjects = {
     xpath: "//button/span[text()='واتساب']",
   },
   brochureButton: {
-    xpath: '//app-pdf-viewer',
+    xpath: "//app-pdf-viewer",
   },
   brochureViewer: {
     xpath: "//p[text()='عرض الكتيب']",
@@ -126,7 +157,7 @@ export const BookingCancellationObjects = {
     xpath: "//div[text()='المخطط الرئيسي']",
   },
   masreplanViewer: {
-    xpath: '//app-image-viewer',
+    xpath: "//app-image-viewer",
   },
   closemasterplanButton: {
     xpath: "(//app-modal//span[contains(@class,'svg-icon')])[3]",
@@ -134,10 +165,10 @@ export const BookingCancellationObjects = {
 
   //Admin - list or real estate brokers and developers
   developerNameSection: {
-    xpath: '//app-developer-tpl',
+    xpath: "//app-developer-tpl",
   },
   developerInfoPage: {
-    xpath: '//app-dx-partner-info-section',
+    xpath: "//app-dx-partner-info-section",
   },
 
   //Secure payment schedule
@@ -145,7 +176,7 @@ export const BookingCancellationObjects = {
     xpath: "//button[contains(text(), 'عرض التفاصيل')]",
   },
   paymentDetailsPopup: {
-    xpath: '//app-flexible-payment-schedule-details-dialog',
+    xpath: "//app-flexible-payment-schedule-details-dialog",
   },
   onlineLinding: {
     xpath: "(//span[contains(text(), 'التمويل العقاري الإلكتروني')])[1]",
@@ -159,35 +190,37 @@ export const BookingCancellationObjects = {
     xpath: "//div[text()='نوع العقار']",
   },
   propertyTypeOption: {
-    role: 'option',
-    name: 'شقة',
+    role: "option",
+    name: "شقة",
   },
   constructionStatusDropdownButton: {
     xpath: "//div[text()='تحت الإنشاء']",
   },
   constructionStatusOption: {
-    role: 'option',
-    name: 'وحدات جاهزة',
+    role: "option",
+    name: "وحدات جاهزة",
   },
   saveButton: {
-    role: 'button',
-    name: ' حفظ ',
+    role: "button",
+    name: " حفظ ",
   },
   unitResultCard: {
-    xpath: '//app-marketplace-project-card-template',
+    xpath: "//app-marketplace-project-card-template",
   },
   unitResultDetailsPage: {
-    xpath: '//app-property-dx-page',
+    xpath: "//app-property-dx-page",
   },
   //Real Estat Data
   insightAndTrendsSection: {
-    xpath: '//app-dx-insight-project-price-trends',
+    xpath: "//app-dx-insight-project-price-trends",
   },
   avaragePriceButton: {
-    xpath: "//app-dx-insight-project-price-trends/descendant::div[@role='radio'][1]",
+    xpath:
+      "//app-dx-insight-project-price-trends/descendant::div[@role='radio'][1]",
   },
   avaragePricePerM2Button: {
-    xpath: "//app-dx-insight-project-price-trends/descendant::div[@role='radio'][2]",
+    xpath:
+      "//app-dx-insight-project-price-trends/descendant::div[@role='radio'][2]",
   },
   avaragePriceSection: {
     xpath: "//div[text()='متوسط ​​الأسعار']",
@@ -196,15 +229,15 @@ export const BookingCancellationObjects = {
     xpath: "//div[text()='متوسط الأسعار لكل م²']",
   },
   monthsDropdownList: {
-    xpath: '//app-dx-insight-time-range',
+    xpath: "//app-dx-insight-time-range",
   },
   monthsOptions: {
     xpath: "//div[@aria-labelledby='selectTimeRange']",
   },
   transactionSection: {
-    xpath: '//app-dx-insight-project-transactions',
+    xpath: "//app-dx-insight-project-transactions",
   },
   demographicSection: {
-    xpath: '//app-dx-insight-demographic-overview',
+    xpath: "//app-dx-insight-demographic-overview",
   },
 } as const;

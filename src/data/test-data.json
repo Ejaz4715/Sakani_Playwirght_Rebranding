@@ -10,12 +10,12 @@
   },
   "services": {
     "offplan-booking": {
-      "projectName": "Automation Project Offplan 20261104163524",
+      "projectName": "Automation Project 20261104102801",
       "adminUsername": "super_admin@test1-admin-sakani.housingapps.sa",
       "adminPassword": "admin",
       "developerUserId": "1023129537",
       "sakaniUserId": "1300061022",
-      "bookedUnitCode": "01-01-0831-14-110"
+      "bookedUnitCode": "01-01-0826-22-118"
     },
     "auction-journey": {
       "projectName": "",
