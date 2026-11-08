@@ -1,6 +1,6 @@
 {
   "environments": {
-    "sapaPortalUrl": "https://pre-sakani-partners.housingapps.sa/",
+    "sapaPortalUrl": "https://pre-sakani-partners.housingapps.sa/auth",
     "userPortalUrl": "https://pre-sakani.housingapps.sa",
     "adminPortalUrl": "https://pre-sakani-admin.housingapps.sa/auth",
     "sayalUrl": "https://test-sayal.housingapps.sa/auth/Login",
@@ -10,12 +10,12 @@
   },
   "services": {
     "offplan-booking": {
-      "projectName": "Automation Project Offplan 20261028073956",
+      "projectName": "Automation Project Offplan 20261104163524",
       "adminUsername": "super_admin@test1-admin-sakani.housingapps.sa",
       "adminPassword": "admin",
       "developerUserId": "1023129537",
       "sakaniUserId": "1300061022",
-      "bookedUnitCode": "01-01-0674-7-103"
+      "bookedUnitCode": "01-01-0831-14-110"
     },
     "auction-journey": {
       "projectName": "",

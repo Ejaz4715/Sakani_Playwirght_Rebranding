@@ -17,7 +17,7 @@ async function adminCreatesProjectSteps(page: Page, unitsFileName: string) {
     .slice(0, 14)}`;
   DataHelper.updateServiceData(SERVICE, "projectName", projectName);
   await logStep(
-    "Pre-Conditions 01.1:Login to the admin portal >Add new Project",
+    "Pre-Conditions 01.1:Login to the admin portal > Add new Project",
   );
   await app.adminProjectPage.login(
     environments.adminPortalUrl,
@@ -265,7 +265,7 @@ async function developerBooksUnitsSteps(
   await app.developerProjectPage.clickOnConfirmationButton();
   await app.developerProjectPage.validateSuccessReservationPopup();
 }
-// Project setup (TC-01 only): the project name and the flexible payment schedule name are saved in test-data.json for the next test cases
+
 async function createProjectSteps(page: Page) {
   const data = DataHelper.readData().services[SERVICE];
   const environments = DataHelper.readData().environments;
@@ -392,11 +392,6 @@ async function individualUserBookingSteps(
 async function createCompanyProjectSteps(page: Page) {
   const data = DataHelper.readData().services[SERVICE];
   const environments = DataHelper.readData().environments;
-  const portalUrls = [
-    environments.adminPortalUrl,
-    environments.sapaPortalUrl,
-    environments.preBeta.userPortalUrl,
-  ];
   const individualProjectName = data.projectName;
   const app = new WebApp(page);
 
@@ -439,11 +434,6 @@ async function companyUserBookingSteps(
 ) {
   const data = DataHelper.readData().services[SERVICE];
   const environments = DataHelper.readData().environments;
-  const portalUrls = [
-    environments.adminPortalUrl,
-    environments.sapaPortalUrl,
-    environments.preBeta.userPortalUrl,
-  ];
   const companyUserId = data[userKey];
   const companyCR = data[crKey];
   const projectName = data.companyProjectName;
@@ -523,55 +513,60 @@ async function companyUserBookingSteps(
     .toBe(true);
 }
 
-// ===================================================== Test cases =====================================================
+test.describe("Flexible payment - Phase 3", () => {
+  test(
+    "TC-01 End-to-End Booking, Payment, and Status Update Flow Using Fixed Payment Schedule for a Bene User With Addition",
+    {
+      annotation: [{ product: "Sakani _Rebranding", type: "critical" }] as any,
+    },
+    async ({ page }) => {
+      await createProjectSteps(page);
+      await individualUserBookingSteps(page, "beneUser", 1);
+    },
+  );
 
-test(
-  "TC-01 End-to-End Booking, Payment, and Status Update Flow Using Fixed Payment Schedule for a Bene User With Addition",
-  { annotation: [{ product: "Sakani _Rebranding", type: "critical" }] as any },
-  async ({ page }) => {
-    test.setTimeout(0);
-    await createProjectSteps(page);
-    await individualUserBookingSteps(page, "beneUser", 1);
-  },
-);
+  test(
+    "TC-02 End-to-End Booking, Payment, and Status Update Flow Using Fixed Payment Schedule for a Non-Bene User With Addition",
+    {
+      annotation: [{ product: "Sakani _Rebranding", type: "critical" }] as any,
+    },
+    async ({ page }) => {
+      await individualUserBookingSteps(page, "nonBeneUser", 1);
+    },
+  );
 
-test(
-  "TC-02 End-to-End Booking, Payment, and Status Update Flow Using Fixed Payment Schedule for a Non-Bene User With Addition",
-  { annotation: [{ product: "Sakani _Rebranding", type: "critical" }] as any },
-  async ({ page }) => {
-    test.setTimeout(0);
-    await individualUserBookingSteps(page, "nonBeneUser", 1);
-  },
-);
+  test(
+    "TC-03 End-to-End Booking, Payment, and Status Update Flow Using Fixed Payment Schedule for a Company Bene User With Addition",
+    {
+      annotation: [{ product: "Sakani _Rebranding", type: "critical" }] as any,
+    },
+    async ({ page }) => {
+      await createCompanyProjectSteps(page);
+      await companyUserBookingSteps(page, "companyBeneUser", "companyBeneCR");
+    },
+  );
 
-test(
-  "TC-03 End-to-End Booking, Payment, and Status Update Flow Using Fixed Payment Schedule for a Company Bene User With Addition",
-  { annotation: [{ product: "Sakani _Rebranding", type: "critical" }] as any },
-  async ({ page }) => {
-    test.setTimeout(0);
-    await createCompanyProjectSteps(page);
-    await companyUserBookingSteps(page, "companyBeneUser", "companyBeneCR");
-  },
-);
+  test(
+    "TC-04 End-to-End Booking, Payment, and Status Update Flow Using Fixed Payment Schedule for a Company Non-Bene User With Addition",
+    {
+      annotation: [{ product: "Sakani _Rebranding", type: "critical" }] as any,
+    },
+    async ({ page }) => {
+      await companyUserBookingSteps(
+        page,
+        "companyNonBeneUser",
+        "companyNonBeneCR",
+      );
+    },
+  );
 
-test(
-  "TC-04 End-to-End Booking, Payment, and Status Update Flow Using Fixed Payment Schedule for a Company Non-Bene User With Addition",
-  { annotation: [{ product: "Sakani _Rebranding", type: "critical" }] as any },
-  async ({ page }) => {
-    test.setTimeout(0);
-    await companyUserBookingSteps(
-      page,
-      "companyNonBeneUser",
-      "companyNonBeneCR",
-    );
-  },
-);
-
-test(
-  "TC-05 End-to-End Booking, Payment, and Status Update Flow Using Fixed Payment Schedule for a Unit Basket for a Bene User",
-  { annotation: [{ product: "Sakani _Rebranding", type: "critical" }] as any },
-  async ({ page }) => {
-    test.setTimeout(0);
-    await individualUserBookingSteps(page, "unitBasketUser", 2);
-  },
-);
+  test(
+    "TC-05 End-to-End Booking, Payment, and Status Update Flow Using Fixed Payment Schedule for a Unit Basket for a Bene User",
+    {
+      annotation: [{ product: "Sakani _Rebranding", type: "critical" }] as any,
+    },
+    async ({ page }) => {
+      await individualUserBookingSteps(page, "unitBasketUser", 2);
+    },
+  );
+});

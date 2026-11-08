@@ -1,5 +1,6 @@
 import { expect, Locator, Page } from "@playwright/test";
 import { DeveloperObjects } from "@objects/DeveloperObjects";
+
 type Element =
   | { readonly xpath: string }
   | {
@@ -133,28 +134,44 @@ export class CommonMethods {
   }
 
   async unifiedSakaniLogin(nationalId: string) {
+    await this.page.waitForLoadState("networkidle");
     const loginButton = this.page.locator(DeveloperObjects.loginButton.xpath);
-    await loginButton.waitFor({ state: "visible", timeout: 20000 });
-    await loginButton.click();
-
     const acceptCookiesButton = this.page
       .getByRole(DeveloperObjects.acceptCookiesButton.role, {
         name: DeveloperObjects.acceptCookiesButton.name,
       })
       .first();
-    await acceptCookiesButton.waitFor({ state: "visible", timeout: 35000 });
-    await acceptCookiesButton.click();
 
-    // The cookie modal fades out; wait for it and its backdrop so they don't block the next click
-    await this.page
-      .locator(DeveloperObjects.acceptCookiesModal)
-      .waitFor({ state: "hidden", timeout: 15000 })
-      .catch(() => {});
-    await this.page
-      .locator(".modal-backdrop")
-      .waitFor({ state: "detached", timeout: 15000 })
-      .catch(() => {});
+    const isLoginVisible = await loginButton
+      .isVisible({ timeout: 3000 })
+      .catch(() => false);
+    const isLoginEnabled = isLoginVisible
+      ? await loginButton.isEnabled().catch(() => false)
+      : false;
 
+    if (isLoginVisible && isLoginEnabled) {
+      await loginButton.click();
+      await this.page.waitForLoadState("networkidle");
+    }
+
+    const isCookiesVisible = await acceptCookiesButton
+      .isVisible({ timeout: 3000 })
+      .catch(() => false);
+    const isCookiesEnabled = isCookiesVisible
+      ? await acceptCookiesButton.isEnabled().catch(() => false)
+      : false;
+
+    if (isCookiesVisible && isCookiesEnabled) {
+      await acceptCookiesButton.click();
+      await this.page
+        .locator(DeveloperObjects.acceptCookiesModal)
+        .waitFor({ state: "hidden", timeout: 35000 })
+        .catch(() => {});
+      await this.page
+        .locator(".modal-backdrop")
+        .waitFor({ state: "detached", timeout: 35000 })
+        .catch(() => {});
+    }
     const usernameInput = this.page.locator(
       DeveloperObjects.usernameInput.xpath,
     );
@@ -182,6 +199,7 @@ export class CommonMethods {
       await this.page.waitForTimeout(3000);
     }
   }
+
   async fillAllMatchingFields(
     fieldObject: { readonly xpath: string },
     value: string | readonly string[],
@@ -206,6 +224,7 @@ export class CommonMethods {
     }
     return fieldCount;
   }
+
   async selectDropdownOption(
     dropdownObject: Element,
     optionObject: Element | readonly Element[],

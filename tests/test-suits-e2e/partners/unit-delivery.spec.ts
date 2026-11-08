@@ -259,7 +259,7 @@ test.describe("Unit Delivery", () => {
       await app.partnersLoginPage.switchRoleToDeveloper();
 
       await logStep("Step 02: Start new individual booking > Enter user id");
-      await app.developerProjectPage.bookUnitForCustomersUsingProjectName(
+      await app.developerProjectPage.bookUnitsForCustomers(
         nationalId,
         projectName,
       );
