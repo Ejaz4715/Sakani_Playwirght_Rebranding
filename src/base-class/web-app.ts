@@ -56,7 +56,7 @@ import { ConveyancePage } from "@pages/ConveyancePage";
 import { NewMortgageCalculatorPage } from "@pages/NewMortgageCalculatorPage";
 import { AppealRequestPage } from "@pages/AppealRequestPage";
 import { BusinessLandingPagePage } from "@pages/BusinessLandingPagePage";
-
+import { PaymentflexiblePhaseThree } from "@pages/PaymentflexiblePhaseThree";
 export class WebApp {
   page: Page;
   loginPage: InstanceType<typeof LoginPage>;
@@ -85,6 +85,8 @@ export class WebApp {
   offPlanBasketMultipleBookingPage: InstanceType<
     typeof OffPlanBasketMultipleBookingPage
   >;
+  PaymentflexiblePhaseThree: InstanceType<typeof PaymentflexiblePhaseThree>;
+
   adminLoyaltyPage: InstanceType<typeof AdminLoyaltyPage>;
   paymentsAndTransactionsPage: InstanceType<typeof PaymentsAndTransactionsPage>;
   buyDesignPage: InstanceType<typeof BuyDesignPage>;
@@ -255,5 +257,6 @@ export class WebApp {
     this.businessLandingPage = new BusinessLandingPagePage(page);
     this.conveyancePage = new ConveyancePage(page);
     this.newMortgageCalculatorPage = new NewMortgageCalculatorPage(page);
+    this.PaymentflexiblePhaseThree = new PaymentflexiblePhaseThree(page);
   }
 }
