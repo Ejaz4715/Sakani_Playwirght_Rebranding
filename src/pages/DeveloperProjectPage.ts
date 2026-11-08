@@ -31,6 +31,9 @@ export class DeveloperProjectPage {
   async switchRoleToDeveloper() {
     const profileIcon = this.page.locator(DeveloperObjects.profileIcon);
     await this.waitForVisible(profileIcon);
+    await this.page.waitForTimeout(3000);
+    const cancelButton = this.page.getByRole("button", { name: "إلغاء" });
+    await this.clickIfVisible(cancelButton.first());
     await profileIcon.click();
 
     const switchRoleButton = this.page.getByRole(
@@ -46,7 +49,6 @@ export class DeveloperProjectPage {
     await this.waitForVisible(developerRole);
     await developerRole.click();
     await this.page.waitForTimeout(3000); // Wait for 3 seconds to ensure the page is fully loaded
-    const cancelButton = this.page.getByRole("button", { name: "إلغاء" });
     await this.clickIfVisible(cancelButton.first());
   }
 
@@ -383,23 +385,16 @@ export class DeveloperProjectPage {
     const confirmBookingButton = this.page.locator(
       DeveloperObjects.confirmBookingActionButton,
     );
-    await confirmBookingButton.nth(0).click();
+    await confirmBookingButton.first().click();
 
-    // 5. Click the confirmation popup/button ("Confirm")
-    await confirmBookingButton.nth(1).click();
-
-    // 6. Click the confirmation popup/button ("Yes") if present
-    const yesButton = this.page.getByRole(
-      DeveloperObjects.yesConfirmationButton.role,
-      {
+    // 5. Click the confirmation popup/button ("Yes")
+    await this.page
+      .getByRole(DeveloperObjects.yesConfirmationButton.role, {
         name: DeveloperObjects.yesConfirmationButton.name,
-      },
-    );
-    if (await yesButton.isVisible()) {
-      await yesButton.click();
-    }
+      })
+      .click();
 
-    // 7. Assert that the booking success message is visible on the screen
+    // 6. Assert that the booking success message is visible on the screen
     await expect(
       this.page.getByText(DeveloperObjects.confirmBookingSuccessText),
       "Confirmation booking success text is not visible",
@@ -425,23 +420,17 @@ export class DeveloperProjectPage {
     const confirmBookingButton = this.page.locator(
       DeveloperObjects.confirmBookingActionButton,
     );
-    await confirmBookingButton.nth(0).click();
+    await confirmBookingButton.first().click();
+    await confirmBookingButton.last().click();
 
-    // 5. Click the confirmation popup/button ("Confirm")
-    await confirmBookingButton.nth(1).click();
-
-    // 6. Click the confirmation popup/button ("Yes") if present
-    const yesButton = this.page.getByRole(
-      DeveloperObjects.yesConfirmationButton.role,
-      {
+    // 5. Click the confirmation popup/button ("Yes")
+    await this.page
+      .getByRole(DeveloperObjects.yesConfirmationButton.role, {
         name: DeveloperObjects.yesConfirmationButton.name,
-      },
-    );
-    if (await yesButton.isVisible()) {
-      await yesButton.click();
-    }
+      })
+      .click();
 
-    // 7. Assert that the booking success message is visible on the screen
+    // 6. Assert that the booking success message is visible on the screen
     await expect(
       this.page.getByText(DeveloperObjects.confirmBookingSuccessText),
       "Confirmation booking success text is not visible",
@@ -515,9 +504,9 @@ export class DeveloperProjectPage {
     await this.page.locator(DeveloperObjects.projectNameOptionSelector).click();
   }
 
-  async bookUnitForCustomersUsingProjectName(
+  async bookUnitsForCustomersUsingUnitCode(
     nationalIdentity: string,
-    projectName: string,
+    unitCode: string,
   ) {
     await this.waitAndClick(
       this.page.locator(DeveloperObjects.manageReservationsButton),
@@ -547,9 +536,7 @@ export class DeveloperProjectPage {
 
     await this.page.waitForTimeout(5000);
     // await this.page.locator(DeveloperObjects.unitCodeTextfield).fill(unitCode);
-    await this.page
-      .locator(DeveloperObjects.projectNameField)
-      .fill(projectName);
+    await this.page.locator(DeveloperObjects.projectNameField).fill(unitCode);
     await this.page.waitForTimeout(2000);
     await this.page.locator(DeveloperObjects.projectNameOptionSelector).click();
   }
@@ -602,6 +589,16 @@ export class DeveloperProjectPage {
   async clickOnKeepBooking() {
     await this.waitAndClick(
       this.page.locator(DeveloperObjects.continueBookingButton),
+    );
+  }
+
+  async clickOnBankDropdown() {
+    await this.waitAndClick(this.page.locator(DeveloperObjects.bankSelector));
+  }
+
+  async selectCRMBank() {
+    await this.waitAndClick(
+      this.page.locator(DeveloperObjects.crmBankSelector),
     );
   }
 
