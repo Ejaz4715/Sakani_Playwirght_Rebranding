@@ -185,7 +185,7 @@ test.describe("Payment tracking - completion percentage", () => {
       const developerUserId = data.developerUserId;
 
       await app.developerProjectPage.gotoAuth(sapaUrl);
-      await app.developerProjectPage.loginDeveloper(developerUserId);
+      await app.commonMethods.unifiedSakaniLogin(developerUserId);
       await app.developerProjectPage.switchRoleToDeveloper();
       await app.developerProjectPage.openProjectBySearch(projectName);
 
@@ -226,7 +226,7 @@ test.describe("Payment tracking - completion percentage", () => {
 
       await logStep("Step 01: Navigate to partners portal > Login");
       await app.developerProjectPage.gotoAuth(sapaUrl);
-      await app.developerProjectPage.loginDeveloper(developerUserId);
+      await app.commonMethods.unifiedSakaniLogin(developerUserId);
       await app.developerProjectPage.switchRoleToDeveloper();
 
       await logStep(
@@ -293,7 +293,7 @@ test.describe("Payment tracking - completion percentage", () => {
 
       await logStep("Step 01: Login to sapa portal as a developer");
       await app.developerProjectPage.gotoAuth(sapaUrl);
-      await app.developerProjectPage.loginDeveloper(developerUserId);
+      await app.commonMethods.unifiedSakaniLogin(developerUserId);
       await app.developerProjectPage.switchRoleToDeveloper();
 
       await logStep("Step 02: Navigate to flexible payment schedules");

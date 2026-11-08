@@ -28,62 +28,14 @@ export class DeveloperProjectPage {
     await this.page.goto(url);
   }
 
-  async loginDeveloper(nationalId: string) {
-    const usernameInput = this.page.getByRole(
-      DeveloperObjects.usernameInput.role,
-      { name: DeveloperObjects.usernameInput.name },
-    );
-    await this.waitForVisible(usernameInput);
-    await usernameInput.fill(nationalId);
-
-    const continueButton = this.page.getByRole(
-      DeveloperObjects.continueButton.role,
-      {
-        name: DeveloperObjects.continueButton.name,
-        exact: DeveloperObjects.continueButton.exact,
-      },
-    );
-    await this.waitForVisible(continueButton);
-    await continueButton.click();
-
-    const nafathModal = this.page.locator("//app-nafath-login-modal");
-    await nafathModal
-      .waitFor({ state: "visible", timeout: 10000 })
-      .catch(() => {});
-
-    while (await nafathModal.isVisible().catch(() => false)) {
-      await this.page.waitForTimeout(3000);
-    }
-    await this.page.waitForTimeout(3000);
-    const verificationButton = this.page.getByRole("button", { name: "تحقق" });
-    if (
-      await verificationButton.isVisible({ timeout: 15000 }).catch(() => false)
-    ) {
-      await verificationButton.click();
-      await this.page.getByRole("spinbutton", { name: "X" }).nth(0).fill("1");
-      await this.page.getByRole("spinbutton", { name: "X" }).nth(1).fill("2");
-      await this.page.getByRole("spinbutton", { name: "X" }).nth(2).fill("3");
-      await this.page.getByRole("spinbutton", { name: "X" }).nth(3).fill("4");
-      await this.page.getByRole("button", { name: "تأكيد ومتابعة" }).click();
-      await this.page
-        .getByRole("button", { name: "انتقل إلى لوحة المعلومات" })
-        .click();
-    }
-    const profileIcon = this.page.locator(DeveloperObjects.profileIcon);
-    await this.waitForVisible(profileIcon);
-    await this.page.waitForTimeout(3000);
-    const cancelButton = this.page.getByRole("button", { name: "إلغاء" });
-    await this.clickIfVisible(cancelButton.first());
-  }
-
   async switchRoleToDeveloper() {
     const profileIcon = this.page.locator(DeveloperObjects.profileIcon);
     await this.waitForVisible(profileIcon);
     await this.page.waitForTimeout(3000);
     const cancelButton = this.page.getByRole("button", { name: "إلغاء" });
     await this.clickIfVisible(cancelButton.first());
-
     await profileIcon.click();
+
     const switchRoleButton = this.page.getByRole(
       DeveloperObjects.switchRoleButton.role,
       { name: DeveloperObjects.switchRoleButton.name },
@@ -250,7 +202,7 @@ export class DeveloperProjectPage {
   }
 
   async uploadAnnexFile(filePath: string) {
-    const fileInput = this.page.locator("//input[@type='file']");
+    const fileInput = this.page.locator(DeveloperObjects.uploadFile);
     await fileInput.setInputFiles(filePath);
     const attachmentText = this.page.getByText("الملف المرفق", { exact: true });
     await attachmentText.waitFor({ state: "visible" });
@@ -430,11 +382,8 @@ export class DeveloperProjectPage {
     await this.switchToBookingTab();
 
     // 4. Locate and click the confirm booking buttons (handling both first and last instances)
-    const confirmBookingButton = this.page.getByRole(
-      DeveloperObjects.confirmBookingActionButton.role,
-      {
-        name: DeveloperObjects.confirmBookingActionButton.name,
-      },
+    const confirmBookingButton = this.page.locator(
+      DeveloperObjects.confirmBookingActionButton,
     );
     await confirmBookingButton.first().click();
 
@@ -468,11 +417,8 @@ export class DeveloperProjectPage {
       .click();
 
     // 4. Locate and click the confirm booking buttons (handling both first and last instances)
-    const confirmBookingButton = this.page.getByRole(
-      DeveloperObjects.confirmBookingActionButton.role,
-      {
-        name: DeveloperObjects.confirmBookingActionButton.name,
-      },
+    const confirmBookingButton = this.page.locator(
+      DeveloperObjects.confirmBookingActionButton,
     );
     await confirmBookingButton.first().click();
     await confirmBookingButton.last().click();
@@ -588,8 +534,11 @@ export class DeveloperProjectPage {
     await expect(nextButton).toBeEnabled({ timeout: DEFAULT_TIMEOUT });
     await nextButton.click();
 
-    await this.page.waitForTimeout(3000);
-    await this.page.locator(DeveloperObjects.unitCodeTextfield).fill(unitCode);
+    await this.page.waitForTimeout(5000);
+    // await this.page.locator(DeveloperObjects.unitCodeTextfield).fill(unitCode);
+    await this.page.locator(DeveloperObjects.projectNameField).fill(unitCode);
+    await this.page.waitForTimeout(2000);
+    await this.page.locator(DeveloperObjects.projectNameOptionSelector).click();
   }
 
   async bookUnitsForCompanies(

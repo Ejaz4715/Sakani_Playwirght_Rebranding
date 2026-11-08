@@ -364,7 +364,7 @@ test.describe("Offplan MOH land booking journey", () => {
 
       await logStep("Step 01: Login as developer to sapa portal");
       await app.developerProjectPage.gotoAuth(sapaPortalUrl);
-      await app.developerProjectPage.loginDeveloper(developerUserId);
+      await app.commonMethods.unifiedSakaniLogin(developerUserId);
       await app.developerProjectPage.switchRoleToDeveloper();
 
       await logStep("Step 02: Confirm the booking");
