@@ -367,6 +367,13 @@
       "sakaniUserId": "1083703320",
       "comments": "appeal request"
     },
+    "appeal-request_Documents": {
+      "adminUsername": "super_admin@test1-admin-sakani.housingapps.sa",
+      "adminPassword": "admin",
+      "sakaniUserId": "1300061533",
+      "comments": "appeal request_Documents"
+    },
+
     "market-exploring": {
       "sakaniUserId": "1300070834",
       "filterOption": "فيلا",
