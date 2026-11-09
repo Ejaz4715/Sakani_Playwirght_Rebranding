@@ -188,9 +188,10 @@
       "projectName": "Automation Project 20261007095117",
       "sakaniUserId": "1300070834"
     },
-    "view-project-unit-readymade": {
-      "projectName": "readymade private land",
-      "sakaniUserId": "1441376098"
+    "ready-made-project": {
+      "projectNameView": "readymade private land",
+      "projectNameBooking": "مشروع مساكن طيبة 5",
+      "sakaniUserId": "1300061236"
     },
     "update-unit": {
       "projectName": "Automation Project Offplan 20261018082240",

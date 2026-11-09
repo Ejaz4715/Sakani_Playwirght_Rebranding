@@ -240,4 +240,18 @@ export const BookingCancellationObjects = {
   demographicSection: {
     xpath: "//app-dx-insight-demographic-overview",
   },
+  //ready made booking + cancellation
+  termsAndConditionsCheckbox: {
+    xpath: "//input[@id='readymadeAgreeTerms']",
+  },
+
+  confirmBookingButton: {
+    xpath: "//button[contains(text(),'تأكيد الحجز')]",
+  },
+  confirmBookingSuccessMessage: {
+    text: "تم تأكيد الحجز",
+  },
+  unitCard: {
+    xpath: "//app-marketplace-unit-card-v6/descendant::span[text() ='SAR']",
+  },
 } as const;

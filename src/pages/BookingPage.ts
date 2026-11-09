@@ -382,4 +382,25 @@ export class BookingPage {
     );
     await this.click(registerOfInterest);
   }
+  //ready made rebranding
+  async checkOnTermsAndConditions() {
+    const termsAndConditionsCheckbox = this.page.locator(
+      BookingCancellationObjects.termsAndConditionsCheckbox.xpath,
+    );
+    await expect(termsAndConditionsCheckbox).toBeVisible({ timeout: 120000 });
+    await termsAndConditionsCheckbox.click();
+  }
+  async clickOnConfirmBookingButton() {
+    const confirmBookingButton = this.page.locator(
+      BookingCancellationObjects.confirmBookingButton.xpath,
+    );
+    await expect(confirmBookingButton).toBeVisible({ timeout: 120000 });
+    await confirmBookingButton.click();
+  }
+  async verifyConfirmBookingSuccessMessageIsPresent() {
+    const confirmBookingSuccessMessage = this.page.getByText(
+      BookingCancellationObjects.confirmBookingSuccessMessage.text,
+    );
+    await expect(confirmBookingSuccessMessage).toBeVisible({ timeout: 120000 });
+  }
 }
