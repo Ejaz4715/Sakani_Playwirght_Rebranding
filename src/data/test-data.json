@@ -10,12 +10,12 @@
   },
   "services": {
     "offplan-booking": {
-      "projectName": "Automation Project Offplan 20261104163524",
+      "projectName": "Automation Project 20261104102801",
       "adminUsername": "super_admin@test1-admin-sakani.housingapps.sa",
       "adminPassword": "admin",
       "developerUserId": "1023129537",
-      "sakaniUserId": "1016549832",
-      "bookedUnitCode": "01-01-0831-16-112"
+      "sakaniUserId": "1300061022",
+      "bookedUnitCode": "01-01-0826-22-118"
     },
     "auction-journey": {
       "projectName": "",
@@ -103,6 +103,22 @@
       "unit1Code": "01-01-0713-6-102",
       "unit2Code": "01-01-0713-5-101"
     },
+    "FlexiblePaymentPhaseThree": {
+      "adminUsername": "super_admin@test1-admin-sakani.housingapps.sa",
+      "adminPassword": "admin",
+      "developerUserId": "1023129537",
+      "projectName": "Doctor test 20261107115221",
+      "beneUser": "1300061216",
+      "nonBeneUser": "1300061210",
+      "unitBasketUser": "1300061207",
+      "companyBeneUser": "1001234342",
+      "companyBeneCR": "7001234342",
+      "companyNonBeneUser": "1000000002",
+      "companyNonBeneCR": "7001234342",
+      "scheduleTitleAr": "جدول دفع مرن لخدمات أتمتة الاختبارات 20261104130449",
+      "scheduleTitleEn": "Automation Flexible Payment Schedule 20261104130449",
+      "companyProjectName": "Doctor test 20261104125743"
+    },
     "selling-to-companies": {
       "adminUsername": "super_admin@test1-admin-sakani.housingapps.sa",
       "adminPassword": "admin",
@@ -188,9 +204,10 @@
       "projectName": "Automation Project 20261007095117",
       "sakaniUserId": "1300070834"
     },
-    "view-project-unit-readymade": {
-      "projectName": "readymade private land",
-      "sakaniUserId": "1441376098"
+    "ready-made-project": {
+      "projectNameView": "readymade private land",
+      "projectNameBooking": "مشروع مساكن طيبة 5",
+      "sakaniUserId": "1300061236"
     },
     "update-unit": {
       "projectName": "Automation Project Offplan 20261018082240",

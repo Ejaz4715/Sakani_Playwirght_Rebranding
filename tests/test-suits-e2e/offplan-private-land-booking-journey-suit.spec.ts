@@ -1,4 +1,4 @@
-﻿import { test } from "@playwright/test";
+﻿import { test, expect } from "@playwright/test";
 import path from "node:path";
 import { DateUtils } from "@pages/utils/DateUtils";
 import { WebApp } from "@base-class/web-app";
@@ -8,6 +8,8 @@ import { DataHelper } from "@helpers/DataHelper";
 const SERVICE = "offplan-booking";
 const readServiceData = () => DataHelper.readData().services[SERVICE];
 const readEnvironments = () => DataHelper.readData().environments;
+const readPreBetaEnvironments = () =>
+  DataHelper.readData().environments["preBeta"].userPortalUrl;
 
 test.describe("Offplan private land booking journey", () => {
   test(
@@ -262,9 +264,9 @@ test.describe("Offplan private land booking journey", () => {
       const app = new WebApp(page);
       await logStep("Step 00: Read data from json relative to the service");
       const data = readServiceData();
-      const environments = readEnvironments();
+      const environments = readPreBetaEnvironments();
       const sakaniUserId = data.sakaniUserId;
-      const userPortalUrl = environments.userPortalUrl;
+      const userPortalUrl = environments;
       const projectName = data.projectName;
 
       await logStep("Step 01: Open the user portal and login");
@@ -290,7 +292,7 @@ test.describe("Offplan private land booking journey", () => {
         let bookingPage = page2;
         let bookingApp = new WebApp(bookingPage);
 
-        await logStep("Step 04: Confirm terms and conditons");
+        await logStep("Step 04: Confirm terms and conditions");
         await bookingApp.unitDetailsPage.reserveUnit();
         await bookingApp.unitBookingPage.acceptTermsAndConfirm();
 
@@ -308,27 +310,23 @@ test.describe("Offplan private land booking journey", () => {
     async ({ page }) => {
       await logStep("Step 00: Read data from json relative to the service");
       const data = readServiceData();
-      const environments = readEnvironments();
+      const environments = readPreBetaEnvironments();
       const app = new WebApp(page);
       const sakaniUserId = data.sakaniUserId;
-      const userPortalUrl = environments.userPortalUrl;
+      const userPortalUrl = environments;
 
-      await logStep("Step 01: Open user portal");
-      await app.loginPage.gotoHomePage(userPortalUrl);
-      await app.loginPage.acceptCookies();
-
-      await logStep("Step 02: Log in with Nafath");
+      await logStep("Step 01: Open user portal > Log in with Nafath");
       await app.loginPage.gotoHomePage(userPortalUrl);
       await app.commonMethods.unifiedSakaniLogin(sakaniUserId);
 
-      await logStep("Step 03: Open active bookings");
+      await logStep("Step 02: Open active bookings");
       await app.bookingPage.openActiveBookings();
 
-      await logStep("Step 04: Open booking details");
+      await logStep("Step 03: Open booking details");
       await app.bookingPage.openBookingDetails();
 
       await logStep(
-        "Step 05: Cancel the booking and validate cancellation success message",
+        "Step 04: Cancel the booking and validate cancellation success message",
       );
       await app.bookingPage.cancelBooking();
       await app.bookingPage.expectCancellationSuccess();
@@ -337,15 +335,15 @@ test.describe("Offplan private land booking journey", () => {
 
   // Rebranding test cases below
   test(
-    "TC-06 User books a second unit (Offplan Private Land)",
+    "TC-06 User books a second unit Offplan Private Land",
     { annotation: [{ product: "Marketplace", type: "critical" }] as any },
     async ({ page }) => {
       const app = new WebApp(page);
       await logStep("Step 00: Read data from json relative to the service");
       const data = readServiceData();
-      const environments = readEnvironments();
+      const environments = readPreBetaEnvironments();
       const sakaniUserId = data.sakaniUserId;
-      const userPortalUrl = environments.userPortalUrl;
+      const userPortalUrl = environments;
       const projectName = data.projectName;
 
       await logStep("Step 01: Open the user portal and login");
@@ -371,7 +369,7 @@ test.describe("Offplan private land booking journey", () => {
         let bookingPage = page2;
         let bookingApp = new WebApp(bookingPage);
 
-        await logStep("Step 04: Confirm terms and conditons");
+        await logStep("Step 04: Confirm terms and conditions");
         await bookingApp.unitDetailsPage.reserveUnit();
         await bookingApp.unitBookingPage.acceptTermsAndConfirm();
 
@@ -389,28 +387,39 @@ test.describe("Offplan private land booking journey", () => {
     async ({ page }) => {
       await logStep("Step 00: Read data from json relative to the service");
       const data = readServiceData();
-      const environments = readEnvironments();
+      const environments = readPreBetaEnvironments();
       const app = new WebApp(page);
       const sakaniUserId = data.sakaniUserId;
-      const userPortalUrl = environments.userPortalUrl;
+      const userPortalUrl = environments;
 
-      await logStep("Step 01: Open user portal");
-      await app.loginPage.gotoHomePage(userPortalUrl);
-      await app.loginPage.acceptCookies();
-
-      await logStep("Step 02: Log in with Nafath");
+      await logStep("Step 01: Open the user portal and login");
       await app.loginPage.gotoHomePage(userPortalUrl);
       await app.commonMethods.unifiedSakaniLogin(sakaniUserId);
 
-      await logStep("Step 03: Open active bookings");
+      await logStep("Step 02: Open active bookings");
       await app.bookingPage.openActiveBookings();
 
+      await logStep("Step 03: Capture booked unit code and save to test data");
+      const bookedUnitCode = await app.bookingPage.getBookedUnitCode();
+      expect(bookedUnitCode).toBeTruthy();
+      DataHelper.updateServiceData(
+        "offplan-booking",
+        "bookedUnitCode",
+        bookedUnitCode,
+      );
       await logStep("Step 04: Open booking details");
       await app.bookingPage.openBookingDetails();
 
       await logStep(
-        "Step 05: Reject the sales contract and validate cancellation success message",
+        "Step 05: Reject the sales contract and validate the booking is cancelled",
       );
+      await app.unitDetailsPage.openSalesContract();
+      await app.bookingPage.clickOnRejectButton();
+      await app.bookingPage.fillRejectionReason();
+      await app.bookingPage.clickOnConfirmRejectButton();
+      await app.bookingPage.expectRejectionSuccess();
+      await app.bookingPage.openCancelledAfterReJectSaleContractBookings();
+      await app.bookingPage.expectBookingIsCancelled(bookedUnitCode);
     },
   );
 });

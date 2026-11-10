@@ -348,14 +348,26 @@ export class AdminProjectPage {
     while (!completed) {
       await this.page.reload();
       await this.page.waitForTimeout(3000);
-      completed = await this.page
-        .getByText(AdminProjectObjects.importCompleteMessage.text)
+      const importCompleteVisible = await this.page;
+
+      const importInProgressVisible = await this.page
+        .getByText(AdminProjectObjects.importInProgressStatus.text)
+        .first()
         .isVisible()
         .catch(() => false);
+      completed = importCompleteVisible && !importInProgressVisible;
       if (!completed) {
         await this.page.waitForTimeout(3000);
       }
     }
+  }
+
+  async expectUnitImportDone() {
+    await expect(
+      this.page
+        .getByText(AdminProjectObjects.importDoneStatus.text, { exact: true })
+        .first(),
+    ).toBeVisible({ timeout: 30000 });
   }
 
   async clickApproveButton() {
@@ -392,6 +404,31 @@ export class AdminProjectPage {
       .filter({ hasText: AdminProjectObjects.visualContentTab.text })
       .first()
       .click();
+  }
+
+  async backToProjectFromUnitsImport() {
+    const backButton = this.page.getByRole(
+      AdminProjectObjects.backButton.role,
+      { name: AdminProjectObjects.backButton.name },
+    );
+    const projectMediaTab = this.page
+      .locator(AdminProjectObjects.visualContentTab.selector)
+      .filter({ hasText: AdminProjectObjects.visualContentTab.text })
+      .first();
+    await expect(async () => {
+      if (await backButton.isVisible()) {
+        await backButton.click();
+      }
+      await expect(projectMediaTab).toBeVisible({ timeout: 10000 });
+    }).toPass({ timeout: 120000 });
+  }
+
+  async reloadAndSaveProjectMediaAgain() {
+    await this.page.waitForTimeout(3000);
+    await this.page.reload();
+    await this.clickProjectMediaTab();
+    await this.clickMediaSaveButton();
+    await this.page.waitForTimeout(3000);
   }
 
   async uploadBannerImage(filePath: string) {
