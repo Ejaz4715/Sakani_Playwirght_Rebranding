@@ -1,5 +1,5 @@
-import { UnitBookingObjects } from "@objects/UnitBookingObjects";
-import { expect, Page } from "@playwright/test";
+import { UnitBookingObjects } from '@objects/UnitBookingObjects';
+import { expect, Page } from '@playwright/test';
 
 export class UnitBookingPage {
   page: Page;
@@ -19,66 +19,51 @@ export class UnitBookingPage {
     const termsCheckbox = this.page.locator(UnitBookingObjects.termsCheckbox);
     await this.click(termsCheckbox);
 
-    const confirmButton = this.page.getByRole(
-      UnitBookingObjects.confirmButton.role,
-      { name: UnitBookingObjects.confirmButton.name },
-    );
-    const acceptAndContinue = this.page.locator(
-      UnitBookingObjects.acceptAndContinue,
-    );
+    const confirmButton = this.page.getByRole(UnitBookingObjects.confirmButton.role, { name: UnitBookingObjects.confirmButton.name });
+    const acceptAndContinue = this.page.locator(UnitBookingObjects.acceptAndContinue);
 
-    const isConfirmVisible = await confirmButton
-      .isVisible({ timeout: 3000 })
-      .catch(() => false);
-    const isConfirmEnabled = isConfirmVisible
-      ? await confirmButton.isEnabled().catch(() => false)
-      : false;
+    const isConfirmVisible = await confirmButton.isVisible({ timeout: 3000 }).catch(() => false);
+    const isConfirmEnabled = isConfirmVisible ? await confirmButton.isEnabled().catch(() => false) : false;
     if (isConfirmVisible && isConfirmEnabled) {
       await confirmButton.click();
     }
 
-    const isAcceptVisible = await acceptAndContinue
-      .isVisible({ timeout: 3000 })
-      .catch(() => false);
-    const isAcceptEnabled = isAcceptVisible
-      ? await acceptAndContinue.isEnabled().catch(() => false)
-      : false;
+    const isAcceptVisible = await acceptAndContinue.isVisible({ timeout: 3000 }).catch(() => false);
+    const isAcceptEnabled = isAcceptVisible ? await acceptAndContinue.isEnabled().catch(() => false) : false;
     if (isAcceptVisible && isAcceptEnabled) {
       await acceptAndContinue.click();
     }
 
-    const payBookingFeeButton = this.page.locator(
-      UnitBookingObjects.payBookingFeeButton,
-    );
+    const payBookingFeeButton = this.page.locator(UnitBookingObjects.payBookingFeeButton);
     await this.click(payBookingFeeButton);
   }
 
   async acceptAuctionTerms() {
     await this.page
-      .getByRole("checkbox", {
-        name: "أؤكد قراءتي وفهمي وموافقتي على الشروط والأحكام",
+      .getByRole('checkbox', {
+        name: 'أؤكد قراءتي وفهمي وموافقتي على الشروط والأحكام',
       })
       .check();
   }
 
-  async signMohLandBookingContract(otp = ["1", "2", "3", "4"]) {
+  async signMohLandBookingContract(otp = ['1', '2', '3', '4']) {
     await this.page
-      .getByRole("checkbox", {
-        name: "لقد قرأت وفهمت الشروط والأحكام الخاصة بالعقد *",
+      .getByRole('checkbox', {
+        name: 'لقد قرأت وفهمت الشروط والأحكام الخاصة بالعقد *',
       })
       .check();
-    await this.page.getByRole("button", { name: "قبول وتوقيع" }).click();
-    const otpInputs = this.page.getByRole("textbox", { name: "-" });
+    await this.page.getByRole('button', { name: 'قبول وتوقيع' }).click();
+    const otpInputs = this.page.getByRole('textbox', { name: '-' });
     for (let index = 0; index < otp.length; index++) {
       await otpInputs.nth(index).fill(otp[index]);
     }
-    await this.page.getByRole("button", { name: "تحقق" }).click();
-    await this.page.getByRole("button", { name: "إغلاق" }).click();
+    await this.page.locator("//button[normalize-space() = 'تحقق']").click();
+    await this.page.locator("//button[normalize-space() = 'تم']").click();
   }
 
-  async signSalesContract(otp = ["1", "2", "3", "4"]) {
-    const approveButton = this.page.getByRole("button", {
-      name: "اعتماد",
+  async signSalesContract(otp = ['1', '2', '3', '4']) {
+    const approveButton = this.page.getByRole('button', {
+      name: 'اعتماد',
       exact: true,
     });
     await expect(approveButton).toBeVisible({ timeout: 90000 });
@@ -91,30 +76,27 @@ export class UnitBookingPage {
     for (let index = 0; index < otp.length; index++) {
       await otpInputs.nth(index).fill(otp[index]);
     }
-    await this.page.getByRole("button", { name: "تحقق", exact: true }).click();
+    await this.page.locator("//button[normalize-space() = 'تحقق']").click();
     await this.page.waitForTimeout(7000);
-    await this.page.getByRole("button", { name: "إغلاق" }).click();
+    await this.page.locator("//button[normalize-space() = 'تم']").click();
   }
 
   async clickOnApproveButton() {
-    const approveButton = this.page.locator(
-      UnitBookingObjects.approveButton.xpath,
-    );
+    const approveButton = this.page.locator(UnitBookingObjects.approveButton.xpath);
     await expect(approveButton).toBeVisible({ timeout: 90000 });
     await approveButton.click();
   }
 
-  async enterOtp(otp = ["1", "2", "3", "4"]) {
+  async enterOtp(otp = ['1', '2', '3', '4']) {
     const otpCode = this.page.locator(UnitBookingObjects.otpCode.xpath);
+    await expect(otpCode.first()).toBeVisible({ timeout: 30000 });
     for (let index = 0; index < otp.length; index++) {
       await otpCode.nth(index).fill(otp[index]);
     }
   }
 
   async clickOnVerifyButton() {
-    const verifyButton = this.page.locator(
-      UnitBookingObjects.verifyButton.xpath,
-    );
+    const verifyButton = this.page.locator(UnitBookingObjects.verifyButton.xpath);
     await expect(verifyButton).toBeVisible({ timeout: 90000 });
     await verifyButton.click();
   }
@@ -126,9 +108,51 @@ export class UnitBookingPage {
   }
 
   async expectSalesContractSuccess() {
-    const { expect } = require("@playwright/test");
-    await expect(
-      this.page.getByRole("heading", { name: "تهانينا" }),
-    ).toBeVisible();
+    await expect(this.page.getByRole('heading', { name: 'تهانينا' })).toBeVisible({ timeout: 30000 });
+  }
+
+  /**---------------------------------------- sign and reject annex---------------------------------------- */
+  async signAnnexContract() {
+    await this.clickOnApproveButton();
+    await this.enterOtp();
+    await this.clickOnVerifyButton();
+    await this.page.waitForTimeout(7000);
+  }
+
+  async expectAnnexContractSuccess() {
+    await expect(this.page.getByRole('status').filter({ hasText: 'تم التوقيع على الوثيقة الملحقة!' })).toBeVisible({ timeout: 30000 });
+  }
+  async clickAnnexRejectButton() {
+    const rejectButton = this.page.locator(UnitBookingObjects.annexRejectButton.xpath);
+    await rejectButton.waitFor({ state: 'visible', timeout: 30000 });
+    await rejectButton.click();
+  }
+
+  async fillAnnexRejectReason(reason: string) {
+    const reasonInput = this.page.locator(UnitBookingObjects.annexRejectReasonInputField.xpath);
+    await reasonInput.waitFor({ state: 'visible', timeout: 30000 });
+    await reasonInput.fill(reason);
+  }
+
+  async clickConfirmAnnexRejectButton() {
+    const confirmButton = this.page.locator(UnitBookingObjects.confirmAnnexRejectButton.xpath);
+    await confirmButton.waitFor({ state: 'visible', timeout: 30000 });
+    await confirmButton.click();
+  }
+
+  async rejectAnnexContract(reason: string) {
+    await this.clickAnnexRejectButton();
+    await this.fillAnnexRejectReason(reason);
+    await this.clickConfirmAnnexRejectButton();
+  }
+
+  async expectAnnexRejectionSuccess() {
+    const successMessage = this.page.locator(UnitBookingObjects.annexRejectionSuccessMessage.xpath);
+    await expect(successMessage).toBeVisible({ timeout: 30000 });
+  }
+
+  async viewAnnexPDFContract() {
+    const successMessage = this.page.locator(UnitBookingObjects.annexRejectionSuccessMessage.xpath);
+    await expect(successMessage).toBeVisible({ timeout: 30000 });
   }
 }
