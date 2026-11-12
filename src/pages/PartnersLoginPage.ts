@@ -1,5 +1,5 @@
-import { Page, expect, Locator } from "@playwright/test";
-import { DeveloperObjects } from "@objects/DeveloperObjects";
+import { Page, expect, Locator } from '@playwright/test';
+import { DeveloperObjects } from '@objects/DeveloperObjects';
 
 export class PartnersLoginPage {
   page: Page;
@@ -25,54 +25,38 @@ export class PartnersLoginPage {
   }
 
   async fillNationalId(nationalId: string) {
-    const usernameInput = this.page.getByRole(
-      DeveloperObjects.usernameInput.role,
-      { name: DeveloperObjects.usernameInput.name },
-    );
+    const usernameInput = this.page.getByRole(DeveloperObjects.usernameInput.role, { name: DeveloperObjects.usernameInput.name });
     await this.waitForVisible(usernameInput);
     await usernameInput.fill(nationalId);
   }
 
   async clickContinueButton() {
-    const continueButton = this.page.getByRole(
-      DeveloperObjects.continueButton.role,
-      {
-        name: DeveloperObjects.continueButton.name,
-        exact: DeveloperObjects.continueButton.exact,
-      },
-    );
+    const continueButton = this.page.getByRole(DeveloperObjects.continueButton.role, {
+      name: DeveloperObjects.continueButton.name,
+      exact: DeveloperObjects.continueButton.exact,
+    });
     await this.waitForVisible(continueButton);
     await continueButton.click();
   }
 
   async confirmIdentityIfRequired() {
     const nafathModal = this.page.locator(DeveloperObjects.nafathModel);
-    await nafathModal
-      .waitFor({ state: "visible", timeout: 10000 })
-      .catch(() => {});
+    await nafathModal.waitFor({ state: 'visible', timeout: 10000 }).catch(() => {});
 
     while (await nafathModal.isVisible().catch(() => false)) {
       await this.page.waitForTimeout(3000);
     }
 
     await this.page.waitForTimeout(3000);
-    const verificationButton = this.page.getByRole(
-      DeveloperObjects.verifyOTPButton.role,
-      { name: DeveloperObjects.verifyOTPButton.name },
-    );
-    if (
-      await verificationButton.isVisible({ timeout: 15000 }).catch(() => false)
-    ) {
+    const verificationButton = this.page.getByRole(DeveloperObjects.verifyOTPButton.role, { name: DeveloperObjects.verifyOTPButton.name });
+    if (await verificationButton.isVisible({ timeout: 15000 }).catch(() => false)) {
       await verificationButton.click();
 
-      const otpInput = this.page.getByRole(
-        DeveloperObjects.otpDigitInput.role,
-        { name: DeveloperObjects.otpDigitInput.name },
-      );
-      await otpInput.nth(0).fill("1");
-      await otpInput.nth(1).fill("2");
-      await otpInput.nth(2).fill("3");
-      await otpInput.nth(3).fill("4");
+      const otpInput = this.page.getByRole(DeveloperObjects.otpDigitInput.role, { name: DeveloperObjects.otpDigitInput.name });
+      await otpInput.nth(0).fill('1');
+      await otpInput.nth(1).fill('2');
+      await otpInput.nth(2).fill('3');
+      await otpInput.nth(3).fill('4');
 
       await this.page
         .getByRole(DeveloperObjects.confirmAndContinueButton.role, {
@@ -99,27 +83,19 @@ export class PartnersLoginPage {
   }
 
   async clickSwitchRoleButton() {
-    const switchRoleButton = this.page.getByRole(
-      DeveloperObjects.switchRoleButton.role,
-      { name: DeveloperObjects.switchRoleButton.name },
-    );
+    const switchRoleButton = this.page.getByRole(DeveloperObjects.switchRoleButton.role, { name: DeveloperObjects.switchRoleButton.name });
     await this.waitForVisible(switchRoleButton);
     await switchRoleButton.click();
   }
 
   async clickDeveloperRole() {
-    const developerRole = this.page.getByText(
-      DeveloperObjects.developerRoleText,
-    );
+    const developerRole = this.page.getByText(DeveloperObjects.developerRoleText);
     await this.waitForVisible(developerRole);
     await developerRole.click();
   }
 
   async dismissNewServiceAlertPopUp() {
-    const cancelButton = this.page.getByRole(
-      DeveloperObjects.cancelButtonOnPopUp.role,
-      { name: DeveloperObjects.cancelButtonOnPopUp.name },
-    );
+    const cancelButton = this.page.getByRole(DeveloperObjects.cancelButtonOnPopUp.role, { name: DeveloperObjects.cancelButtonOnPopUp.name });
     await this.clickIfVisible(cancelButton.first());
   }
 
@@ -142,42 +118,34 @@ export class PartnersLoginPage {
         name: DeveloperObjects.acceptCookiesButton.name,
       })
       .first();
-    await acceptCookiesButton.waitFor({ state: "visible", timeout: 120000 });
+    await acceptCookiesButton.waitFor({ state: 'visible', timeout: 120000 });
     await this.page.waitForTimeout(2000);
     await acceptCookiesButton.click();
 
     // The cookie modal fades out; wait for it and its backdrop so they don't block the next click
     await this.page
       .locator(DeveloperObjects.acceptCookiesModal)
-      .waitFor({ state: "hidden", timeout: 15000 })
+      .waitFor({ state: 'hidden', timeout: 15000 })
       .catch(() => {});
     await this.page
-      .locator(".modal-backdrop")
-      .waitFor({ state: "detached", timeout: 15000 })
+      .locator('.modal-backdrop')
+      .waitFor({ state: 'detached', timeout: 15000 })
       .catch(() => {});
 
-    const usernameInput = this.page.locator(
-      DeveloperObjects.usernameInput.xpath,
-    );
+    const usernameInput = this.page.locator(DeveloperObjects.usernameInput.xpath);
     await this.waitForVisible(usernameInput);
     await usernameInput.fill(nationalId);
 
-    const loginToButton = this.page.locator(
-      DeveloperObjects.loginToButton.xpath,
-    );
+    const loginToButton = this.page.locator(DeveloperObjects.loginToButton.xpath);
     await this.waitForVisible(loginToButton);
     await loginToButton.click();
 
-    const continueButton = this.page.locator(
-      DeveloperObjects.continueButton.xpath,
-    );
+    const continueButton = this.page.locator(DeveloperObjects.continueButton.xpath);
     await this.waitForVisible(continueButton);
     await continueButton.click();
 
-    const nafathModal = this.page.locator("//app-nafath-login-modal");
-    await nafathModal
-      .waitFor({ state: "visible", timeout: 10000 })
-      .catch(() => {});
+    const nafathModal = this.page.locator('//app-nafath-login-modal');
+    await nafathModal.waitFor({ state: 'visible', timeout: 10000 }).catch(() => {});
 
     while (await nafathModal.isVisible().catch(() => false)) {
       await this.page.waitForTimeout(3000);
@@ -186,7 +154,7 @@ export class PartnersLoginPage {
     const profileIcon = this.page.locator(DeveloperObjects.profileIcon);
     await this.waitForVisible(profileIcon);
     await this.page.waitForTimeout(3000);
-    const cancelButton = this.page.getByRole("button", { name: "إلغاء" });
+    const cancelButton = this.page.getByRole('button', { name: 'إلغاء' });
     await this.clickIfVisible(cancelButton.first());
   }
 

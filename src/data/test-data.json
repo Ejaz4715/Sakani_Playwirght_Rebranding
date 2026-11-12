@@ -103,6 +103,22 @@
       "unit1Code": "01-01-0713-6-102",
       "unit2Code": "01-01-0713-5-101"
     },
+    "FlexiblePaymentPhaseThree": {
+      "adminUsername": "super_admin@test1-admin-sakani.housingapps.sa",
+      "adminPassword": "admin",
+      "developerUserId": "1023129537",
+      "projectName": "Doctor test 20261107115221",
+      "beneUser": "1300061216",
+      "nonBeneUser": "1300061210",
+      "unitBasketUser": "1300061207",
+      "companyBeneUser": "1001234342",
+      "companyBeneCR": "7001234342",
+      "companyNonBeneUser": "1000000002",
+      "companyNonBeneCR": "7001234342",
+      "scheduleTitleAr": "جدول دفع مرن لخدمات أتمتة الاختبارات 20261104130449",
+      "scheduleTitleEn": "Automation Flexible Payment Schedule 20261104130449",
+      "companyProjectName": "Doctor test 20261104125743"
+    },
     "selling-to-companies": {
       "adminUsername": "super_admin@test1-admin-sakani.housingapps.sa",
       "adminPassword": "admin",
@@ -233,8 +249,8 @@
     "flexible-payment-schedule": {
       "projectName": "Automation Project P_003",
       "developerUserId": "1023129537",
-      "scheduleTitleAr": "جدول دفع مرن لخدمات أتمتة الاختبارات 20261028121358",
-      "scheduleTitleEn": "Automation Flexible Payment Schedule 20261012104113",
+      "scheduleTitleAr": "جدول دفع مرن لخدمات أتمتة الاختبارات 20261112111234",
+      "scheduleTitleEn": "Automation Flexible Payment Schedule 20261112111234",
       "userId": "1441376098",
       "bookedUnitCode": "02-01-0149-15-111"
     },
@@ -352,6 +368,12 @@
       "sakaniUserId": "1083703320",
       "comments": "appeal request"
     },
+    "appeal-request_Documents": {
+      "adminUsername": "super_admin@test1-admin-sakani.housingapps.sa",
+      "adminPassword": "admin",
+      "sakaniUserId": "1300061533",
+      "comments": "appeal request_Documents"
+    },
     "market-exploring": {
       "sakaniUserId": "1300070834",
       "filterOption": "فيلا",
@@ -360,23 +382,7 @@
     "sakani-offers": {
       "sakaniUserId": "1300070834",
       "sortOptions": ["من الأحدث إلى الأقدم", "من الأقدم إلى الأحدث"],
-      "filterOptions": [
-        "الخدمات المنزلية",
-        "التسوق",
-        "عروض الهدايا والإكسسوارات",
-        "الترفيه",
-        "الموضة",
-        "الصحة والجمال",
-        "المأكولات والمشروبات",
-        "السفر والسياحة",
-        "خدمات السيارات",
-        "التعليم",
-        "الأعمال",
-        "أونلاين",
-        "في الفروع",
-        "المستفيد فقط",
-        "عروض حصرية"
-      ]
+      "filterOptions": ["الخدمات المنزلية", "التسوق", "عروض الهدايا والإكسسوارات", "الترفيه", "الموضة", "الصحة والجمال", "المأكولات والمشروبات", "السفر والسياحة", "خدمات السيارات", "التعليم", "الأعمال", "أونلاين", "في الفروع", "المستفيد فقط", "عروض حصرية"]
     },
     "conveyance-service": {
       "sakaniUserId": "1300070834",

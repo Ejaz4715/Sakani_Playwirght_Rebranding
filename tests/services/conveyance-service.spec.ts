@@ -14,7 +14,7 @@ test.describe('Conveyance Service', () => {
     {
       annotation: [
         {
-          product: 'Real Estate Data',
+          product: 'Rebranding',
           type: 'non-critical',
         } as any,
       ],
@@ -46,7 +46,7 @@ test.describe('Conveyance Service', () => {
     {
       annotation: [
         {
-          product: 'Real Estate Data',
+          product: 'Rebranding',
           type: 'non-critical',
         } as any,
       ],
@@ -82,7 +82,7 @@ test.describe('Conveyance Service', () => {
     {
       annotation: [
         {
-          product: 'Real Estate Data',
+          product: 'Rebranding',
           type: 'non-critical',
         } as any,
       ],

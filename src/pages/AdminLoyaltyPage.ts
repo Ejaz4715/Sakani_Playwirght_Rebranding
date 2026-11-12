@@ -155,9 +155,7 @@ export class AdminLoyaltyPage {
   }
 
   async fillTermsAndConditions(termsText = 'Testing terms and condition for sharrai offer') {
-    const termsTextarea = this.page
-      .getByRole(AdminLoyaltyObjects.termsAndConditionsRegion.role, { name: AdminLoyaltyObjects.termsAndConditionsRegion.name })
-      .locator(AdminLoyaltyObjects.termsTextarea);
+    const termsTextarea = this.page.getByRole(AdminLoyaltyObjects.termsAndConditionsRegion.role, { name: AdminLoyaltyObjects.termsAndConditionsRegion.name }).locator(AdminLoyaltyObjects.termsTextarea);
     await termsTextarea.fill(termsText);
   }
 

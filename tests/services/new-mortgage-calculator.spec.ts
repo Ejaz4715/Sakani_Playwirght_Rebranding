@@ -12,7 +12,7 @@ const readEnvironments = () => DataHelper.readData().environments;
 
 const ROUNDING_TOLERANCE = 1;
 
-const annotation = { annotation: [{ product: 'Marketplace', type: 'non-critical' } as any] };
+const annotation = { annotation: [{ product: 'Rebranding', type: 'non-critical' } as any] };
 
 /**
  * Mortgage calculator (rebranded v6 page) — SAKANI-44613.
@@ -62,10 +62,7 @@ test.describe('New Mortgage Calculator', () => {
       const actual = await app.newMortgageCalculatorPage.getResultFigures();
       const expected = calculateExpectedMortgage(scenario);
       expect(Math.abs(actual.monthlyPayment - expected.monthlyPayment), `monthly payment ${actual.monthlyPayment} vs ${expected.monthlyPayment}`).toBeLessThanOrEqual(ROUNDING_TOLERANCE);
-      expect(
-        Math.abs(actual.totalFinancingWithProfit - expected.totalFinancingWithProfit),
-        `total financing ${actual.totalFinancingWithProfit} vs ${expected.totalFinancingWithProfit}`
-      ).toBeLessThanOrEqual(ROUNDING_TOLERANCE);
+      expect(Math.abs(actual.totalFinancingWithProfit - expected.totalFinancingWithProfit), `total financing ${actual.totalFinancingWithProfit} vs ${expected.totalFinancingWithProfit}`).toBeLessThanOrEqual(ROUNDING_TOLERANCE);
       expect(Math.abs(actual.totalInterest - expected.totalInterest), `total interest ${actual.totalInterest} vs ${expected.totalInterest}`).toBeLessThanOrEqual(ROUNDING_TOLERANCE);
     });
   }

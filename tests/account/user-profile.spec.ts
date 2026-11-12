@@ -49,21 +49,17 @@ test.describe('Account - profile page', () => {
     expect(body, 'Plain national ID should be masked').not.toContain('1000011485');
   });
 
-  test(
-    'TC-05 Wallet shows a balance and both tabs (Balance & Transactions, Bank account)',
-    { annotation: [{ product: 'Marketplace', type: 'non-critical' } as any] },
-    async ({ authenticatedPage }) => {
-      const profile = new UserProfilePage(authenticatedPage);
+  test('TC-05 Wallet shows a balance and both tabs (Balance & Transactions, Bank account)', { annotation: [{ product: 'Marketplace', type: 'non-critical' } as any] }, async ({ authenticatedPage }) => {
+    const profile = new UserProfilePage(authenticatedPage);
 
-      await logStep('Step 01: Open the wallet page');
-      await profile.openWallet();
+    await logStep('Step 01: Open the wallet page');
+    await profile.openWallet();
 
-      await logStep('Step 02: Validate wallet balance and tab set');
-      await expect(profile.walletHeading).toBeVisible();
-      await expect(profile.walletBalance).toBeVisible();
-      await expect(await profile.visibleTabLabels(['Balance & Transactions', 'Bank account'])).toEqual(expect.arrayContaining(['Balance & Transactions', 'Bank account']));
-    }
-  );
+    await logStep('Step 02: Validate wallet balance and tab set');
+    await expect(profile.walletHeading).toBeVisible();
+    await expect(profile.walletBalance).toBeVisible();
+    await expect(await profile.visibleTabLabels(['Balance & Transactions', 'Bank account'])).toEqual(expect.arrayContaining(['Balance & Transactions', 'Bank account']));
+  });
 
   test('TC-06 Wallet transactions list renders correctly', { annotation: [{ product: 'Marketplace', type: 'non-critical' } as any] }, async ({ authenticatedPage }) => {
     const profile = new UserProfilePage(authenticatedPage);
@@ -88,21 +84,17 @@ test.describe('Account - profile page', () => {
     await expect(authenticatedPage.getByText(/IBAN|bank|إضافة|account/i).first()).toBeVisible({ timeout: 60_000 });
   });
 
-  test(
-    'TC-08 Financial advisory shows the profile and both tabs (Overview, Financing Requests)',
-    { annotation: [{ product: 'Marketplace', type: 'non-critical' } as any] },
-    async ({ authenticatedPage }) => {
-      const profile = new UserProfilePage(authenticatedPage);
+  test('TC-08 Financial advisory shows the profile and both tabs (Overview, Financing Requests)', { annotation: [{ product: 'Marketplace', type: 'non-critical' } as any] }, async ({ authenticatedPage }) => {
+    const profile = new UserProfilePage(authenticatedPage);
 
-      await logStep('Step 01: Open the financial advisory page');
-      await profile.openFinancialAdvisory();
+    await logStep('Step 01: Open the financial advisory page');
+    await profile.openFinancialAdvisory();
 
-      await logStep('Step 02: Validate the advisory heading, action, and tabs');
-      await expect(profile.advisoryHeading.first()).toBeVisible();
-      await expect(profile.updateFinancialInfoButton.first()).toBeVisible();
-      expect(await profile.visibleTabLabels(['Overview', 'Financing Requests'])).toEqual(expect.arrayContaining(['Overview', 'Financing Requests']));
-    }
-  );
+    await logStep('Step 02: Validate the advisory heading, action, and tabs');
+    await expect(profile.advisoryHeading.first()).toBeVisible();
+    await expect(profile.updateFinancialInfoButton.first()).toBeVisible();
+    expect(await profile.visibleTabLabels(['Overview', 'Financing Requests'])).toEqual(expect.arrayContaining(['Overview', 'Financing Requests']));
+  });
 
   test('TC-09 Financing requests tab opens', { annotation: [{ product: 'Marketplace', type: 'non-critical' } as any] }, async ({ authenticatedPage }) => {
     const profile = new UserProfilePage(authenticatedPage);
@@ -157,35 +149,25 @@ test.describe('Account - profile page', () => {
     await expect(first).toBeDisabled();
   });
 
-  test(
-    'TC-13 Favorites exposes all five category tabs (All, Destinations, Projects, Units, Services)',
-    { annotation: [{ product: 'Marketplace', type: 'non-critical' } as any] },
-    async ({ authenticatedPage }) => {
-      const profile = new UserProfilePage(authenticatedPage);
+  test('TC-13 Favorites exposes all five category tabs (All, Destinations, Projects, Units, Services)', { annotation: [{ product: 'Marketplace', type: 'non-critical' } as any] }, async ({ authenticatedPage }) => {
+    const profile = new UserProfilePage(authenticatedPage);
 
-      await logStep('Step 01: Open the favorites page');
-      await profile.openFavorites();
+    await logStep('Step 01: Open the favorites page');
+    await profile.openFavorites();
 
-      await logStep('Step 02: Validate the favorites tabs');
-      expect(await profile.visibleTabLabels(['All', 'Destinations', 'Projects', 'Units', 'Services'])).toEqual(expect.arrayContaining(['All', 'Destinations', 'Projects', 'Units', 'Services']));
-    }
-  );
+    await logStep('Step 02: Validate the favorites tabs');
+    expect(await profile.visibleTabLabels(['All', 'Destinations', 'Projects', 'Units', 'Services'])).toEqual(expect.arrayContaining(['All', 'Destinations', 'Projects', 'Units', 'Services']));
+  });
 
-  test(
-    'TC-14 Registered interests exposes all five tabs (All, Destinations, Projects, Developers, Brokers)',
-    { annotation: [{ product: 'Marketplace', type: 'non-critical' } as any] },
-    async ({ authenticatedPage }) => {
-      const profile = new UserProfilePage(authenticatedPage);
+  test('TC-14 Registered interests exposes all five tabs (All, Destinations, Projects, Developers, Brokers)', { annotation: [{ product: 'Marketplace', type: 'non-critical' } as any] }, async ({ authenticatedPage }) => {
+    const profile = new UserProfilePage(authenticatedPage);
 
-      await logStep('Step 01: Open the registered interests page');
-      await profile.openRegisteredInterests();
+    await logStep('Step 01: Open the registered interests page');
+    await profile.openRegisteredInterests();
 
-      await logStep('Step 02: Validate the interest tabs');
-      expect(await profile.visibleTabLabels(['All', 'Destinations', 'Projects', 'Developers', 'Brokers'])).toEqual(
-        expect.arrayContaining(['All', 'Destinations', 'Projects', 'Developers', 'Brokers'])
-      );
-    }
-  );
+    await logStep('Step 02: Validate the interest tabs');
+    expect(await profile.visibleTabLabels(['All', 'Destinations', 'Projects', 'Developers', 'Brokers'])).toEqual(expect.arrayContaining(['All', 'Destinations', 'Projects', 'Developers', 'Brokers']));
+  });
 
   test('TC-15 Registered interests shows its empty state with a CTA', { annotation: [{ product: 'Marketplace', type: 'non-critical' } as any] }, async ({ authenticatedPage }) => {
     const profile = new UserProfilePage(authenticatedPage);

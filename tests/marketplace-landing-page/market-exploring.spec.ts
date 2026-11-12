@@ -14,7 +14,7 @@ test.describe('Market Exploring', () => {
     {
       annotation: [
         {
-          product: 'Real Estate Data',
+          product: 'Rebranding',
           type: 'non-critical',
         } as any,
       ],
@@ -44,7 +44,7 @@ test.describe('Market Exploring', () => {
     {
       annotation: [
         {
-          product: 'Real Estate Data',
+          product: 'Rebranding',
           type: 'non-critical',
         } as any,
       ],
@@ -84,7 +84,7 @@ test.describe('Market Exploring', () => {
     {
       annotation: [
         {
-          product: 'Real Estate Data',
+          product: 'Rebranding',
           type: 'non-critical',
         } as any,
       ],
@@ -130,7 +130,7 @@ test.describe('Market Exploring', () => {
     {
       annotation: [
         {
-          product: 'Real Estate Data',
+          product: 'Rebranding',
           type: 'non-critical',
         } as any,
       ],
@@ -160,7 +160,7 @@ test.describe('Market Exploring', () => {
     {
       annotation: [
         {
-          product: 'Real Estate Data',
+          product: 'Rebranding',
           type: 'non-critical',
         } as any,
       ],
@@ -198,7 +198,7 @@ test.describe('Market Exploring', () => {
     {
       annotation: [
         {
-          product: 'Real Estate Data',
+          product: 'Rebranding',
           type: 'non-critical',
         } as any,
       ],

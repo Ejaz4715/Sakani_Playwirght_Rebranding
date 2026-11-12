@@ -18,13 +18,13 @@ export const UnitsDeliveryObjects = {
     xpath: "//ng-dropdown-panel//span[contains(text(),'رمز الوحدة')]",
   },
   projectNameDropdownOption: {
-    xpath: "//ng-dropdown-panel/div/div[2]/div",
+    xpath: '//ng-dropdown-panel/div/div[2]/div',
   },
   projectNameTextField: {
     xpath: "(//input[@role='combobox'])[2]",
   },
   unitCodeTextField: {
-    css: ".input-icon-container>input",
+    css: '.input-icon-container>input',
   },
   searchButton: {
     xpath: "//button[contains(text(),'بحث')]",
@@ -39,7 +39,7 @@ export const UnitsDeliveryObjects = {
     css: "label[for='id']",
   },
   calendarIcon: {
-    css: "app-hijri-datepicker .icon",
+    css: 'app-hijri-datepicker .icon',
   },
   visibleAllowedDataLocator: {
     css: "div[role='gridcell'][aria-disabled='false'] .btn-light",
@@ -54,11 +54,10 @@ export const UnitsDeliveryObjects = {
     xpath: "//button[contains(text(),'إرسال')]",
   },
   deliveryReadinessSuccessfulMessage: {
-    xpath:
-      "//div[contains(text(),'الوحدة جاهزة للتسليم. لبدء التقديم، يرجى الانتقال إلى صفحة \"الوحدات الجاهزة للتسليم\".')]",
+    xpath: '//div[contains(text(),\'الوحدة جاهزة للتسليم. لبدء التقديم، يرجى الانتقال إلى صفحة "الوحدات الجاهزة للتسليم".\')]',
   },
   unitCheckBox: {
-    css: ".datatable-body-cell-label > div> div",
+    css: '.datatable-body-cell-label > div> div',
   },
   sendAllMarkedUnitsButton: {
     xpath: "//button[contains(text(),'إرسال الكل')]",
@@ -88,8 +87,7 @@ export const UnitsDeliveryObjects = {
     xpath: "//div[@role='tab']/span[contains(text(),'مرفوض')]",
   },
   showDeliveryUnitModelButton: {
-    xpath: (unitCode: string) =>
-      `//article[.//span[normalize-space(.)='رمز الوحدة']/following-sibling::span[normalize-space(.)='${unitCode}']]//button[contains(normalize-space(.),'عرض نموذج تسليم الوحدة')]`,
+    xpath: (unitCode: string) => `//article[.//span[normalize-space(.)='رمز الوحدة']/following-sibling::span[normalize-space(.)='${unitCode}']]//button[contains(normalize-space(.),'عرض نموذج تسليم الوحدة')]`,
   },
   yesRadioButton: {
     xpath: "//input[@aria-label='نعم']/parent::label",
@@ -110,7 +108,7 @@ export const UnitsDeliveryObjects = {
     xpath: "//p[contains(text(),'التاريخ المحدد خارج النطاق المسموح به')]",
   },
   termsAndConditionsCheckbox: {
-    css: "#agreeTermsConditions",
+    css: '#agreeTermsConditions',
   },
   agreeOnDeliveryUnit: {
     xpath: "//button[contains(text(),'قبول تسليم الوحدة')]",
@@ -122,7 +120,7 @@ export const UnitsDeliveryObjects = {
     xpath: "//p[text()='لقد تم رفض الطلب.']",
   },
   verifyField: {
-    xpath: "//skn-otp-input-v6//div/input",
+    xpath: '//skn-otp-input-v6//div/input',
   },
   verifyButton: {
     xpath: "//button[contains(text(),'تحقق')]",
@@ -146,12 +144,12 @@ export const UnitsDeliveryObjects = {
     xpath: "//p[contains(text(),'لقد وصلت إلى الحد الأقصى لعدد مرات الرفض')]",
   },
   commentsHistorySection: {
-    xpath: "//app-rejection-histories-v6",
+    xpath: '//app-rejection-histories-v6',
   },
   //Admin
   unitDeliveryManagementLink: {
-    role: "link",
-    name: "إدارة تسليم الوحدات",
+    role: 'link',
+    name: 'إدارة تسليم الوحدات',
   },
 
   editButton: {
@@ -164,12 +162,12 @@ export const UnitsDeliveryObjects = {
     xpath: "//button[text()=' حفظ ']",
   },
   editSuccessfulMessage: {
-    text: "تم حفظ الإعدادات بنجاح",
+    text: 'تم حفظ الإعدادات بنجاح',
   },
   previewUnitDeliveryContractFileButton: {
     xpath: "//button/span[text()='معاينة محضر التسليم الخاص بالوحدة']",
   },
   previewUnitDeliveryContractPopup: {
-    text: "محضر التسليم الخاص بالوحدة",
+    text: 'محضر التسليم الخاص بالوحدة',
   },
 } as const;

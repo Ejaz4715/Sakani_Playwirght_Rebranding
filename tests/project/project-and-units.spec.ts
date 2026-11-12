@@ -8,22 +8,18 @@ import { findBookableNonBeneUnit, getProject } from '@helpers/marketplaceApi';
 import { logStep } from '@helpers/LogSteps';
 
 test.describe('View projects and units', () => {
-  test(
-    'TC-01 Project detail renders all business sections About this project, Developer, Payment methods, Facilities, Location, Participating banks, Contact',
-    { annotation: [{ product: 'Marketplace', type: 'non-critical' } as any] },
-    async ({ authenticatedPage }) => {
-      const project = new ProjectPage(authenticatedPage, PROJECTS.bookable);
-      await logStep('Step 01: Open the project detail page');
-      await project.open();
-      await project.expectLoaded();
+  test('TC-01 Project detail renders all business sections About this project, Developer, Payment methods, Facilities, Location, Participating banks, Contact', { annotation: [{ product: 'Marketplace', type: 'non-critical' } as any] }, async ({ authenticatedPage }) => {
+    const project = new ProjectPage(authenticatedPage, PROJECTS.bookable);
+    await logStep('Step 01: Open the project detail page');
+    await project.open();
+    await project.expectLoaded();
 
-      await logStep('Step 02: Check the project sections are rendered');
-      const headings = (await project.sectionHeadings()).join(' | ');
-      for (const section of ['About this project', 'Developer', 'Payment methods', 'Facilities', 'Location', 'Participating banks', 'Contact']) {
-        expect(headings, `Section "${section}" should render`).toContain(section);
-      }
+    await logStep('Step 02: Check the project sections are rendered');
+    const headings = (await project.sectionHeadings()).join(' | ');
+    for (const section of ['About this project', 'Developer', 'Payment methods', 'Facilities', 'Location', 'Participating banks', 'Contact']) {
+      expect(headings, `Section "${section}" should render`).toContain(section);
     }
-  );
+  });
 
   test('TC-02 Unit-model page lists units with filter chips', { annotation: [{ product: 'Marketplace', type: 'non-critical' } as any] }, async ({ authenticatedPage }) => {
     await logStep('Step 01: Find a bookable unit and open its model page');

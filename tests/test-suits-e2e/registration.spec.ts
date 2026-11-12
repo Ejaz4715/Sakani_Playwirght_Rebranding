@@ -133,11 +133,6 @@ test.describe('User registration and check eligibility', () => {
     await logStep('Step 01: Open the user portal and login');
     await app.loginPage.gotoHomePage(preBeta);
     await app.commonMethods.unifiedSakaniLogin(userId);
-    // await app.loginPage.openPreBetaLogin();
-    // await app.loginPage.preBetaLoginWithNafath(userId);
-    // await app.loginPage.waitForNafathPromptToDisappear();
-    // await app.loginPage.continuePreBetaNewUserPopup();
-    // await app.loginPage.handlePushNotificationPopup();
 
     await logStep('Step 02: Navigate to user profile > Open active booking then check if any active booking available');
     await app.bookingPage.openActiveBookings();
@@ -164,7 +159,6 @@ test.describe('User registration and check eligibility', () => {
 
       await logStep('Step 04: Confirm terms and conditions');
       await bookingApp.unitDetailsPage.reserveUnit();
-      // await bookingApp.unitBookingPage.acceptTermsAndConfirm();
       await bookingApp.bookingAndSelectPaymentMethodPage.checkOnTermAndCondition();
       await bookingApp.bookingAndSelectPaymentMethodPage.clickOnApproveAndContinueIfVisible();
       await bookingApp.bookingAndSelectPaymentMethodPage.clickOnPayBookingFeesButton();
@@ -175,50 +169,44 @@ test.describe('User registration and check eligibility', () => {
       await bookingApp.paymentConfirmationPage.expectSuccessMessage();
     }
   });
-  test(
-    'TC-05 Verify that the financial advisory service displays Active Booking Detected when the user has an active booking',
-    { annotation: [{ product: 'Rebranding', type: 'critical' }] as any },
-    async ({ page }) => {
-      await logStep('Step 00: Read data from json relative to the service');
-      const data = readServiceData();
-      const environments = readEnvironments();
-      const app = new WebApp(page);
-      const userId = data.userId;
-      const preBeta = environments['pre-beta'].userPortalUrl;
 
-      await logStep('Step 01: Open the user portal and login');
-      await app.loginPage.gotoHomePage(preBeta);
-      await app.commonMethods.unifiedSakaniLogin(userId);
+  test('TC-05 Verify that the financial advisory service displays Active Booking Detected when the user has an active booking', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+    await logStep('Step 00: Read data from json relative to the service');
+    const data = readServiceData();
+    const environments = readEnvironments();
+    const app = new WebApp(page);
+    const userId = data.userId;
+    const preBeta = environments['pre-beta'].userPortalUrl;
 
-      await logStep('Step 02: Navigate to user profile > Click on financial advisory');
-      await app.marketplaceLandingPage.expandProfileDropDownMenu();
-      await app.marketplaceLandingPage.openProfileManagement();
-      await app.registrationPage.clickFinancialAdvisoryLink();
+    await logStep('Step 01: Open the user portal and login');
+    await app.loginPage.gotoHomePage(preBeta);
+    await app.commonMethods.unifiedSakaniLogin(userId);
 
-      await logStep('Step 03: Start the service > Verify you have active message is present');
-      await app.registrationPage.clickStartNowButton();
-      await app.registrationPage.clickStartServiceLink();
-      await app.registrationPage.verifyYouHaveActiveMessage();
-    }
-  );
-  test(
-    'TC-06 Verify That the Financial Advisory Service Displays the Saudi Citizen Only Notice for Non-Saudi Users',
-    { annotation: [{ product: 'Rebranding', type: 'critical' }] as any },
-    async ({ page }) => {
-      await logStep('Step 00: Read data from json relative to the service');
-      const data = readServiceData();
-      const environments = readEnvironments();
-      const app = new WebApp(page);
-      const nonSaudiUserId = data.nonSaudiUserId;
-      const preBeta = environments['pre-beta'].userPortalUrl;
+    await logStep('Step 02: Navigate to user profile > Click on financial advisory');
+    await app.marketplaceLandingPage.expandProfileDropDownMenu();
+    await app.marketplaceLandingPage.openProfileManagement();
+    await app.registrationPage.clickFinancialAdvisoryLink();
 
-      await logStep('Step 01: Open the user portal and login');
-      await app.loginPage.gotoHomePage(preBeta);
-      await app.commonMethods.unifiedSakaniLogin(nonSaudiUserId);
+    await logStep('Step 03: Start the service > Verify you have active message is present');
+    await app.registrationPage.clickStartNowButton();
+    await app.registrationPage.clickStartServiceLink();
+    await app.registrationPage.verifyYouHaveActiveMessage();
+  });
 
-      await logStep('Step 02: Navigate to user profile > Verify financial advisory option not present');
-      await app.marketplaceLandingPage.openProfileManagement();
-      await app.registrationPage.verifyFanaticalAdvisoryButtonNotPresent();
-    }
-  );
+  test('TC-06 Verify That the Financial Advisory Service Displays the Saudi Citizen Only Notice for Non-Saudi Users', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+    await logStep('Step 00: Read data from json relative to the service');
+    const data = readServiceData();
+    const environments = readEnvironments();
+    const app = new WebApp(page);
+    const nonSaudiUserId = data.nonSaudiUserId;
+    const preBeta = environments['pre-beta'].userPortalUrl;
+
+    await logStep('Step 01: Open the user portal and login');
+    await app.loginPage.gotoHomePage(preBeta);
+    await app.commonMethods.unifiedSakaniLogin(nonSaudiUserId);
+
+    await logStep('Step 02: Navigate to user profile > Verify financial advisory option not present');
+    await app.marketplaceLandingPage.openProfileManagement();
+    await app.registrationPage.verifyFanaticalAdvisoryButtonNotPresent();
+  });
 });
