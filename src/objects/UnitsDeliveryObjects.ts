@@ -145,8 +145,31 @@ export const UnitsDeliveryObjects = {
   maximumNumberOfRejectionsErrorMessage: {
     xpath: "//p[contains(text(),'لقد وصلت إلى الحد الأقصى لعدد مرات الرفض')]",
   },
-
   commentsHistorySection: {
     xpath: "//app-rejection-histories-v6",
+  },
+  //Admin
+  unitDeliveryManagementLink: {
+    role: "link",
+    name: "إدارة تسليم الوحدات",
+  },
+
+  editButton: {
+    xpath: "//button[text()=' تعديل ']",
+  },
+  rejectionLimitTimeInputfield: {
+    xpath: "//input[@formcontrolname='maximum_rejection_limit']",
+  },
+  saveButton: {
+    xpath: "//button[text()=' حفظ ']",
+  },
+  editSuccessfulMessage: {
+    text: "تم حفظ الإعدادات بنجاح",
+  },
+  previewUnitDeliveryContractFileButton: {
+    xpath: "//button/span[text()='معاينة محضر التسليم الخاص بالوحدة']",
+  },
+  previewUnitDeliveryContractPopup: {
+    text: "محضر التسليم الخاص بالوحدة",
   },
 } as const;
