@@ -13,8 +13,6 @@ const writeServiceData = (key: string, value: any) => DataHelper.updateServiceDa
 
 test.describe('Events Tags', () => {
   test('TC-01 Admin add new event tag', { annotation: [{ product: 'Loyalty', type: 'critical' }] as any }, async ({ page }) => {
-    test.setTimeout(0);
-    //read data from json relative to the service
     const environment = readEnvironments();
     const data = readServiceData();
     const app = new WebApp(page);
@@ -46,9 +44,8 @@ test.describe('Events Tags', () => {
     await app.adminProjectPage.clickSaveButton();
     await app.commonMethods.verifyElementVisible(EventsTagsObjects.successfulMessageTagCreation);
   });
+
   test('TC-02 Admin edit the event tag', { annotation: [{ product: 'Loyalty', type: 'critical' }] as any }, async ({ page }) => {
-    test.setTimeout(0);
-    //read data from json relative to the service
     const environment = readEnvironments();
     const data = readServiceData();
     const app = new WebApp(page);
@@ -70,9 +67,8 @@ test.describe('Events Tags', () => {
     await app.commonMethods.clickElement(EventsTagsObjects.updateButton);
     await app.commonMethods.verifyElementVisible(EventsTagsObjects.updatedMessage);
   });
+
   test('TC-03 Admin delete the event tag', { annotation: [{ product: 'Loyalty', type: 'critical' }] as any }, async ({ page }) => {
-    test.setTimeout(0);
-    //read data from json relative to the service
     const environment = readEnvironments();
     const data = readServiceData();
     const app = new WebApp(page);

@@ -44,9 +44,7 @@ export function calculateExpectedMortgage(input: Required<Pick<NewMortgageInput,
 }
 
 /** Highest property price the bank allows when the installment exceeds the debt burden ratio. */
-export function calculateExpectedMaxPropertyPrice(
-  input: Required<Pick<NewMortgageInput, 'monthlyIncome' | 'monthlyLiabilities' | 'downPaymentAmount' | 'annualInterestRate' | 'fundingPeriodYears'>>
-): number {
+export function calculateExpectedMaxPropertyPrice(input: Required<Pick<NewMortgageInput, 'monthlyIncome' | 'monthlyLiabilities' | 'downPaymentAmount' | 'annualInterestRate' | 'fundingPeriodYears'>>): number {
   const allowedMonthlyPayment = input.monthlyIncome * DEBT_BURDEN_RATIO - input.monthlyLiabilities;
   const maxFinancedAmount = (allowedMonthlyPayment * input.fundingPeriodYears * 12) / (1 + (input.annualInterestRate / 100) * input.fundingPeriodYears);
   return maxFinancedAmount + input.downPaymentAmount;
@@ -63,10 +61,7 @@ export class NewMortgageCalculatorPage {
 
   async openMortgageCalculatorPage(userPortalUrl: string) {
     await this.page.goto(new URL(NewMortgageCalculatorObjects.pagePath, userPortalUrl).toString());
-    const rejectCookiesButton = this.page
-      .getByRole(NewMortgageCalculatorObjects.rejectCookiesButton.role, { name: NewMortgageCalculatorObjects.rejectCookiesButton.name })
-      .filter({ visible: true })
-      .first();
+    const rejectCookiesButton = this.page.getByRole(NewMortgageCalculatorObjects.rejectCookiesButton.role, { name: NewMortgageCalculatorObjects.rejectCookiesButton.name }).filter({ visible: true }).first();
     await rejectCookiesButton.click({ timeout: 10_000 }).catch(() => {});
     await expect(this.page.locator(NewMortgageCalculatorObjects.calculatorForm.xpath)).toBeVisible({ timeout: DEFAULT_TIMEOUT });
   }

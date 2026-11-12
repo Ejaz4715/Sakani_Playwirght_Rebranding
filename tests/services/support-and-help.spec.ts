@@ -90,21 +90,17 @@ test.describe('Contact us', () => {
     await expect(support.sendButton).toBeDisabled();
   });
 
-  test(
-    'TC-02 All six fields are marked mandatory (Type of request, National ID, Beneficiary Name, Region, City, Message)',
-    { annotation: [{ product: 'Marketplace', type: 'non-critical' } as any] },
-    async ({ page }) => {
-      const support = new SupportPage(page);
-      await logStep('Step 01: Open the contact form');
-      await support.openContactUs();
-      await support.expectContactLoaded();
+  test('TC-02 All six fields are marked mandatory (Type of request, National ID, Beneficiary Name, Region, City, Message)', { annotation: [{ product: 'Marketplace', type: 'non-critical' } as any] }, async ({ page }) => {
+    const support = new SupportPage(page);
+    await logStep('Step 01: Open the contact form');
+    await support.openContactUs();
+    await support.expectContactLoaded();
 
-      await logStep('Step 02: Confirm required labels are marked as mandatory');
-      const labels = await page.locator('label').allInnerTexts();
-      const required = labels.filter((l) => l.includes('*'));
-      expect(required.length).toBeGreaterThanOrEqual(6);
-    }
-  );
+    await logStep('Step 02: Confirm required labels are marked as mandatory');
+    const labels = await page.locator('label').allInnerTexts();
+    const required = labels.filter((l) => l.includes('*'));
+    expect(required.length).toBeGreaterThanOrEqual(6);
+  });
 
   test('TC-03 Filling only some fields leaves Send disabled', { annotation: [{ product: 'Marketplace', type: 'non-critical' } as any] }, async ({ page }) => {
     const support = new SupportPage(page);

@@ -101,8 +101,7 @@ export const NewMortgageCalculatorObjects = {
 } as const;
 
 /** Amount shown after the "SAR" currency span that follows the given label in the result block. */
-export const resultAmountXpath = (label: string) =>
-  `//app-calculator-result-tpl-v6//*[normalize-space(text())='${label}']/following::span[contains(@class,'sar-currency')][1]/following-sibling::span[1]`;
+export const resultAmountXpath = (label: string) => `//app-calculator-result-tpl-v6//*[normalize-space(text())='${label}']/following::span[contains(@class,'sar-currency')][1]/following-sibling::span[1]`;
 
 /** First non-empty value that follows the given label in the result summary (%, dates). */
 export const resultSummaryXpath = (label: string) => `//app-calculator-result-tpl-v6//span[normalize-space(.)='${label}']/following::span[normalize-space(.)!=''][1]`;
