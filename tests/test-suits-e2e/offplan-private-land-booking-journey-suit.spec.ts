@@ -245,6 +245,33 @@ test.describe('Offplan private land booking journey', () => {
     }
   });
 
+  test('TC-05 User cancels a booking', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+    await logStep('Step 00: Read data from json relative to the service');
+    const data = readServiceData();
+    const environments = readEnvironments();
+    const app = new WebApp(page);
+    const sakaniUserId = data.sakaniUserId;
+    const userPortalUrl = environments.userPortalUrl;
+
+    await logStep('Step 01: Open user portal');
+    await app.loginPage.gotoHomePage(userPortalUrl);
+    await app.loginPage.acceptCookies();
+
+    await logStep('Step 02: Log in with Nafath');
+    await app.loginPage.gotoHomePage(userPortalUrl);
+    await app.commonMethods.unifiedSakaniLogin(sakaniUserId);
+
+    await logStep('Step 03: Open active bookings');
+    await app.bookingPage.openActiveBookings();
+
+    await logStep('Step 04: Open booking details');
+    await app.bookingPage.openBookingDetails();
+
+    await logStep('Step 05: Cancel the booking and validate cancellation success message');
+    await app.bookingPage.cancelBooking();
+    await app.bookingPage.expectCancellationSuccess();
+  });
+
   // Rebranding test cases below
   test('TC-06 User books a second unit Offplan Private Land', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     const app = new WebApp(page);
