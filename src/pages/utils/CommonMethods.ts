@@ -1,6 +1,6 @@
 import { expect, Locator, Page } from "@playwright/test";
 import { DeveloperObjects } from "@objects/DeveloperObjects";
-import { LoginObjects } from "@objects/LoginObjects";
+
 type Element =
   | { readonly xpath: string }
   | {
@@ -165,14 +165,13 @@ export class CommonMethods {
       await acceptCookiesButton.click();
       await this.page
         .locator(DeveloperObjects.acceptCookiesModal)
-        .waitFor({ state: "hidden", timeout: 15000 })
+        .waitFor({ state: "hidden", timeout: 35000 })
         .catch(() => {});
       await this.page
         .locator(".modal-backdrop")
-        .waitFor({ state: "detached", timeout: 15000 })
+        .waitFor({ state: "detached", timeout: 35000 })
         .catch(() => {});
     }
-
     const usernameInput = this.page.locator(
       DeveloperObjects.usernameInput.xpath,
     );
