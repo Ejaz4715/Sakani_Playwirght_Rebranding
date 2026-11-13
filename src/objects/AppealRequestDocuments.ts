@@ -58,7 +58,7 @@ export const AppealRequestDocuments = {
     text: "المستندات المطلوبة",
   },
 
-  closeButton: {
+  closeButtonFrist: {
     role: "button",
     name: "إغلاق",
   },
@@ -75,7 +75,11 @@ export const AppealRequestDocuments = {
     text: "تم أرسال المستندات المطلوبة الى المستفيد بنجاح",
   },
 
-  closePopupButton: {
+  closePopupButtonSecond: {
+    xpath:
+      '(//button[contains(@class, "btn-outline-primary") and normalize-space()="إغلاق"])[2]',
+  },
+  closePopupButtonTherd: {
     role: "button",
     name: "إغلاق",
   },
@@ -87,6 +91,11 @@ export const AppealRequestDocuments = {
 
   deedCopyOption: {
     text: "صورة من الصك العقاري",
+    exact: true,
+  },
+
+  underProcessingLabel: {
+    text: "تحت المعالجة",
     exact: true,
   },
 
@@ -105,8 +114,8 @@ export const AppealRequestDocuments = {
   },
 
   uploadDocumentsButton: {
-    role: "button",
-    name: "تحميل المستندات",
+    text: "تحميل المستندات",
+    exact: true,
   },
 
   confirmButtonfordocumentationRequest: {
@@ -116,11 +125,11 @@ export const AppealRequestDocuments = {
 
   uploadNationalId: {
     xpath:
-      '(//span[normalize-space()="اسحب الملفات وأفلتها هنا لتحميلها."])[1]/ancestor::lib-base-uploader//input[@type="file"]',
+      '(//div[contains(@class, "v6-dashed-box")])[1]/ancestor::lib-base-uploader//input[@type="file"]',
   },
   uploadAbsherBeneficiary: {
     xpath:
-      '(//span[normalize-space()="اسحب الملفات وأفلتها هنا لتحميلها."])[2]/ancestor::lib-base-uploader//input[@type="file"]',
+      '(//div[contains(@class, "v6-dashed-box")])[2]/ancestor::lib-base-uploader//input[@type="file"]',
   },
 
   sendButton: {
@@ -154,5 +163,12 @@ export const AppealRequestDocuments = {
 
   objectionTextarea: {
     xpath: '//textarea[@formcontrolname="explanation"]',
+  },
+  requiredDocumentsLabel: {
+    xpath:
+      "(//div[contains(@class,'appeal-status')][normalize-space()='مستندات مطلوبة'])[1]",
+  },
+  documentsSentSuccessMessage: {
+    text: "تم الإرسال بنجاح",
   },
 } as const;

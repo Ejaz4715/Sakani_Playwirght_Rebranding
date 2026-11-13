@@ -64,7 +64,7 @@ export class AppealRequestPageDocumentsPage {
   }
   async VerifyCloseButton() {
     await this.commonMethod.verifyElementVisible(
-      AppealRequestDocuments.closeButton,
+      AppealRequestDocuments.closeButtonFrist,
     );
   }
   async ClickonSubmitRequestButton() {
@@ -72,9 +72,14 @@ export class AppealRequestPageDocumentsPage {
       AppealRequestDocuments.submitRequestButtonforApproveRequest,
     );
   }
-  async ClickonClosePopupButton() {
+  async ClickonClosePopupButtonsecond() {
     await this.commonMethod.clickElement(
-      AppealRequestDocuments.closePopupButton,
+      AppealRequestDocuments.closePopupButtonSecond,
+    );
+  }
+  async ClickonClosePopupButtonTherd() {
+    await this.commonMethod.clickElement(
+      AppealRequestDocuments.closePopupButtonTherd,
     );
   }
   async ClickonMultiSelectInput() {
@@ -116,6 +121,7 @@ export class AppealRequestPageDocumentsPage {
       AppealRequestDocuments.uploadDocumentsButton,
     );
   }
+
   async uploadACopyOfNationalId(upload: string) {
     await this.commonMethod.uploadFile(
       AppealRequestDocuments.uploadNationalId,
@@ -161,7 +167,7 @@ export class AppealRequestPageDocumentsPage {
   async ClickonClosePopupButtonIfPresent() {
     try {
       await this.commonMethod.clickIfVisible(
-        AppealRequestDocuments.closePopupButton,
+        AppealRequestDocuments.closePopupButtonTherd,
         { timeout: 5000 },
       );
     } catch {}
@@ -170,5 +176,23 @@ export class AppealRequestPageDocumentsPage {
     const thirdButton = this.page.getByRole("button").nth(2);
     await thirdButton.waitFor({ state: "visible" });
     await thirdButton.click();
+  }
+
+  async VerifyUnderProceesingLapleDisplay() {
+    await this.commonMethod.verifyElementVisible(
+      AppealRequestDocuments.underProcessingLabel,
+    );
+  }
+
+  async VerifyRequiredDocumentsLabel() {
+    await this.commonMethod.verifyElementVisible(
+      AppealRequestDocuments.requiredDocumentsLabel,
+    );
+  }
+
+  async VerifyDocumentsSentSuccessMessage() {
+    await this.commonMethod.verifyElementVisible(
+      AppealRequestDocuments.documentsSentSuccessMessage,
+    );
   }
 }
