@@ -132,10 +132,7 @@ export class Header {
         },
         {
           timeout: 120_000,
-          message:
-            'Logout did not return to the application. It hands off to ' +
-            '`…-partners.housingapps.sa/authentication/slo`, which must relay back to ' +
-            'returnUrl; "navigation-failed" means that host could not be reached at all.',
+          message: 'Logout did not return to the application. It hands off to ' + '`…-partners.housingapps.sa/authentication/slo`, which must relay back to ' + 'returnUrl; "navigation-failed" means that host could not be reached at all.',
         }
       )
       .toBe('returned-to-app');

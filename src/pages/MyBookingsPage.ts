@@ -97,11 +97,7 @@ export class MyBookingsPage extends BasePage {
   }
 
   async tabLabels(): Promise<string[]> {
-    return this.page.evaluate(() =>
-      [...document.querySelectorAll('a')]
-        .map((a) => (a.textContent ?? '').replace(/\s+/g, ' ').trim())
-        .filter((t) => ['All', 'Active', 'Cancelled', 'Completed', 'Unpaid', 'Ready to sign'].includes(t))
-    );
+    return this.page.evaluate(() => [...document.querySelectorAll('a')].map((a) => (a.textContent ?? '').replace(/\s+/g, ' ').trim()).filter((t) => ['All', 'Active', 'Cancelled', 'Completed', 'Unpaid', 'Ready to sign'].includes(t)));
   }
 
   async selectTab(tab: Locator): Promise<void> {

@@ -15,24 +15,20 @@ test.describe('Account - My company bookings and payments', () => {
     await expect(profile.bookingCard).toBeVisible({ timeout: 60_000 });
   });
 
-  test(
-    'TC-02 Company bookings page exposes all four status tabs (All, Unpaid, Paid, Cancelled)',
-    { annotation: [{ product: 'Marketplace', type: 'non-critical' } as any] },
-    async ({ authenticatedPageCompanyUser, page }) => {
-      const profile = new UserProfilePage(authenticatedPageCompanyUser);
-      const myBookings = new MyBookingsPage(page);
+  test('TC-02 Company bookings page exposes all four status tabs (All, Unpaid, Paid, Cancelled)', { annotation: [{ product: 'Marketplace', type: 'non-critical' } as any] }, async ({ authenticatedPageCompanyUser, page }) => {
+    const profile = new UserProfilePage(authenticatedPageCompanyUser);
+    const myBookings = new MyBookingsPage(page);
 
-      await logStep('Step 01: Open the company bookings page');
-      await profile.openCompanyBookings();
-      await expect(profile.bookingCard).toBeVisible({ timeout: 60_000 });
+    await logStep('Step 01: Open the company bookings page');
+    await profile.openCompanyBookings();
+    await expect(profile.bookingCard).toBeVisible({ timeout: 60_000 });
 
-      await logStep('Step 02: Validate the booking tabs are available');
-      const tabs = await myBookings.tabLabels();
-      for (const tab of ['All', 'Active', 'Cancelled', 'Completed']) {
-        expect(tabs, `Status tab "${tab}" should be present`).toContain(tab);
-      }
+    await logStep('Step 02: Validate the booking tabs are available');
+    const tabs = await myBookings.tabLabels();
+    for (const tab of ['All', 'Active', 'Cancelled', 'Completed']) {
+      expect(tabs, `Status tab "${tab}" should be present`).toContain(tab);
     }
-  );
+  });
 
   test('TC-03 The Active tab filters only lists active company bookings', { annotation: [{ product: 'Marketplace', type: 'non-critical' } as any] }, async ({ authenticatedPageCompanyUser, page }) => {
     const profile = new UserProfilePage(authenticatedPageCompanyUser);
@@ -143,18 +139,14 @@ test.describe('Account - My company bookings and payments', () => {
     await expect(profile.invoiceCard).toBeVisible({ timeout: 60_000 });
   });
 
-  test(
-    'TC-10 Company payments page exposes all four status tabs (All, Unpaid, Paid, Cancelled)',
-    { annotation: [{ product: 'Marketplace', type: 'non-critical' } as any] },
-    async ({ authenticatedPageCompanyUser }) => {
-      const profile = new UserProfilePage(authenticatedPageCompanyUser);
+  test('TC-10 Company payments page exposes all four status tabs (All, Unpaid, Paid, Cancelled)', { annotation: [{ product: 'Marketplace', type: 'non-critical' } as any] }, async ({ authenticatedPageCompanyUser }) => {
+    const profile = new UserProfilePage(authenticatedPageCompanyUser);
 
-      await logStep('Step 01: Open the payments page');
-      await profile.openCompanyPayments();
-      await expect(profile.invoiceCard).toBeVisible({ timeout: 60_000 });
+    await logStep('Step 01: Open the payments page');
+    await profile.openCompanyPayments();
+    await expect(profile.invoiceCard).toBeVisible({ timeout: 60_000 });
 
-      await logStep('Step 02: Validate the payment tabs');
-      expect(await profile.visibleTabLabels(['All', 'Unpaid', 'Paid', 'Cancelled'])).toEqual(expect.arrayContaining(['All', 'Unpaid', 'Paid', 'Cancelled']));
-    }
-  );
+    await logStep('Step 02: Validate the payment tabs');
+    expect(await profile.visibleTabLabels(['All', 'Unpaid', 'Paid', 'Cancelled'])).toEqual(expect.arrayContaining(['All', 'Unpaid', 'Paid', 'Cancelled']));
+  });
 });

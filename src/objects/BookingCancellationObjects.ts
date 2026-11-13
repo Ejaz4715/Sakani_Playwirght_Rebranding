@@ -6,23 +6,34 @@ export const BookingCancellationObjects = {
     role: 'tab',
     name: 'نشطة',
   },
+  unitCode: {
+    xpath: "(//div[text() = ' رمز الوحدة ']/following-sibling::div/child::div)[1]",
+  },
   completedBookingsTab: {
     role: 'tab',
     name: 'مكتملة',
   },
+  cancelledBookingsTab: {
+    role: 'tab',
+    name: 'ملغاة',
+  },
   bookingDetailsButton: {
     xpath: "(//button[text()=' عرض التفاصيل '])[1]",
   },
-  cancelBookingText: {
-    text: 'إلغاء الحجز',
+  cancelBookingButton: {
+    xpath: "//button[contains(text(),'إلغاء الحجز')]",
   },
   continueButton: {
-    role: 'button',
-    name: 'المتابعة',
+    xpath: "//button[contains(text(),'متابعة إلغاء الحجز')]",
   },
-  projectLocationRadio: {
-    role: 'radio',
-    name: 'موقع المشروع',
+  othersRadioButton: {
+    xpath: "//input[@value='others']/parent::label",
+  },
+  othersTextArea: {
+    xpath: "//textarea[@formcontrolname='other_reason']",
+  },
+  saveAndContinueButton: {
+    xpath: "//button[contains(text(),' حفظ ومتابعة ')]",
   },
   confirmCancelButton: {
     role: 'button',
@@ -33,8 +44,22 @@ export const BookingCancellationObjects = {
     name: 'نعم',
   },
   cancellationSuccessHeading: {
-    role: 'heading',
-    name: 'تم إلغاء الحجز بنجاح!',
+    text: 'تم إلغاء الحجز بنجاح!',
+  },
+  rejectButton: {
+    xpath: "//button[contains(text(),'رفض')]",
+  },
+  rejectReasonTextArea: {
+    xpath: "//textarea[@formcontrolname='reject_reason']",
+  },
+  confirmRejectButton: {
+    xpath: "//button[contains(text(),'تأكيد الرفض')]",
+  },
+  rejectionSuccessHeading: {
+    text: 'تم رفض العرض بنجاح!',
+  },
+  myBookingsButton: {
+    xpath: "//button[contains(text(),'حجوزاتي')]",
   },
   refudedStatus: {
     xpath: "//app-booking-refund-fee-badge/descendant::div[contains(text(),'المبلغ المسترد')]",
@@ -206,5 +231,19 @@ export const BookingCancellationObjects = {
   },
   demographicSection: {
     xpath: '//app-dx-insight-demographic-overview',
+  },
+  //ready made booking + cancellation
+  termsAndConditionsCheckbox: {
+    xpath: "//input[@id='readymadeAgreeTerms']",
+  },
+
+  confirmBookingButton: {
+    xpath: "//button[contains(text(),'تأكيد الحجز')]",
+  },
+  confirmBookingSuccessMessage: {
+    text: 'تم تأكيد الحجز',
+  },
+  unitCard: {
+    xpath: "//app-marketplace-unit-card-v6/descendant::span[text() ='SAR']",
   },
 } as const;

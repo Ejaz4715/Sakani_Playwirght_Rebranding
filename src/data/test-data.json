@@ -10,12 +10,12 @@
   },
   "services": {
     "offplan-booking": {
-      "projectName": "Automation Project Offplan 20261104163524",
+      "projectName": "Automation Project 20261104102801",
       "adminUsername": "super_admin@test1-admin-sakani.housingapps.sa",
       "adminPassword": "admin",
       "developerUserId": "1023129537",
       "sakaniUserId": "1300061022",
-      "bookedUnitCode": "01-01-0831-14-110"
+      "bookedUnitCode": "01-01-0826-22-118"
     },
     "auction-journey": {
       "projectName": "",
@@ -132,9 +132,9 @@
       "adminUsername": "super_admin@test1-admin-sakani.housingapps.sa",
       "adminPassword": "admin",
       "developerUserId": "1023129537",
-      "projectName": "Automation Project 20261104102801",
+      "projectName": "Automation Project 20261112121634",
       "sakaniUserId": "1772087118",
-      "deliveryUnitCode": "01-01-0826-7-103"
+      "deliveryUnitCode": "01-01-0857-5-101"
     },
     "payments-and-transactions": {
       "sakaniUserId": "1019075926"
@@ -204,9 +204,10 @@
       "projectName": "Automation Project 20261007095117",
       "sakaniUserId": "1300070834"
     },
-    "view-project-unit-readymade": {
-      "projectName": "readymade private land",
-      "sakaniUserId": "1441376098"
+    "ready-made-project": {
+      "projectNameView": "readymade private land",
+      "projectNameBooking": "مشروع مساكن طيبة 5",
+      "sakaniUserId": "1300061236"
     },
     "update-unit": {
       "projectName": "Automation Project Offplan 20261018082240",
@@ -248,8 +249,8 @@
     "flexible-payment-schedule": {
       "projectName": "Automation Project P_003",
       "developerUserId": "1023129537",
-      "scheduleTitleAr": "جدول دفع مرن لخدمات أتمتة الاختبارات 20261028121358",
-      "scheduleTitleEn": "Automation Flexible Payment Schedule 20261012104113",
+      "scheduleTitleAr": "جدول دفع مرن لخدمات أتمتة الاختبارات 20261112111234",
+      "scheduleTitleEn": "Automation Flexible Payment Schedule 20261112111234",
       "userId": "1441376098",
       "bookedUnitCode": "02-01-0149-15-111"
     },
@@ -373,7 +374,6 @@
       "sakaniUserId": "1001956406",
       "comments": "appeal request_Documents"
     },
-
     "market-exploring": {
       "sakaniUserId": "1300070834",
       "filterOption": "فيلا",
@@ -382,23 +382,7 @@
     "sakani-offers": {
       "sakaniUserId": "1300070834",
       "sortOptions": ["من الأحدث إلى الأقدم", "من الأقدم إلى الأحدث"],
-      "filterOptions": [
-        "الخدمات المنزلية",
-        "التسوق",
-        "عروض الهدايا والإكسسوارات",
-        "الترفيه",
-        "الموضة",
-        "الصحة والجمال",
-        "المأكولات والمشروبات",
-        "السفر والسياحة",
-        "خدمات السيارات",
-        "التعليم",
-        "الأعمال",
-        "أونلاين",
-        "في الفروع",
-        "المستفيد فقط",
-        "عروض حصرية"
-      ]
+      "filterOptions": ["الخدمات المنزلية", "التسوق", "عروض الهدايا والإكسسوارات", "الترفيه", "الموضة", "الصحة والجمال", "المأكولات والمشروبات", "السفر والسياحة", "خدمات السيارات", "التعليم", "الأعمال", "أونلاين", "في الفروع", "المستفيد فقط", "عروض حصرية"]
     },
     "conveyance-service": {
       "sakaniUserId": "1300070834",

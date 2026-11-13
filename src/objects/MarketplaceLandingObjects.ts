@@ -12,7 +12,7 @@ export const MarketplaceLandingObjects = {
     xpath: "(//app-global-search-modal-result-block/descendant::div[contains(@class,'title')]/span)[1]",
   },
   readyMadeUnitCard: {
-    xpath: "//app-dx-project-unit-card/descendant::span[text() ='SAR']",
+    xpath: "//app-project-unit-card-v6/descendant::span[text() ='SAR']",
   },
   searchTextField: 'app-smart-search-input input',
   searchResultsCard: 'app-smart-search-dropdown-section',

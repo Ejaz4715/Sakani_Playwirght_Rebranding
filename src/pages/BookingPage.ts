@@ -20,6 +20,10 @@ export class BookingPage {
     await expect(locator).toBeVisible({ timeout: 90000 });
     await locator.check();
   }
+  async fill(locator, value) {
+    await expect(locator).toBeVisible({ timeout: 90000 });
+    await locator.fill(value);
+  }
 
   async openActiveBookings() {
     const userProfileButton = this.page.locator(BookingCancellationObjects.userProfileButton);
@@ -45,6 +49,15 @@ export class BookingPage {
     await expect(completedBookingsTab).toBeVisible({ timeout: 150000 });
     await this.click(completedBookingsTab);
   }
+  async openCancelledAfterReJectSaleContractBookings() {
+    const myBookingsButton = this.page.locator(BookingCancellationObjects.myBookingsButton.xpath);
+    await expect(myBookingsButton).toBeVisible({ timeout: 90000 });
+    await this.click(myBookingsButton);
+
+    const cancelledBookingsTab = this.page.getByRole(BookingCancellationObjects.cancelledBookingsTab.role, { name: BookingCancellationObjects.cancelledBookingsTab.name });
+    await expect(cancelledBookingsTab).toBeVisible({ timeout: 150000 });
+    await this.click(cancelledBookingsTab);
+  }
 
   async clickProfileIcon() {
     const userProfileButton = this.page.locator(BookingCancellationObjects.userProfileButton);
@@ -67,31 +80,60 @@ export class BookingPage {
   }
 
   async getBookedUnitCode() {
-    const unitCode = this.page.locator("(//div[text() = ' رمز الوحدة ']/following-sibling::div/child::div)[1]");
+    const unitCode = this.page.locator(BookingCancellationObjects.unitCode.xpath);
     await unitCode.waitFor({ state: 'visible', timeout: 30000 });
     return (await unitCode.textContent())?.trim();
   }
 
   async cancelBooking() {
-    const cancelBookingText = this.page.getByText(BookingCancellationObjects.cancelBookingText.text);
-    await this.click(cancelBookingText);
+    const cancelBookingButton = this.page.locator(BookingCancellationObjects.cancelBookingButton.xpath);
+    await this.page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    await this.page.waitForTimeout(2000);
+    await this.click(cancelBookingButton);
 
-    const continueButton = this.page.getByRole(BookingCancellationObjects.continueButton.role, { name: BookingCancellationObjects.continueButton.name });
+    const continueButton = this.page.locator(BookingCancellationObjects.continueButton.xpath);
     await this.click(continueButton);
 
-    const projectLocationRadio = this.page.getByRole(BookingCancellationObjects.projectLocationRadio.role, { name: BookingCancellationObjects.projectLocationRadio.name });
-    await this.check(projectLocationRadio);
+    const othersRadioButton = this.page.locator(BookingCancellationObjects.othersRadioButton.xpath);
+    await this.check(othersRadioButton);
 
-    const confirmCancelButton = this.page.getByRole(BookingCancellationObjects.confirmCancelButton.role, { name: BookingCancellationObjects.confirmCancelButton.name });
-    await this.click(confirmCancelButton);
+    const othersTextArea = this.page.locator(BookingCancellationObjects.othersTextArea.xpath);
+    await this.fill(othersTextArea, 'سبب إلغاء الحجز');
 
-    const yesButton = this.page.getByRole(BookingCancellationObjects.yesButton.role, { name: BookingCancellationObjects.yesButton.name });
-    await this.click(yesButton);
+    const saveAndContinueButton = this.page.locator(BookingCancellationObjects.saveAndContinueButton.xpath);
+    await this.click(saveAndContinueButton);
+
+    // const confirmCancelButton = this.page.getByRole(BookingCancellationObjects.confirmCancelButton.role, { name: BookingCancellationObjects.confirmCancelButton.name });
+    // await this.click(confirmCancelButton);
+
+    // const yesButton = this.page.getByRole(BookingCancellationObjects.yesButton.role, { name: BookingCancellationObjects.yesButton.name });
+    // await this.click(yesButton);
   }
 
   async expectCancellationSuccess() {
-    const successHeading = this.page.getByRole(BookingCancellationObjects.cancellationSuccessHeading.role, { name: BookingCancellationObjects.cancellationSuccessHeading.name });
+    const successHeading = this.page.getByText(BookingCancellationObjects.cancellationSuccessHeading.text);
     await expect(successHeading, 'Cancellation success message is not visible').toBeVisible();
+  }
+
+  async clickOnRejectButton() {
+    const rejectButton = this.page.locator(BookingCancellationObjects.rejectButton.xpath);
+    await this.click(rejectButton);
+  }
+  async fillRejectionReason() {
+    const rejectReasonTextArea = this.page.locator(BookingCancellationObjects.rejectReasonTextArea.xpath);
+    await this.fill(rejectReasonTextArea, 'سبب رفض العقد');
+  }
+  async clickOnConfirmRejectButton() {
+    const confirmRejectButton = this.page.locator(BookingCancellationObjects.confirmRejectButton.xpath);
+    await this.click(confirmRejectButton);
+  }
+  async expectRejectionSuccess() {
+    const rejectionSuccessHeading = this.page.getByText(BookingCancellationObjects.rejectionSuccessHeading.text);
+    await expect(rejectionSuccessHeading, 'Rejection success message is not visible').toBeVisible();
+  }
+  async expectBookingIsCancelled(value: string) {
+    const unitCode = this.page.getByText(value, { exact: true });
+    await expect(unitCode, `Booking with unit code "${value}" is not visible`).toBeVisible();
   }
 
   async cancelMohLandBooking(otp = ['1', '2', '3', '4']) {
@@ -228,5 +270,20 @@ export class BookingPage {
   async clickOnRegisterOfInterest() {
     const registerOfInterest = this.page.getByRole(BookingCancellationObjects.registerOfInterest.role, { name: BookingCancellationObjects.registerOfInterest.name });
     await this.click(registerOfInterest);
+  }
+  //ready made rebranding
+  async checkOnTermsAndConditions() {
+    const termsAndConditionsCheckbox = this.page.locator(BookingCancellationObjects.termsAndConditionsCheckbox.xpath);
+    await expect(termsAndConditionsCheckbox).toBeVisible({ timeout: 120000 });
+    await termsAndConditionsCheckbox.click();
+  }
+  async clickOnConfirmBookingButton() {
+    const confirmBookingButton = this.page.locator(BookingCancellationObjects.confirmBookingButton.xpath);
+    await expect(confirmBookingButton).toBeVisible({ timeout: 120000 });
+    await confirmBookingButton.click();
+  }
+  async verifyConfirmBookingSuccessMessageIsPresent() {
+    const confirmBookingSuccessMessage = this.page.getByText(BookingCancellationObjects.confirmBookingSuccessMessage.text);
+    await expect(confirmBookingSuccessMessage).toBeVisible({ timeout: 120000 });
   }
 }

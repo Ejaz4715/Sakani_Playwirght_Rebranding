@@ -1,8 +1,8 @@
 // @ts-nocheck
-import { ProfileManagementObjects } from "@objects/ProfileManagementObjects";
-import { Deflate } from "node:zlib";
+import { ProfileManagementObjects } from '@objects/ProfileManagementObjects';
+import { Deflate } from 'node:zlib';
 
-const { Page, expect } = require("@playwright/test");
+const { Page, expect } = require('@playwright/test');
 
 export class OffPlanBasketMultipleBookingPage {
   page: Page;
@@ -15,7 +15,7 @@ export class OffPlanBasketMultipleBookingPage {
 
   async clickMyActivities() {
     await this.page.locator(ProfileManagementObjects.activities).waitFor({
-      state: "visible",
+      state: 'visible',
       timeout: this.DEFAULT_TIMEOUT,
     });
     await this.page.locator(ProfileManagementObjects.activities).click();
@@ -23,7 +23,7 @@ export class OffPlanBasketMultipleBookingPage {
 
   async clickOnBookings() {
     await this.page.locator(ProfileManagementObjects.bookings).waitFor({
-      state: "visible",
+      state: 'visible',
       timeout: this.DEFAULT_TIMEOUT,
     });
     await this.page.locator(ProfileManagementObjects.bookings).click();
@@ -31,47 +31,39 @@ export class OffPlanBasketMultipleBookingPage {
 
   async clickOnActiveBooking() {
     await this.page.locator(ProfileManagementObjects.activeBookings).waitFor({
-      state: "visible",
+      state: 'visible',
       timeout: this.DEFAULT_TIMEOUT,
     });
     await this.page.locator(ProfileManagementObjects.activeBookings).click();
   }
 
   async clickOnCompanyActiveBookings() {
-    await this.page
-      .locator(ProfileManagementObjects.companyActiveBookings)
-      .waitFor({
-        state: "visible",
-        timeout: this.DEFAULT_TIMEOUT,
-      });
-    await this.page
-      .locator(ProfileManagementObjects.companyActiveBookings)
-      .click();
+    await this.page.locator(ProfileManagementObjects.companyActiveBookings).waitFor({
+      state: 'visible',
+      timeout: this.DEFAULT_TIMEOUT,
+    });
+    await this.page.locator(ProfileManagementObjects.companyActiveBookings).click();
   }
 
   async clickOnNotBilled() {
     await this.page.locator(ProfileManagementObjects.notBilledButton).waitFor({
-      state: "visible",
+      state: 'visible',
       timeout: this.DEFAULT_TIMEOUT,
     });
     await this.page.locator(ProfileManagementObjects.notBilledButton).click();
   }
 
   async clickOnReadyForSign() {
-    await this.page
-      .locator(ProfileManagementObjects.readyForSignButton)
-      .waitFor({
-        state: "visible",
-        timeout: this.DEFAULT_TIMEOUT,
-      });
-    await this.page
-      .locator(ProfileManagementObjects.readyForSignButton)
-      .click();
+    await this.page.locator(ProfileManagementObjects.readyForSignButton).waitFor({
+      state: 'visible',
+      timeout: this.DEFAULT_TIMEOUT,
+    });
+    await this.page.locator(ProfileManagementObjects.readyForSignButton).click();
   }
 
   async getUnit1Code() {
     await this.page.locator(ProfileManagementObjects.unit1Code).waitFor({
-      state: "visible",
+      state: 'visible',
       timeout: this.DEFAULT_TIMEOUT,
     });
     return this.page.locator(ProfileManagementObjects.unit1Code).textContent();
@@ -79,7 +71,7 @@ export class OffPlanBasketMultipleBookingPage {
 
   async getUnit2Code() {
     await this.page.locator(ProfileManagementObjects.unit2Code).waitFor({
-      state: "visible",
+      state: 'visible',
       timeout: this.DEFAULT_TIMEOUT,
     });
     return this.page.locator(ProfileManagementObjects.unit2Code).textContent();
@@ -87,7 +79,7 @@ export class OffPlanBasketMultipleBookingPage {
 
   async clickOnUnit1CheckBox() {
     await this.page.locator(ProfileManagementObjects.unit1Chckbox).waitFor({
-      state: "visible",
+      state: 'visible',
       timeout: this.DEFAULT_TIMEOUT,
     });
     await this.page.locator(ProfileManagementObjects.unit1Chckbox).click();
@@ -95,7 +87,7 @@ export class OffPlanBasketMultipleBookingPage {
 
   async clickOnUnit2CheckBox() {
     await this.page.locator(ProfileManagementObjects.unit2CheckBox).waitFor({
-      state: "visible",
+      state: 'visible',
       timeout: this.DEFAULT_TIMEOUT,
     });
     await this.page.locator(ProfileManagementObjects.unit2CheckBox).click();
@@ -103,7 +95,7 @@ export class OffPlanBasketMultipleBookingPage {
 
   async clickOnContinue() {
     await this.page.locator(ProfileManagementObjects.continueButton).waitFor({
-      state: "visible",
+      state: 'visible',
       timeout: this.DEFAULT_TIMEOUT,
     });
     await this.page.locator(ProfileManagementObjects.continueButton).click();
@@ -111,27 +103,23 @@ export class OffPlanBasketMultipleBookingPage {
 
   async clickOnPayBills() {
     await this.page.locator(ProfileManagementObjects.payBillsButton).waitFor({
-      state: "visible",
+      state: 'visible',
       timeout: this.DEFAULT_TIMEOUT,
     });
     await this.page.locator(ProfileManagementObjects.payBillsButton).click();
   }
 
   async isSuccessfulPayment() {
-    await this.page
-      .locator(ProfileManagementObjects.successfulPaymentMessage)
-      .waitFor({
-        state: "visible",
-        timeout: this.DEFAULT_TIMEOUT,
-      });
-    return await this.page
-      .locator(ProfileManagementObjects.successfulPaymentMessage)
-      .isVisible();
+    await this.page.locator(ProfileManagementObjects.successfulPaymentMessage).waitFor({
+      state: 'visible',
+      timeout: this.DEFAULT_TIMEOUT,
+    });
+    return await this.page.locator(ProfileManagementObjects.successfulPaymentMessage).isVisible();
   }
 
   async clickOnProjectCheckBox() {
     await this.page.locator(ProfileManagementObjects.projectCheckBox).waitFor({
-      state: "visible",
+      state: 'visible',
       timeout: this.DEFAULT_TIMEOUT,
     });
     await this.page.locator(ProfileManagementObjects.projectCheckBox).click();
@@ -139,7 +127,7 @@ export class OffPlanBasketMultipleBookingPage {
 
   async clickOnAgreeOnAll() {
     await this.page.locator(ProfileManagementObjects.agreeOnAll).waitFor({
-      state: "visible",
+      state: 'visible',
       timeout: this.DEFAULT_TIMEOUT,
     });
     await this.page.locator(ProfileManagementObjects.agreeOnAll).click();
@@ -147,96 +135,72 @@ export class OffPlanBasketMultipleBookingPage {
 
   async typeVerifyOtpCode() {
     await this.page.locator(ProfileManagementObjects.verifyField).waitFor({
-      state: "visible",
+      state: 'visible',
       timeout: this.DEFAULT_TIMEOUT,
     });
     await this.page.locator(ProfileManagementObjects.verifyField).focus();
-    await this.page.keyboard.type("1234");
+    await this.page.keyboard.type('1234');
   }
 
   async clickOnVerify() {
     await this.page.locator(ProfileManagementObjects.verifyButton).waitFor({
-      state: "visible",
+      state: 'visible',
       timeout: this.DEFAULT_TIMEOUT,
     });
     await this.page.locator(ProfileManagementObjects.verifyButton).click();
   }
 
   async clickOnAllProjectUnitsToApprove() {
-    await this.page
-      .locator(ProfileManagementObjects.allProjectsRadioButton)
-      .waitFor({
-        state: "visible",
-        timeout: this.DEFAULT_TIMEOUT,
-      });
-    await this.page
-      .locator(ProfileManagementObjects.allProjectsRadioButton)
-      .click();
+    await this.page.locator(ProfileManagementObjects.allProjectsRadioButton).waitFor({
+      state: 'visible',
+      timeout: this.DEFAULT_TIMEOUT,
+    });
+    await this.page.locator(ProfileManagementObjects.allProjectsRadioButton).click();
   }
 
   async isSuccessfulContractSignMessage() {
-    await this.page
-      .locator(ProfileManagementObjects.successfulContractSignMessage)
-      .waitFor({
-        state: "visible",
-        timeout: this.DEFAULT_TIMEOUT,
-      });
-    return await this.page
-      .locator(ProfileManagementObjects.successfulContractSignMessage)
-      .isVisible();
+    await this.page.locator(ProfileManagementObjects.successfulContractSignMessage).waitFor({
+      state: 'visible',
+      timeout: this.DEFAULT_TIMEOUT,
+    });
+    return await this.page.locator(ProfileManagementObjects.successfulContractSignMessage).isVisible();
   }
 
   async clickOnCompanies() {
     await this.page.locator(ProfileManagementObjects.companies).waitFor({
-      state: "visible",
+      state: 'visible',
       timeout: this.DEFAULT_TIMEOUT,
     });
     await this.page.locator(ProfileManagementObjects.companies).click();
   }
 
   async clickOnCompanyReservations() {
-    await this.page
-      .locator(ProfileManagementObjects.companyReservations)
-      .waitFor({
-        state: "visible",
-        timeout: this.DEFAULT_TIMEOUT,
-      });
-    await this.page
-      .locator(ProfileManagementObjects.companyReservations)
-      .click();
+    await this.page.locator(ProfileManagementObjects.companyReservations).waitFor({
+      state: 'visible',
+      timeout: this.DEFAULT_TIMEOUT,
+    });
+    await this.page.locator(ProfileManagementObjects.companyReservations).click();
   }
 
   async clickOnShowDetails() {
-    await this.page
-      .locator(ProfileManagementObjects.companyUnitDetailsButton)
-      .waitFor({
-        state: "visible",
-        timeout: this.DEFAULT_TIMEOUT,
-      });
-    await this.page
-      .locator(ProfileManagementObjects.companyUnitDetailsButton)
-      .click();
+    await this.page.locator(ProfileManagementObjects.companyUnitDetailsButton).waitFor({
+      state: 'visible',
+      timeout: this.DEFAULT_TIMEOUT,
+    });
+    await this.page.locator(ProfileManagementObjects.companyUnitDetailsButton).click();
   }
 
   async clickOnCompanyReservationFeesPayment() {
-    await this.page
-      .locator(ProfileManagementObjects.companyPayBillsButton)
-      .waitFor({
-        state: "visible",
-        timeout: this.DEFAULT_TIMEOUT,
-      });
-    await this.page
-      .locator(ProfileManagementObjects.companyPayBillsButton)
-      .click();
+    await this.page.locator(ProfileManagementObjects.companyPayBillsButton).waitFor({
+      state: 'visible',
+      timeout: this.DEFAULT_TIMEOUT,
+    });
+    await this.page.locator(ProfileManagementObjects.companyPayBillsButton).click();
   }
 
   async getCompanyUnitCode() {
-    await this.page.keyboard.press("PageDown");
-    await this.page
-      .locator(ProfileManagementObjects.unit1Code)
-      .waitFor({ state: "visible", timeout: this.DEFAULT_TIMEOUT });
-    return await this.page
-      .locator(ProfileManagementObjects.unit1Code)
-      .textContent();
+    await this.page.keyboard.press('PageDown');
+    await this.page.locator(ProfileManagementObjects.unit1Code).waitFor({ state: 'visible', timeout: this.DEFAULT_TIMEOUT });
+    return await this.page.locator(ProfileManagementObjects.unit1Code).textContent();
   }
 }

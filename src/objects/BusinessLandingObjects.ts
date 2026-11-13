@@ -27,8 +27,7 @@ export const BusinessLandingObjects = {
     xpath: "//button[normalize-space()='Explore Digitar for broker']",
   },
   exploreDigitarForRealEstateDeveloperButton: {
-    xpath:
-      "//button[normalize-space()='Explore digitar for real estate developer']",
+    xpath: "//button[normalize-space()='Explore digitar for real estate developer']",
   },
   exploreDigitarForDataAnalystButton: {
     xpath: "//button[normalize-space()='Explore digitar for data analyst']",
@@ -40,7 +39,7 @@ export const BusinessLandingObjects = {
     xpath: "//button[normalize-space()='العربية']",
   },
   businessUserIconButton: {
-    xpath: "//skn-avatar-v6/parent::button",
+    xpath: '//skn-avatar-v6/parent::button',
   },
   switchToIndividualButton: {
     xpath: "//span[normalize-space()='الانتقال إلى الأفراد']",

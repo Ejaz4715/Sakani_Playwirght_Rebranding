@@ -144,75 +144,71 @@ test.describe('Add, update or delete the units of an offplan project through SAP
     }
   });
 
-  test(
-    'TC-05 Developer update the unit target segment and checks the update is reflected for the targetted unit',
-    { annotation: [{ product: 'Marketplace', type: 'non-critical' }] as any },
-    async ({ page }) => {
-      test.setTimeout(0);
-      await logStep('Step 00: Read data from json relative to the service');
-      const environment = readEnvironments();
-      const data = readServiceData();
-      const app = new WebApp(page);
-      const projectName = data.projectName;
-      const developerUserId = data.developerUserId;
-      const sapaPortalUrl = environment.sapaPortalUrl;
-      const unitCode = data.newUnitCode;
-      const filePath = path.join(process.cwd(), 'src', 'data', 'update-unit.xlsx');
+  test('TC-05 Developer update the unit target segment and checks the update is reflected for the targetted unit', { annotation: [{ product: 'Marketplace', type: 'non-critical' }] as any }, async ({ page }) => {
+    test.setTimeout(0);
+    await logStep('Step 00: Read data from json relative to the service');
+    const environment = readEnvironments();
+    const data = readServiceData();
+    const app = new WebApp(page);
+    const projectName = data.projectName;
+    const developerUserId = data.developerUserId;
+    const sapaPortalUrl = environment.sapaPortalUrl;
+    const unitCode = data.newUnitCode;
+    const filePath = path.join(process.cwd(), 'src', 'data', 'update-unit.xlsx');
 
-      await logStep('Step 01: Login as developer to sapa portal and open the project');
-      await app.partnersLoginPage.gotoAuth(sapaPortalUrl);
-      // await app.partnersLoginPage.loginToSapaPortal(developerUserId);
-      await page.pause();
-      await app.partnersLoginPage.switchRoleToDeveloper();
+    await logStep('Step 01: Login as developer to sapa portal and open the project');
+    await app.partnersLoginPage.gotoAuth(sapaPortalUrl);
+    // await app.partnersLoginPage.loginToSapaPortal(developerUserId);
+    await page.pause();
+    await app.partnersLoginPage.switchRoleToDeveloper();
 
-      await logStep('Step 02: Search for project');
-      await app.developerProjectPage.openProjectBySearch(projectName);
+    await logStep('Step 02: Search for project');
+    await app.developerProjectPage.openProjectBySearch(projectName);
 
-      await logStep('Step 03: Navigate to project units');
-      await app.updateUnitsPage.clickUnitDetailsTab();
+    await logStep('Step 03: Navigate to project units');
+    await app.updateUnitsPage.clickUnitDetailsTab();
 
-      await logStep('Step 04: Search for a unit by unit code');
-      await app.updateUnitsPage.selectUnitCodeSearchCriteria();
-      await app.updateUnitsPage.fillUnitCode(unitCode);
-      await app.updateUnitsPage.clickSearchUnitButton();
+    await logStep('Step 04: Search for a unit by unit code');
+    await app.updateUnitsPage.selectUnitCodeSearchCriteria();
+    await app.updateUnitsPage.fillUnitCode(unitCode);
+    await app.updateUnitsPage.clickSearchUnitButton();
 
-      await logStep('Step 05: Get the current channels of the unit');
-      await page.waitForTimeout(3000);
-      const targetSegmentBefore = await app.updateUnitsPage.getUnitTargetSegment();
+    await logStep('Step 05: Get the current channels of the unit');
+    await page.waitForTimeout(3000);
+    const targetSegmentBefore = await app.updateUnitsPage.getUnitTargetSegment();
 
-      await logStep('Step 06: Navigate to add unit > Upload units file');
-      await app.updateUnitsPage.selectManageProjectOption('تحديث وحدات المشروع');
-      await app.updateUnitsPage.selectApartmentUnitType();
-      await app.updateUnitsPage.uploadFile(filePath);
+    await logStep('Step 06: Navigate to add unit > Upload units file');
+    await app.updateUnitsPage.selectManageProjectOption('تحديث وحدات المشروع');
+    await app.updateUnitsPage.selectApartmentUnitType();
+    await app.updateUnitsPage.uploadFile(filePath);
 
-      await logStep('Step 07: Add the file and confirm');
-      await app.updateUnitsPage.clickAddUnitFile();
-      await page.waitForTimeout(1500);
-      await app.updateUnitsPage.clickConfirmYesButton();
-      await page.waitForTimeout(3000);
-      await app.updateUnitsPage.clickConfirmYesButton();
+    await logStep('Step 07: Add the file and confirm');
+    await app.updateUnitsPage.clickAddUnitFile();
+    await page.waitForTimeout(1500);
+    await app.updateUnitsPage.clickConfirmYesButton();
+    await page.waitForTimeout(3000);
+    await app.updateUnitsPage.clickConfirmYesButton();
 
-      await logStep('Step 08: Validate the analysis file is present');
-      await app.updateUnitsPage.verifyAddUnitsAnalysisIsVisible();
+    await logStep('Step 08: Validate the analysis file is present');
+    await app.updateUnitsPage.verifyAddUnitsAnalysisIsVisible();
 
-      await logStep('Step 09: Confirm the file and approve');
-      await page.waitForTimeout(5000);
-      await page.reload();
-      await page.waitForTimeout(3000);
-      await app.updateUnitsPage.clickConfirmUnitPriceUpdateButton();
-      await app.updateUnitsPage.clickConfirmYesButton();
+    await logStep('Step 09: Confirm the file and approve');
+    await page.waitForTimeout(5000);
+    await page.reload();
+    await page.waitForTimeout(3000);
+    await app.updateUnitsPage.clickConfirmUnitPriceUpdateButton();
+    await app.updateUnitsPage.clickConfirmYesButton();
 
-      await logStep('Step 10: Validate the unit target segment is updated');
-      await app.developerProjectPage.openProjectBySearch(projectName);
-      await app.updateUnitsPage.clickUnitDetailsTab();
-      await app.updateUnitsPage.selectUnitCodeSearchCriteria();
-      await app.updateUnitsPage.fillUnitCode(unitCode);
-      await app.updateUnitsPage.clickSearchUnitButton();
-      await page.waitForTimeout(3000);
-      const targetSegmentAfter = await app.updateUnitsPage.getUnitTargetSegment();
-      expect(targetSegmentAfter).not.toEqual(targetSegmentBefore);
-    }
-  );
+    await logStep('Step 10: Validate the unit target segment is updated');
+    await app.developerProjectPage.openProjectBySearch(projectName);
+    await app.updateUnitsPage.clickUnitDetailsTab();
+    await app.updateUnitsPage.selectUnitCodeSearchCriteria();
+    await app.updateUnitsPage.fillUnitCode(unitCode);
+    await app.updateUnitsPage.clickSearchUnitButton();
+    await page.waitForTimeout(3000);
+    const targetSegmentAfter = await app.updateUnitsPage.getUnitTargetSegment();
+    expect(targetSegmentAfter).not.toEqual(targetSegmentBefore);
+  });
 
   test('TC-06 Developer deletes the unit', { annotation: [{ product: 'Marketplace', type: 'non-critical' }] as any }, async ({ page }) => {
     test.setTimeout(0);
