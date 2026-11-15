@@ -6,15 +6,14 @@ import { DataHelper } from '@helpers/DataHelper';
 
 const SERVICE = 'ready-made-project';
 const readServiceData = () => DataHelper.readData().services[SERVICE];
-const readEnvironments = () => DataHelper.readData().environments;
 const readPreBetaEnvironments = () => DataHelper.readData().environments['preBeta'].userPortalUrl;
 
 test.describe('View Proejct and unit of Readymade', () => {
-  test('TC-01 Verify user viewing the project', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+  test('SAKANI-48753-01 Verify user viewing the project', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     test.setTimeout(0);
     await logStep('Step 00: Read data from json relative to the service');
     const data = readServiceData();
-    const environment = readEnvironments();
+    const environment = readPreBetaEnvironments();
     const app = new WebApp(page);
     const sakaniUserId = data.sakaniUserId;
     const userPortalUrl = environment.userPortalUrl;
@@ -22,12 +21,7 @@ test.describe('View Proejct and unit of Readymade', () => {
 
     await logStep('Step 01: Open the user portal and login');
     await app.loginPage.gotoHomePage(userPortalUrl);
-    await app.loginPage.acceptCookies();
-    await app.loginPage.openLogin();
-    await app.loginPage.loginWithNafath(sakaniUserId);
-    await app.loginPage.waitForNafathPromptToDisappear();
-    await app.loginPage.continueNewUserPopup();
-    await app.loginPage.handlePushNotificationPopup();
+    await app.commonMethods.unifiedSakaniLogin(sakaniUserId);
 
     await logStep('Step 02: Verify project sections are present');
     await app.marketplaceLandingPage.openSearch();
@@ -42,11 +36,11 @@ test.describe('View Proejct and unit of Readymade', () => {
     await app.bookingPage.verifyElementVisibility(BookingCancellationObjects.projectUnitsSection, true);
   });
 
-  test('TC-02 Verify user viewing the unit', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+  test('SAKANI-48753-02 Verify user viewing the unit', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     test.setTimeout(0);
     await logStep('Step 00: Read data from json relative to the service');
     const data = readServiceData();
-    const environment = readEnvironments();
+    const environment = readPreBetaEnvironments();
     const app = new WebApp(page);
     const sakaniUserId = data.sakaniUserId;
     const userPortalUrl = environment.userPortalUrl;
@@ -54,12 +48,8 @@ test.describe('View Proejct and unit of Readymade', () => {
 
     await logStep('Step 01: Open the user portal and login');
     await app.loginPage.gotoHomePage(userPortalUrl);
-    await app.loginPage.acceptCookies();
-    await app.loginPage.openLogin();
-    await app.loginPage.loginWithNafath(sakaniUserId);
-    await app.loginPage.waitForNafathPromptToDisappear();
-    await app.loginPage.continueNewUserPopup();
-    await app.loginPage.handlePushNotificationPopup();
+    await app.commonMethods.unifiedSakaniLogin(sakaniUserId);
+
     await logStep('Step 02: Find the project and open its unit model');
     await app.marketplaceLandingPage.openSearch();
     await app.marketplaceLandingPage.clickSearchedResultIfTextMatches(projectNameView);
@@ -79,7 +69,7 @@ test.describe('View Proejct and unit of Readymade', () => {
   });
 
   //Rebranding
-  test('TC-03 User books ready made unit', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+  test('SAKANI-48753-03 User books ready made unit', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     const app = new WebApp(page);
     await logStep('Step 00: Read data from json relative to the service');
     const data = readServiceData();
@@ -109,7 +99,7 @@ test.describe('View Proejct and unit of Readymade', () => {
     await app.bookingPage.verifyConfirmBookingSuccessMessageIsPresent();
   });
 
-  test('TC-04 User cancels a ready made booking', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+  test('SAKANI-51190-04 User cancels a ready made booking', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     await logStep('Step 00: Read data from json relative to the service');
     const data = readServiceData();
     const environments = readPreBetaEnvironments();

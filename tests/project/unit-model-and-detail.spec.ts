@@ -3,7 +3,6 @@ import { UnitModelPage } from '@pages/UnitModelPage';
 import { UnitDetailPage } from '@pages/UnitDetailPage';
 import { PROJECTS } from '@data/testData';
 import { findBookableUnit } from '@helpers/marketplaceApi';
-import testData from '@data/test-data.json';
 import { logStep } from '@helpers/LogSteps';
 
 test.describe('Unit model listing', () => {
@@ -200,9 +199,6 @@ test.describe('Unit details page', () => {
    */
   test('TC-08 A guest sees the unit but is prompted to login to book', { annotation: [{ product: 'Marketplace', type: 'non-critical' } as any] }, async ({ page, browser }) => {
     await logStep('Step 01: Prepare a guest booking flow for a unit detail page');
-    // test.fail(true, 'D16: guest booking CTA does not route to login');
-
-    // Inventory lookup needs a session; the journey itself must run as a guest.
     const lookupContext = await browser.newContext();
     const lookupPage = await lookupContext.newPage();
     let unitId: string | null = null;
@@ -213,16 +209,10 @@ test.describe('Unit details page', () => {
     } finally {
       await lookupContext.close();
     }
-    // test.skip(
-    //   !unitId,
-    //   `TEST DATA BLOCKER: project ${PROJECTS.bookable} exposes no bookable unit for a guest journey`,
-    // );
     const detail = new UnitDetailPage(page, unitId!);
     await logStep('Step 02: Trigger booking as a guest and verify login prompt appears');
     await detail.open();
     await detail.clickBook();
     await expect(page.locator('//app-nafath-login-modal')).toBeVisible({ timeout: 60_000 });
-
-    // await expect(page).toHaveURL(/\/app\/authentication\/login/, { timeout: 120_000 });
   });
 });
