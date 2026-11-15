@@ -51,15 +51,13 @@ async function adminCreatesProjectSteps(page: Page, unitsFileName: string) {
 
   await logStep('Pre-condition 01.5: Import the project units > Verify the import is done (تم إكمال الإجراء) > Approve');
   await app.adminProjectPage.clickUnitsTab();
-  await app.adminProjectPage.expectImportNewUnitButtonVisible();
   await app.adminProjectPage.clickImportNewUnitButton();
-  await app.adminProjectPage.expectResidentialUnitTypeVisible();
   await app.adminProjectPage.openResidentialUnitTypeDropdown();
   await app.adminProjectPage.selectApartmentUnitType();
   await app.adminProjectPage.uploadUnitsFile(path.join(process.cwd(), 'src', 'data', unitsFileName));
   await app.adminProjectPage.clickImportSaveButton();
   await app.adminProjectPage.waitForUnitImportCompletion();
-  // await app.adminProjectPage.expectUnitImportDone(); //  new Meythod to Check The Unit already imported
+  await app.adminProjectPage.expectUnitImportDone(); //  new Meythod to Check The Unit already imported
   await app.adminProjectPage.clickApproveButton();
   await app.adminProjectPage.clickConfirmButton();
   await app.adminProjectPage.waitForImportConfirmation();
@@ -380,7 +378,7 @@ async function companyUserBookingSteps(page: Page, userKey: string, crKey: strin
 
 test.describe('Flexible payment - Phase 3', () => {
   test(
-    'TC-01 End-to-End Booking, Payment, and Status Update Flow Using Fixed Payment Schedule for a Bene User With Addition',
+    'SAKANI-51191-01 End-to-End Booking, Payment, and Status Update Flow Using Fixed Payment Schedule for a Bene User With Addition',
     {
       annotation: [{ product: 'Rebranding', type: 'critical' }] as any,
     },
@@ -391,7 +389,7 @@ test.describe('Flexible payment - Phase 3', () => {
   );
 
   test(
-    'TC-02 End-to-End Booking, Payment, and Status Update Flow Using Fixed Payment Schedule for a Non-Bene User With Addition',
+    'SAKANI-51191-02 End-to-End Booking, Payment, and Status Update Flow Using Fixed Payment Schedule for a Non-Bene User With Addition',
     {
       annotation: [{ product: 'Rebranding', type: 'critical' }] as any,
     },
@@ -401,7 +399,7 @@ test.describe('Flexible payment - Phase 3', () => {
   );
 
   test(
-    'TC-03 End-to-End Booking, Payment, and Status Update Flow Using Fixed Payment Schedule for a Company Bene User With Addition',
+    'SAKANI-51191-03 End-to-End Booking, Payment, and Status Update Flow Using Fixed Payment Schedule for a Company Bene User With Addition',
     {
       annotation: [{ product: 'Rebranding', type: 'critical' }] as any,
     },
@@ -412,7 +410,7 @@ test.describe('Flexible payment - Phase 3', () => {
   );
 
   test(
-    'TC-04 End-to-End Booking, Payment, and Status Update Flow Using Fixed Payment Schedule for a Company Non-Bene User With Addition',
+    'SAKANI-51191-04 End-to-End Booking, Payment, and Status Update Flow Using Fixed Payment Schedule for a Company Non-Bene User With Addition',
     {
       annotation: [{ product: 'Rebranding', type: 'critical' }] as any,
     },
@@ -422,7 +420,7 @@ test.describe('Flexible payment - Phase 3', () => {
   );
 
   test(
-    'TC-05 End-to-End Booking, Payment, and Status Update Flow Using Fixed Payment Schedule for a Unit Basket for a Bene User',
+    'SAKANI-51191-05 End-to-End Booking, Payment, and Status Update Flow Using Fixed Payment Schedule for a Unit Basket for a Bene User',
     {
       annotation: [{ product: 'Rebranding', type: 'critical' }] as any,
     },

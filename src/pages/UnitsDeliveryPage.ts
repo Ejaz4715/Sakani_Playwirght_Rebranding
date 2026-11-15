@@ -189,6 +189,7 @@ export class UnitsDeliveryPage {
     });
     await this.page.locator(UnitsDeliveryObjects.agreePopUpButton.xpath).click();
   }
+
   async isUnitDelivered() {
     await this.page.locator(UnitsDeliveryObjects.deliverySuccessMessage.xpath).waitFor({
       state: 'visible',
@@ -196,6 +197,7 @@ export class UnitsDeliveryPage {
     });
     return await this.page.locator(UnitsDeliveryObjects.deliverySuccessMessage.xpath).isVisible();
   }
+
   async clickOnUnitDeliveryFromSakani() {
     await this.page.locator(UnitsDeliveryObjects.unitDeliveryLinkFromSakani.xpath).waitFor({
       state: 'visible',
@@ -203,6 +205,7 @@ export class UnitsDeliveryPage {
     });
     await this.page.locator(UnitsDeliveryObjects.unitDeliveryLinkFromSakani.xpath).click();
   }
+
   async clickUnitDeliveryConfirmationFromSakani() {
     await this.page.locator(UnitsDeliveryObjects.unitDeliveryConfirmationFromSakani.xpath).waitFor({
       state: 'visible',
@@ -210,6 +213,7 @@ export class UnitsDeliveryPage {
     });
     await this.page.locator(UnitsDeliveryObjects.unitDeliveryConfirmationFromSakani.xpath).click();
   }
+
   async clickOnPendingUnitsForDelivery() {
     await this.page.waitForTimeout(6000);
     await this.page.locator(UnitsDeliveryObjects.pendingUnitDelivery.xpath).waitFor({
@@ -218,6 +222,7 @@ export class UnitsDeliveryPage {
     });
     await this.page.locator(UnitsDeliveryObjects.pendingUnitDelivery.xpath).click();
   }
+
   async clickOnShowDeliveryUnitModel(unitCode: string) {
     await this.page.waitForTimeout(8000);
     const showDeliveryUnitModelButton = this.page.locator(UnitsDeliveryObjects.showDeliveryUnitModelButton.xpath(unitCode));
@@ -227,6 +232,7 @@ export class UnitsDeliveryPage {
     });
     await showDeliveryUnitModelButton.click();
   }
+
   async selectYesOnUnitDeliveryState() {
     await this.page.locator(UnitsDeliveryObjects.yesRadioButton.xpath).waitFor({
       state: 'visible',
@@ -234,6 +240,7 @@ export class UnitsDeliveryPage {
     });
     await this.page.locator(UnitsDeliveryObjects.yesRadioButton.xpath).click();
   }
+
   async clickOnContinueButton() {
     await this.page.locator(UnitsDeliveryObjects.continueButton.xpath).waitFor({
       state: 'visible',
@@ -249,6 +256,7 @@ export class UnitsDeliveryPage {
     });
     await this.page.locator(UnitsDeliveryObjects.noRadioButton.xpath).click();
   }
+
   async fillGeneralCommentsForRejection(comment: string) {
     await this.page.locator(UnitsDeliveryObjects.generalCommentsForRejectionTextarea.xpath).waitFor({
       state: 'visible',
@@ -294,6 +302,7 @@ export class UnitsDeliveryPage {
     await dateInput.fill(hijriDate);
     await this.commonMethod.press(UnitsDeliveryObjects.finalUnitRedeliveryDate, 'Enter');
   }
+
   async verifyDateErrorMessageIsPresent() {
     const errorMessageLocator = this.page.locator(UnitsDeliveryObjects.dateErrorMessage.xpath);
     await errorMessageLocator.waitFor({
@@ -302,6 +311,7 @@ export class UnitsDeliveryPage {
     });
     return await this.page.locator(UnitsDeliveryObjects.dateErrorMessage.xpath).isVisible();
   }
+
   async agreeOnUnitDelivery() {
     await this.page.locator(UnitsDeliveryObjects.agreeOnDeliveryUnit.xpath).waitFor({
       state: 'visible',
@@ -309,6 +319,7 @@ export class UnitsDeliveryPage {
     });
     await this.page.locator(UnitsDeliveryObjects.agreeOnDeliveryUnit.xpath).click();
   }
+
   async rejectOnUnitDelivery() {
     await this.page.locator(UnitsDeliveryObjects.rejectOnDeliveryUnit.xpath).waitFor({
       state: 'visible',
@@ -316,6 +327,7 @@ export class UnitsDeliveryPage {
     });
     await this.page.locator(UnitsDeliveryObjects.rejectOnDeliveryUnit.xpath).click();
   }
+
   async verifyUnitRejectionMessage() {
     await this.page.locator(UnitsDeliveryObjects.rejectionSuccessfulMessage.xpath).waitFor({
       state: 'visible',
@@ -323,6 +335,7 @@ export class UnitsDeliveryPage {
     });
     return await this.page.locator(UnitsDeliveryObjects.rejectionSuccessfulMessage.xpath).isVisible();
   }
+
   async agreeOnTermsAndConditions() {
     await this.page.waitForTimeout(3000);
     await this.page.locator(UnitsDeliveryObjects.termsAndConditionsCheckbox.css).waitFor({
@@ -331,6 +344,7 @@ export class UnitsDeliveryPage {
     });
     await this.page.locator(UnitsDeliveryObjects.termsAndConditionsCheckbox.css).click();
   }
+
   async typeVerifyOtpCode() {
     await this.page.waitForTimeout(5000);
     const otpInputs = this.page.locator(UnitsDeliveryObjects.verifyField.xpath);
@@ -343,6 +357,7 @@ export class UnitsDeliveryPage {
     }
     await this.page.waitForTimeout(5000);
   }
+
   async clickOnVerify() {
     await this.page.locator(UnitsDeliveryObjects.verifyButton.xpath).waitFor({
       state: 'visible',
@@ -350,6 +365,7 @@ export class UnitsDeliveryPage {
     });
     await this.page.locator(UnitsDeliveryObjects.verifyButton.xpath).click();
   }
+
   async isUnitDeliveredAndAcceptedFromSakani() {
     await this.page.locator(UnitsDeliveryObjects.unitDeliverySuccessMessage.xpath).waitFor({
       state: 'visible',
@@ -357,6 +373,7 @@ export class UnitsDeliveryPage {
     });
     return await this.page.locator(UnitsDeliveryObjects.unitDeliverySuccessMessage.xpath).isVisible();
   }
+
   async clickOnAcceptedStatusUnitDelivery() {
     await this.page.waitForTimeout(6000);
     await this.page.locator(UnitsDeliveryObjects.acceptedStatusUnitDelivery.xpath).waitFor({
@@ -365,6 +382,7 @@ export class UnitsDeliveryPage {
     });
     await this.page.locator(UnitsDeliveryObjects.acceptedStatusUnitDelivery.xpath).click();
   }
+
   async clickOnAcceptedByDeveloperStatusUnitDelivery() {
     await this.page.locator(UnitsDeliveryObjects.acceptedByDeveloperStatusUnitDelivery.xpath).waitFor({
       state: 'visible',
@@ -372,6 +390,7 @@ export class UnitsDeliveryPage {
     });
     await this.page.locator(UnitsDeliveryObjects.acceptedByDeveloperStatusUnitDelivery.xpath).click();
   }
+
   async clickOnRejectedStatusUnitDelivery() {
     await this.page.locator(UnitsDeliveryObjects.rejectedStatusUnitDelivery.xpath).waitFor({
       state: 'visible',
@@ -379,6 +398,7 @@ export class UnitsDeliveryPage {
     });
     await this.page.locator(UnitsDeliveryObjects.rejectedStatusUnitDelivery.xpath).click();
   }
+
   async verifyUnitDeliveryStatusAreSelected() {
     const statusXpaths = [UnitsDeliveryObjects.pendingUnitDelivery.xpath, UnitsDeliveryObjects.acceptedStatusUnitDelivery.xpath, UnitsDeliveryObjects.acceptedByDeveloperStatusUnitDelivery.xpath, UnitsDeliveryObjects.rejectedStatusUnitDelivery.xpath];
 
@@ -396,6 +416,7 @@ export class UnitsDeliveryPage {
         .toBe(true);
     }
   }
+
   async clickOnRedeliveryButton() {
     await this.page.locator(UnitsDeliveryObjects.redeliveryButton.xpath).waitFor({
       state: 'visible',
@@ -403,6 +424,7 @@ export class UnitsDeliveryPage {
     });
     await this.page.locator(UnitsDeliveryObjects.redeliveryButton.xpath).click();
   }
+
   async clickOnViewDetailsButton() {
     await this.page.locator(UnitsDeliveryObjects.viewDetailsButton.xpath).waitFor({
       state: 'visible',
@@ -410,6 +432,7 @@ export class UnitsDeliveryPage {
     });
     await this.page.locator(UnitsDeliveryObjects.viewDetailsButton.xpath).click();
   }
+
   async clickOnConfirmButton() {
     await this.page.locator(UnitsDeliveryObjects.confirmButton.xpath).waitFor({
       state: 'visible',
@@ -417,6 +440,7 @@ export class UnitsDeliveryPage {
     });
     await this.page.locator(UnitsDeliveryObjects.confirmButton.xpath).click();
   }
+
   async verifyUnitRedeliverySuccessMessage() {
     await this.page.locator(UnitsDeliveryObjects.successfulRedeliveryMessage.xpath).waitFor({
       state: 'visible',
@@ -424,6 +448,7 @@ export class UnitsDeliveryPage {
     });
     return await this.page.locator(UnitsDeliveryObjects.successfulRedeliveryMessage.xpath).isVisible();
   }
+
   async verifyCommentsHistorySectionIsPresent() {
     await this.page.locator(UnitsDeliveryObjects.commentsHistorySection.xpath).waitFor({
       state: 'visible',
@@ -431,6 +456,7 @@ export class UnitsDeliveryPage {
     });
     return await this.page.locator(UnitsDeliveryObjects.commentsHistorySection.xpath).isVisible();
   }
+
   async verifyTheRejectionLimitIsPresent() {
     await this.page.locator(UnitsDeliveryObjects.maximumNumberOfRejectionsErrorMessage.xpath).waitFor({
       state: 'visible',
@@ -438,6 +464,7 @@ export class UnitsDeliveryPage {
     });
     return await this.page.locator(UnitsDeliveryObjects.maximumNumberOfRejectionsErrorMessage.xpath).isVisible();
   }
+
   async clickOnUnitDeliveryManagementButton() {
     const unitDeliveryManagementLink = this.page.getByRole(UnitsDeliveryObjects.unitDeliveryManagementLink.role, { name: UnitsDeliveryObjects.unitDeliveryManagementLink.name });
     await unitDeliveryManagementLink.waitFor({
@@ -446,6 +473,7 @@ export class UnitsDeliveryPage {
     });
     await unitDeliveryManagementLink.click();
   }
+
   async clickOnEditButton() {
     await this.page.locator(UnitsDeliveryObjects.editButton.xpath).waitFor({
       state: 'visible',
@@ -453,6 +481,7 @@ export class UnitsDeliveryPage {
     });
     await this.page.locator(UnitsDeliveryObjects.editButton.xpath).click();
   }
+
   async fillRejectionLimitTime(max: string) {
     await this.commonMethod.press(UnitsDeliveryObjects.rejectionLimitTimeInputfield, 'Control+A');
     await this.page.locator(UnitsDeliveryObjects.rejectionLimitTimeInputfield.xpath).waitFor({
@@ -461,6 +490,7 @@ export class UnitsDeliveryPage {
     });
     await this.page.locator(UnitsDeliveryObjects.rejectionLimitTimeInputfield.xpath).fill(max);
   }
+
   async clickOnSaveButton() {
     await this.page.locator(UnitsDeliveryObjects.saveButton.xpath).waitFor({
       state: 'visible',
@@ -468,13 +498,13 @@ export class UnitsDeliveryPage {
     });
     await this.page.locator(UnitsDeliveryObjects.saveButton.xpath).click();
   }
+
   async verifyEditRejectionLimitIsSaved() {
-    await this.page.locator(UnitsDeliveryObjects.editSuccessfulMessage.text).waitFor({
-      state: 'visible',
-      timeout: DEFAULT_TIMEOUT,
+    await expect(this.page.getByText(UnitsDeliveryObjects.editSuccessfulMessage.text, { exact: true })).toBeVisible({
+      timeout: 10000,
     });
-    return await this.page.locator(UnitsDeliveryObjects.editSuccessfulMessage.text).isVisible();
   }
+
   async clickOPpreviewUnitDeliveryContractFileButton() {
     await this.page.locator(UnitsDeliveryObjects.previewUnitDeliveryContractFileButton.xpath).waitFor({
       state: 'visible',
@@ -482,8 +512,9 @@ export class UnitsDeliveryPage {
     });
     await this.page.locator(UnitsDeliveryObjects.previewUnitDeliveryContractFileButton.xpath).click();
   }
+
   async verifyUnitDeliveryContractFileIsPresent() {
-    await this.page.locator(UnitsDeliveryObjects.previewUnitDeliveryContractPopup.text).waitFor({
+    await this.page.getByText(UnitsDeliveryObjects.previewUnitDeliveryContractPopup.text).waitFor({
       state: 'visible',
       timeout: DEFAULT_TIMEOUT,
     });

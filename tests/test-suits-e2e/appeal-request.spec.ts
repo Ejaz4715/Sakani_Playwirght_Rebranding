@@ -43,6 +43,7 @@ test.describe('Appeal Request', () => {
     await app.paymentConfirmationPage.closePayment();
     await app.appealRequestPage.verifyUserSubmitTheRequest();
   });
+
   test('TC-02 Admin approve the appeal request', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     await logStep('Step 00: Read data from json relative to the service');
     const environments = readEnvironments();

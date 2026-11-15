@@ -335,38 +335,28 @@ export class AdminProjectPage {
       .click();
   }
 
-  async expectImportNewUnitButtonVisible() {
-    await expect(
-      this.page.getByRole(AdminProjectObjects.importNewUnitButton.role, {
-        name: AdminProjectObjects.importNewUnitButton.name,
-      })
-    ).toBeVisible({ timeout: 30000 });
-  }
-
   async clickImportNewUnitButton() {
-    await this.page
-      .getByRole(AdminProjectObjects.importNewUnitButton.role, {
-        name: AdminProjectObjects.importNewUnitButton.name,
-      })
-      .click();
-  }
-
-  async expectResidentialUnitTypeVisible() {
-    this.page.waitForTimeout(3000);
-    await expect(
-      this.page.getByRole(AdminProjectObjects.residentialUnitType.role, {
-        name: AdminProjectObjects.residentialUnitType.name,
-      })
-    ).toBeVisible({ timeout: 30000 });
+    const newImportButton = this.page.getByRole(AdminProjectObjects.importNewUnitButton.role, {
+      name: AdminProjectObjects.importNewUnitButton.name,
+    });
+    await newImportButton.waitFor({ state: 'visible', timeout: 20000 });
+    await newImportButton.click();
   }
 
   async openResidentialUnitTypeDropdown() {
-    this.page.waitForTimeout(7000);
+    await this.page.waitForTimeout(7000);
     await this.page
-      .getByRole(AdminProjectObjects.residentialUnitType.role, {
-        name: AdminProjectObjects.residentialUnitType.name,
+      .getByRole(AdminProjectObjects.importSaveButton.role, {
+        name: AdminProjectObjects.importSaveButton.name,
       })
-      .click();
+      .waitFor({ state: 'visible', timeout: 20000 });
+
+    const unitTypeDropdown = await this.page.getByRole(AdminProjectObjects.residentialUnitType.role, {
+      name: AdminProjectObjects.residentialUnitType.name,
+    });
+
+    await unitTypeDropdown.waitFor({ state: 'visible', timeout: 20000 });
+    await unitTypeDropdown.click();
   }
 
   async selectApartmentUnitType() {
@@ -389,6 +379,10 @@ export class AdminProjectPage {
         name: AdminProjectObjects.importSaveButton.name,
       })
       .click();
+  }
+
+  async expectUnitImportDone() {
+    await expect(this.page.getByText(AdminProjectObjects.importDoneStatus.text, { exact: true }).first()).toBeVisible({ timeout: 30000 });
   }
 
   async waitForUnitImportCompletion() {

@@ -1,17 +1,17 @@
-import { expect, Locator, Page, test } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import { WebApp } from '@base-class/web-app';
 import { DateUtils } from '@pages/utils/DateUtils';
 import { DataHelper } from '@helpers/DataHelper';
 import { logStep } from '@helpers/LogSteps';
 import path from 'node:path';
 import { AdminProjectObjects } from '@objects/AdminProjectsObjects';
+import { ServerResponse } from 'node:http';
 
 const SERVICE = 'unit-delivery';
 const readServiceData = () => DataHelper.readData().services[SERVICE];
 const readEnvironments = () => DataHelper.readData().environments;
 const writeServiceData = (key: string, value: any) => DataHelper.updateServiceData(SERVICE, key, value);
 
-const DEFAULT_TIMEOUT = 30_000;
 const LONG_TIMEOUT = 90_000;
 
 test.describe('Unit Delivery', () => {
@@ -25,7 +25,7 @@ test.describe('Unit Delivery', () => {
       .toISOString()
       .replace(/[-:T.]/g, '')
       .slice(0, 14)}`;
-    DataHelper.updateServiceData('test-data.json', 'offplan-booking', 'projectName', projectName);
+    DataHelper.updateServiceData(SERVICE, 'projectName', projectName);
 
     await logStep('Step 01: Login to admin portal as a super admin');
     await app.adminProjectPage.login(environments.adminPortalUrl, data.adminUsername, data.adminPassword);
@@ -71,9 +71,7 @@ test.describe('Unit Delivery', () => {
 
     await logStep('Step 06: Import and commit project units');
     await app.adminProjectPage.clickUnitsTab();
-    await app.adminProjectPage.expectImportNewUnitButtonVisible();
     await app.adminProjectPage.clickImportNewUnitButton();
-    await app.adminProjectPage.expectResidentialUnitTypeVisible();
     await app.adminProjectPage.openResidentialUnitTypeDropdown();
     await app.adminProjectPage.selectApartmentUnitType();
     const unitsImportFilePath = path.join(process.cwd(), 'src', 'data', 'Offplan_MOH.xlsx');
@@ -395,7 +393,6 @@ test.describe('Unit Delivery', () => {
   });
 
   test('SAKANI-51040-11 Admin edit the limitation rejection times > Set to one time', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
-    test.setTimeout(0);
     await logStep('Step 00: Read data from json relative to the service');
     const data = readServiceData();
     const environments = readEnvironments();
@@ -410,6 +407,7 @@ test.describe('Unit Delivery', () => {
     await logStep('Step 02: Navigate to unit delivery management');
     await app.adminProjectPage.clickPartnerLink();
     await app.unitsDeliveryPage.clickOnUnitDeliveryManagementButton();
+
     await logStep('Step 03: Edit the limit rejection maximum time to one > Save and verify');
     await app.unitsDeliveryPage.clickOnEditButton();
     await app.unitsDeliveryPage.fillRejectionLimitTime('1');
@@ -560,6 +558,7 @@ test.describe('Unit Delivery', () => {
     await logStep('Step 03: Show the delivery unit details > Click on preview unit delivery contract file');
     await app.unitsDeliveryPage.clickOnShowDeliveryUnitModel(data.deliveryUnitCode);
     await app.unitsDeliveryPage.clickOPpreviewUnitDeliveryContractFileButton();
+
     await logStep('Step 04: Verify unit delivery contract file is present');
     await app.unitsDeliveryPage.verifyUnitDeliveryContractFileIsPresent();
   });

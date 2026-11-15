@@ -65,10 +65,9 @@ test.describe('Offplan booking fees refund', () => {
 
     await logStep('Step 06: Import and commit project units');
     await app.adminProjectPage.clickUnitsTab();
-    await app.adminProjectPage.expectImportNewUnitButtonVisible();
     await app.adminProjectPage.clickImportNewUnitButton();
-    await app.adminProjectPage.expectResidentialUnitTypeVisible();
     await app.adminProjectPage.openResidentialUnitTypeDropdown();
+
     await app.adminProjectPage.selectApartmentUnitType();
     const unitsImportFilePath = path.join(process.cwd(), 'src', 'data', 'Offplan_MOH.xlsx');
     await app.adminProjectPage.uploadUnitsFile(unitsImportFilePath);
