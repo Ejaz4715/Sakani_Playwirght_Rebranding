@@ -16,23 +16,19 @@ test.describe('Unit model card favorites', () => {
     const data = readServiceData();
     const environment = readEnvironments();
     const projectName = data.projectName;
-    userPortalUrl = environment['pre-beta'].userPortalUrl;
+    userPortalUrl = environment['preBeta'].userPortalUrl;
     app = new WebApp(page);
 
     await logStep('Step 01: Login with the configured Sakani user');
     await app.loginPage.gotoHomePage(userPortalUrl);
-    await app.loginPage.openPreBetaLogin();
-    await app.loginPage.preBetaLoginWithNafath(data.sakaniUserId);
-    await app.loginPage.waitForNafathPromptToDisappear();
-    await app.loginPage.continuePreBetaNewUserPopup();
-    await app.loginPage.handlePushNotificationPopup();
+    await app.commonMethods.unifiedSakaniLogin(data.sakaniUserId);
 
     await logStep('Step 02: Search for the project > Open units');
     await app.favoritesPage.searchAndOpenProject(projectName);
     await app.favoritesPage.openProjectUnitsTab();
   }
 
-  test('TC-01 Add a unit to favorites and verify it is listed in the user favorites', { annotation: [{ product: 'Sakani _Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+  test('SAKANI-48617-01 Add a unit to favorites and verify it is listed in the user favorites', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     await loginAndOpenProjectUnits(page);
     await logStep('Step 03: Add the first unit to favorites');
     const unitName = await app.favoritesPage.markFirstUnitAsFavorite();
@@ -45,7 +41,7 @@ test.describe('Unit model card favorites', () => {
     await app.favoritesPage.verifyUnitInFavorites(unitName);
   });
 
-  test('TC-02 Verify user can Unfavorite a Unit Model card on the Project page', { annotation: [{ product: 'Sakani _Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+  test('SAKANI-48617-02 Verify user can Unfavorite a Unit Model card on the Project page', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     await loginAndOpenProjectUnits(page);
 
     await logStep('Step 03: Click the heart on the first unit to add it to favorites (heart turns red)');
@@ -62,7 +58,7 @@ test.describe('Unit model card favorites', () => {
     await app.favoritesPage.verifyUnitNotInFavorites(unitName);
   });
 
-  test('TC-03 Verify user can Unfavorite a Unit Model from the unit details page', { annotation: [{ product: 'Sakani _Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+  test('SAKANI-48617-03 Verify user can Unfavorite a Unit Model from the unit details page', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     await loginAndOpenProjectUnits(page);
 
     await logStep('Step 03: Click the heart on the first unit to add it to favorites (heart turns red)');
@@ -78,10 +74,10 @@ test.describe('Unit model card favorites', () => {
     await app.favoritesPage.unfavoriteUnitFromDetailsPage();
   });
 
-  test('TC-04 Verify guest (logged-out) user is prompted to log in when tapping Favorite on a Unit Model', { annotation: [{ product: 'Sakani _Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+  test('SAKANI-48617-04 Verify guest user is prompted to log in when tapping Favorite on a Unit Model', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     await logStep('Step 00: Read data from json relative to the service');
     const data = readServiceData();
-    userPortalUrl = readEnvironments()['pre-beta'].userPortalUrl;
+    userPortalUrl = readEnvironments()['preBeta'].userPortalUrl;
     app = new WebApp(page);
 
     await logStep('Step 01: Open the home page without login');
