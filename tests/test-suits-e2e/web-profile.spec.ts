@@ -7,7 +7,7 @@ const SERVICE = 'register-interest-filters';
 const readServiceData = () => DataHelper.readData().services[SERVICE];
 const readEnvironments = () => DataHelper.readData().environments;
 
-test.describe('Register Interest - Filters', () => {
+test.describe('Favorites, register interest and waiting lists filters', () => {
   let app: WebApp;
   let userPortalUrl: string;
 
@@ -15,19 +15,15 @@ test.describe('Register Interest - Filters', () => {
     await logStep('Step 00: Read data from json relative to the service');
     const data = readServiceData();
     const environment = readEnvironments();
-    userPortalUrl = environment['pre-beta'].userPortalUrl;
+    userPortalUrl = environment['preBeta'].userPortalUrl;
     app = new WebApp(page);
 
     await logStep('Step 01: Login with the configured Sakani user');
     await app.loginPage.gotoHomePage(userPortalUrl);
-    await app.loginPage.openPreBetaLogin();
-    await app.loginPage.preBetaLoginWithNafath(data.sakaniUserId);
-    await app.loginPage.waitForNafathPromptToDisappear();
-    await app.loginPage.continuePreBetaNewUserPopup();
-    await app.loginPage.handlePushNotificationPopup();
+    await app.commonMethods.unifiedSakaniLogin(data.sakaniUserId);
   }
 
-  test('TC-01 favorites - Filters', { annotation: [{ product: 'Sakani _Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+  test('SAKANI-47804-01 Favorites filters', { annotation: [{ product: 'Rebranding', type: 'non-critical' }] as any }, async ({ page }) => {
     await login(page);
 
     await logStep('Step 02: Open profile dropdown > المفضلة');
@@ -54,7 +50,7 @@ test.describe('Register Interest - Filters', () => {
     await app.webProfilePage.verifyEmptyMessageOrItemsDisplayed();
   });
 
-  test('TC-02 Register Interest - Filters', { annotation: [{ product: 'Sakani _Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+  test('SAKANI-47804-02 Register Interest filters', { annotation: [{ product: 'Rebranding', type: 'non-critical' }] as any }, async ({ page }) => {
     await login(page);
     await logStep('Step 02: Open profile dropdown > المفضلة');
     await app.favoritesPage.openFavoritesFromProfileMenu();
@@ -85,7 +81,7 @@ test.describe('Register Interest - Filters', () => {
     await app.webProfilePage.verifyNoInterestedItemsMessageOrItemsDisplayed();
   });
 
-  test('TC-03 Waiting list management - Filters', { annotation: [{ product: 'Sakani _Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+  test('SAKANI-47804-03 Waiting list management filters', { annotation: [{ product: 'Rebranding', type: 'non-critical' }] as any }, async ({ page }) => {
     await login(page);
 
     await logStep('Step 02: Open profile dropdown > المفضلة');
