@@ -56,6 +56,7 @@ import { ConveyancePage } from '@pages/ConveyancePage';
 import { NewMortgageCalculatorPage } from '@pages/NewMortgageCalculatorPage';
 import { AppealRequestPage } from '@pages/AppealRequestPage';
 import { BusinessLandingPagePage } from '@pages/BusinessLandingPagePage';
+import { WebProfilePage } from '@pages/WebProfilePage';
 import { PaymentflexiblePhaseThree } from '@pages/PaymentflexiblePhaseThree';
 import { AppealRequestPageDocumentsPage } from '@pages/AppealRequestPageDocumentsPage';
 
@@ -119,6 +120,7 @@ export class WebApp {
   newMortgageCalculatorPage: InstanceType<typeof NewMortgageCalculatorPage>;
   appealRequestPage: InstanceType<typeof AppealRequestPage>;
   businessLandingPage: InstanceType<typeof BusinessLandingPagePage>;
+  webProfilePage: InstanceType<typeof WebProfilePage>;
   AppealRequestPageDocumentsPage: InstanceType<typeof AppealRequestPageDocumentsPage>;
 
   constructor(page: Page) {
@@ -229,6 +231,7 @@ export class WebApp {
     this.AppealRequestPageDocumentsPage = new AppealRequestPageDocumentsPage(page);
     this.offersPage = new OffersPage(page);
     this.businessLandingPage = new BusinessLandingPagePage(page);
+    this.webProfilePage = new WebProfilePage(page);
     this.conveyancePage = new ConveyancePage(page);
     this.newMortgageCalculatorPage = new NewMortgageCalculatorPage(page);
     this.PaymentflexiblePhaseThree = new PaymentflexiblePhaseThree(page);
