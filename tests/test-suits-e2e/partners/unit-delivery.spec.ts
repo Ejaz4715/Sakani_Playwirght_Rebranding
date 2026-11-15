@@ -26,8 +26,7 @@ async function waitAndFill(locator: Locator, value: string, timeout = DEFAULT_TI
 
 test.describe('Unit Delivery', () => {
   let deliveryUnitCode: string;
-
-  test('TC-01 Admin adds new offplan project for unit delivery', { annotation: [{ product: 'Marketplace', type: 'critical' }] as any }, async ({ page }) => {
+  test('TC-01 Admin adds new offplan project for unit delivery', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     const data = readServiceData();
     const environments = readEnvironments();
     const app = new WebApp(page);
@@ -159,7 +158,7 @@ test.describe('Unit Delivery', () => {
     await expect(page.locator(AdminProjectObjects.maxBookingsPerNonBeneInput)).toHaveValue('5');
   });
 
-  test('TC-02 Developer approves sales contract for unit delivery project', { annotation: [{ product: 'Marketplace', type: 'critical' }] as any }, async ({ page }) => {
+  test('TC-02 Developer approves sales contract for unit delivery project', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     const data = readServiceData();
     const environments = readEnvironments();
     const app = new WebApp(page);
@@ -168,7 +167,7 @@ test.describe('Unit Delivery', () => {
 
     await logStep('Step 01: Navigate to partners portal > Login as developer');
     await app.developerProjectPage.gotoAuth(environments.sapaPortalUrl);
-    await app.partnersLoginPage.loginToSapaPortalBeta(developerUserId);
+    await app.commonMethods.unifiedSakaniLogin(developerUserId);
     await app.partnersLoginPage.switchRoleToDeveloper();
 
     await logStep('Step 02: Search for the project > Open it');
@@ -183,7 +182,7 @@ test.describe('Unit Delivery', () => {
     await app.developerProjectPage.verifyApprovalSuccessMessage();
   });
 
-  test('TC-03 Developer books one unit for delivery', { annotation: [{ product: 'Marketplace', type: 'critical' }] as any }, async ({ page }) => {
+  test('TC-03 Developer books one unit for delivery', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     await logStep('Step 00: Read data from json relative to the service');
     const data = readServiceData();
     const environments = readEnvironments();
@@ -195,7 +194,7 @@ test.describe('Unit Delivery', () => {
 
     await logStep('Step 01: Navigate to partners portal > Login as developer');
     await app.developerProjectPage.gotoAuth(environments.sapaPortalUrl);
-    await app.partnersLoginPage.loginToSapaPortalBeta(developerUserId);
+    await app.commonMethods.unifiedSakaniLogin(developerUserId);
     await app.partnersLoginPage.switchRoleToDeveloper();
 
     await logStep('Step 02: Start new individual booking > Enter user id');
@@ -216,7 +215,7 @@ test.describe('Unit Delivery', () => {
     await app.developerProjectPage.validateSuccessReservationPopup();
   });
 
-  test('TC-04 User Pays the invoice of the booked unit for delivery', { annotation: [{ product: 'Marketplace', type: 'critical' }] as any }, async ({ page }) => {
+  test('TC-04 User Pays the invoice of the booked unit for delivery', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     const data = readServiceData();
     const environments = readEnvironments();
     const app = new WebApp(page);
@@ -246,7 +245,7 @@ test.describe('Unit Delivery', () => {
     await page.waitForTimeout(12000);
   });
 
-  test('TC-05 User Signs sale contract of booked unit for delivery', { annotation: [{ product: 'Marketplace', type: 'critical' }] as any }, async ({ page }) => {
+  test('TC-05 User Signs sale contract of booked unit for delivery', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     const data = readServiceData();
     const environments = readEnvironments();
     const app = new WebApp(page);
@@ -276,7 +275,7 @@ test.describe('Unit Delivery', () => {
     await expect.poll(() => app.offPlanBasketMultipleBookingPage.isSuccessfulContractSignMessage(), { timeout: LONG_TIMEOUT }).toBe(true);
   });
 
-  test('TC-06 Developer confirms the cash payment for unit delivery', { annotation: [{ product: 'Marketplace', type: 'critical' }] as any }, async ({ page }) => {
+  test('TC-06 Developer confirms the cash payment for unit delivery', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     const data = readServiceData();
     const environments = readEnvironments();
     const app = new WebApp(page);
@@ -284,7 +283,7 @@ test.describe('Unit Delivery', () => {
 
     await logStep('Step 01: Navigate to partners portal > Login as developer');
     await app.developerProjectPage.gotoAuth(environments.sapaPortalUrl);
-    await app.partnersLoginPage.loginToSapaPortalBeta(developerUserId);
+    await app.commonMethods.unifiedSakaniLogin(developerUserId);
     await app.partnersLoginPage.switchRoleToDeveloper();
 
     await logStep('Step 02: Open financial management > Cash payment > Search customer by ID');
@@ -301,7 +300,7 @@ test.describe('Unit Delivery', () => {
     await app.cashPaymentPage.expectCashPaymentSuccess();
   });
 
-  test('TC-07 Unit delivery preparation by the developer', { annotation: [{ product: 'Marketplace', type: 'critical' }] as any }, async ({ page }) => {
+  test('TC-07 Unit delivery preparation by the developer', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     const data = readServiceData();
     const environments = readEnvironments();
     const projectName = data.projectName;
@@ -310,7 +309,7 @@ test.describe('Unit Delivery', () => {
 
     await logStep('Step 01: Navigate to partners portal > Login as developer');
     await app.developerProjectPage.gotoAuth(environments.sapaPortalUrl);
-    await app.partnersLoginPage.loginToSapaPortalBeta(developerUserId);
+    await app.commonMethods.unifiedSakaniLogin(developerUserId);
     await app.partnersLoginPage.switchRoleToDeveloper();
 
     await logStep('Step 02: Open units delivery > Start preparing > Search by project name > Select the unit');
@@ -331,7 +330,7 @@ test.describe('Unit Delivery', () => {
     expect(await app.unitsDeliveryPage.isUnitReadyForDelivery()).toBe(true);
   });
 
-  test('TC-08 Delivery of the ready units from Partner', { annotation: [{ product: 'Marketplace', type: 'critical' }] as any }, async ({ page }) => {
+  test('TC-08 Delivery of the ready units from Partner', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     const data = readServiceData();
     const environments = readEnvironments();
     const app = new WebApp(page);
@@ -339,7 +338,7 @@ test.describe('Unit Delivery', () => {
 
     await logStep('Step 01: Navigate to partners portal > Login as developer');
     await app.developerProjectPage.gotoAuth(environments.sapaPortalUrl);
-    await app.partnersLoginPage.loginToSapaPortalBeta(developerUserId);
+    await app.commonMethods.unifiedSakaniLogin(developerUserId);
     await app.partnersLoginPage.switchRoleToDeveloper();
 
     await logStep('Step 02: Open units delivery > Ready units > Search by unit code');
@@ -353,8 +352,7 @@ test.describe('Unit Delivery', () => {
     await app.unitsDeliveryPage.sendToCustomerForDelivery();
     expect(await app.unitsDeliveryPage.isUnitDelivered()).toBe(true);
   });
-
-  test('TC-09 Verify user filter by unit delivery status', { annotation: [{ product: 'Marketplace', type: 'critical' }] as any }, async ({ page }) => {
+  test('TC-09 Verify user filter by unit delivery status', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     const data = readServiceData();
     const environments = readEnvironments();
     const app = new WebApp(page);
@@ -371,8 +369,7 @@ test.describe('Unit Delivery', () => {
     await app.unitsDeliveryPage.clickOnUnitDeliveryFromSakani();
     await app.unitsDeliveryPage.verifyUnitDeliveryStatusAreSelected();
   });
-
-  test('TC-10 Validate the message of the date with out of range', { annotation: [{ product: 'Marketplace', type: 'critical' }] as any }, async ({ page }) => {
+  test('TC-10 Validate the message of the date with out of range', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     const data = readServiceData();
     const environments = readEnvironments();
     const app = new WebApp(page);
@@ -402,8 +399,30 @@ test.describe('Unit Delivery', () => {
     await app.unitsDeliveryPage.fillFinalUnitRedeliveryDate(-2, 0);
     await app.unitsDeliveryPage.verifyDateErrorMessageIsPresent();
   });
+  test('TC-11 Admin edit the limitation rejection times > Set to one time', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+    test.setTimeout(0);
+    await logStep('Step 00: Read data from json relative to the service');
+    const data = readServiceData();
+    const environments = readEnvironments();
+    const app = new WebApp(page);
+    const adminUrl = environments.adminPortalUrl;
+    const adminUsername = data.adminUsername;
+    const adminPassword = data.adminPassword;
+    const developerName = data.developerName;
 
-  test('TC-11 User reject the form with no first time', { annotation: [{ product: 'Marketplace', type: 'critical' }] as any }, async ({ page }) => {
+    await logStep('Step 01: Navigate to admin platform > Login');
+    await app.adminProjectPage.login(adminUrl, adminUsername, adminPassword);
+    await logStep('Step 02: Navigate to unit delivery management');
+    await app.adminProjectPage.clickPartnerLink();
+    await app.unitsDeliveryPage.clickOnUnitDeliveryManagementButton();
+    await logStep('Step 03: Edit the limit rejection maximum time to one > Save and verify');
+    await app.unitsDeliveryPage.clickOnEditButton();
+    await app.unitsDeliveryPage.fillRejectionLimitTime('1');
+    await app.unitsDeliveryPage.clickOnSaveButton();
+    await app.unitsDeliveryPage.verifyEditRejectionLimitIsSaved();
+  });
+
+  test('TC-12 User reject the form', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     const data = readServiceData();
     const environments = readEnvironments();
     const app = new WebApp(page);
@@ -441,7 +460,7 @@ test.describe('Unit Delivery', () => {
     await app.unitsDeliveryPage.clickOnVerify();
     await app.unitsDeliveryPage.verifyUnitRejectionMessage();
   });
-  test('TC-12 Developer redelivery the unit first time', { annotation: [{ product: 'Marketplace', type: 'critical' }] as any }, async ({ page }) => {
+  test('TC-13 Developer redelivery the unit', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     const data = readServiceData();
     const environments = readEnvironments();
     const app = new WebApp(page);
@@ -449,7 +468,7 @@ test.describe('Unit Delivery', () => {
 
     await logStep('Step 01: Navigate to partners portal > Login as developer');
     await app.developerProjectPage.gotoAuth(environments.sapaPortalUrl);
-    await app.partnersLoginPage.loginToSapaPortalBeta(developerUserId);
+    await app.commonMethods.unifiedSakaniLogin(developerUserId);
     await app.partnersLoginPage.switchRoleToDeveloper();
 
     await logStep('Step 02: Open units delivery > Ready units > Search by unit code');
@@ -467,7 +486,7 @@ test.describe('Unit Delivery', () => {
     await app.unitsDeliveryPage.clickOnConfirmButton();
     await app.unitsDeliveryPage.verifyUnitRedeliverySuccessMessage();
   });
-  test('TC-13 User reject the form with no second time', { annotation: [{ product: 'Marketplace', type: 'critical' }] as any }, async ({ page }) => {
+  test('TC-14 Verify the rejection limit message and accept the unit delivery form', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     const data = readServiceData();
     const environments = readEnvironments();
     const app = new WebApp(page);
@@ -488,47 +507,8 @@ test.describe('Unit Delivery', () => {
     await app.unitsDeliveryPage.clickOnShowDeliveryUnitModel(data.deliveryUnitCode);
     await app.unitsDeliveryPage.clickUnitDeliveryConfirmationFromSakani();
 
-    await logStep('Step 04: Select no > Enter comments > Click on continue');
-    await app.unitsDeliveryPage.selectNoOnUnitDeliveryState();
-    await app.unitsDeliveryPage.fillGeneralCommentsForRejection('Test rejection comment');
-    await app.unitsDeliveryPage.clickOnContinueButton();
-
-    await logStep('Step 05: Fill the final unit redelivery date > Click on continue');
-    await app.unitsDeliveryPage.fillFinalUnitRedeliveryDate(0);
-    await app.unitsDeliveryPage.clickOnContinueButton();
-
-    await logStep('Step 06: Check on terms and conditions > Click on reject unit delivery');
-    await app.unitsDeliveryPage.agreeOnTermsAndConditions();
-    await app.unitsDeliveryPage.rejectOnUnitDelivery();
-
-    await logStep('Step 07: Fill the OTP > Click on verify > Verify the unit rejection message');
-    await app.unitsDeliveryPage.typeVerifyOtpCode();
-    await app.unitsDeliveryPage.clickOnVerify();
-    await app.unitsDeliveryPage.verifyUnitRejectionMessage();
-  });
-
-  test('TC-09 Delivery confirmation from the sakani user side', { annotation: [{ product: 'Marketplace', type: 'critical' }] as any }, async ({ page }) => {
-    const data = readServiceData();
-    const environments = readEnvironments();
-    const app = new WebApp(page);
-    const sakaniUserId = data.sakaniUserId;
-    const preBeta = environments['preBeta'].userPortalUrl;
-
-    await logStep('Step 01: Navigate to user portal > Login');
-    await app.loginPage.gotoHomePage(preBeta);
-    await app.commonMethods.unifiedSakaniLogin(sakaniUserId);
-
-    await logStep('Step 02: Navigate to my activities > Units delivery > Pending units');
-    await app.marketplaceLandingPage.openProfileManagement();
-    await app.offPlanBasketMultipleBookingPage.clickMyActivities();
-    await app.unitsDeliveryPage.clickOnUnitDeliveryFromSakani();
-    await app.unitsDeliveryPage.clickOnPendingUnitsForDelivery();
-
-    await logStep('Step 03: Show the delivery unit details > Confirm the unit delivery');
-    await app.unitsDeliveryPage.clickOnShowDeliveryUnitModel(data.deliveryUnitCode);
-    await app.unitsDeliveryPage.clickUnitDeliveryConfirmationFromSakani();
-
-    await logStep('Step 04: Agree on unit state, terms and conditions and delivery');
+    await logStep('Step 04: Verify the rejection limits message > Agree on unit state, terms and conditions and delivery');
+    await app.unitsDeliveryPage.verifyTheRejectionLimitIsPresent();
     await app.unitsDeliveryPage.selectYesOnUnitDeliveryState();
     await app.unitsDeliveryPage.clickOnContinueButton();
     await app.unitsDeliveryPage.agreeOnTermsAndConditions();
@@ -540,27 +520,7 @@ test.describe('Unit Delivery', () => {
     await app.unitsDeliveryPage.clickOnVerify();
     expect(await app.unitsDeliveryPage.isUnitDeliveredAndAcceptedFromSakani()).toBe(true);
   });
-  test('TC-09 User view unit delivery contract file from request details', { annotation: [{ product: 'Marketplace', type: 'critical' }] as any }, async ({ page }) => {
-    const data = readServiceData();
-    const environments = readEnvironments();
-    const app = new WebApp(page);
-    const sakaniUserId = data.sakaniUserId;
-    const preBeta = environments['preBeta'].userPortalUrl;
-
-    await logStep('Step 01: Navigate to user portal > Login');
-    await app.loginPage.gotoHomePage(preBeta);
-    await app.commonMethods.unifiedSakaniLogin(sakaniUserId);
-
-    await logStep('Step 02: Navigate to my activities > Units delivery > Accepted units');
-    await app.marketplaceLandingPage.openProfileManagement();
-    await app.offPlanBasketMultipleBookingPage.clickMyActivities();
-    await app.unitsDeliveryPage.clickOnUnitDeliveryFromSakani();
-    await app.unitsDeliveryPage.clickOnAcceptedStatusUnitDelivery();
-
-    await logStep('Step 03: Show the delivery unit details >');
-    await app.unitsDeliveryPage.clickOnShowDeliveryUnitModel(data.deliveryUnitCode);
-  });
-  test('TC-09 User view comments history from request details', { annotation: [{ product: 'Marketplace', type: 'critical' }] as any }, async ({ page }) => {
+  test('TC-15 User view comments history from request details', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     const data = readServiceData();
     const environments = readEnvironments();
     const app = new WebApp(page);
@@ -580,5 +540,28 @@ test.describe('Unit Delivery', () => {
     await logStep('Step 03: Show the delivery unit details > Verify the comments history section is present');
     await app.unitsDeliveryPage.clickOnShowDeliveryUnitModel(data.deliveryUnitCode);
     await app.unitsDeliveryPage.verifyCommentsHistorySectionIsPresent();
+  });
+  test('TC-16 User view unit delivery contract file from request details', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+    const data = readServiceData();
+    const environments = readEnvironments();
+    const app = new WebApp(page);
+    const sakaniUserId = data.sakaniUserId;
+    const preBeta = environments['preBeta'].userPortalUrl;
+
+    await logStep('Step 01: Navigate to user portal > Login');
+    await app.loginPage.gotoHomePage(preBeta);
+    await app.commonMethods.unifiedSakaniLogin('1074829753');
+
+    await logStep('Step 02: Navigate to my activities > Units delivery > Accepted units');
+    await app.marketplaceLandingPage.openProfileManagement();
+    await app.offPlanBasketMultipleBookingPage.clickMyActivities();
+    await app.unitsDeliveryPage.clickOnUnitDeliveryFromSakani();
+    await app.unitsDeliveryPage.clickOnAcceptedStatusUnitDelivery();
+
+    await logStep('Step 03: Show the delivery unit details > Click on preview unit delivery contract file');
+    await app.unitsDeliveryPage.clickOnShowDeliveryUnitModel(data.deliveryUnitCode);
+    await app.unitsDeliveryPage.clickOPpreviewUnitDeliveryContractFileButton();
+    await logStep('Step 04: Verify unit delivery contract file is present');
+    await app.unitsDeliveryPage.verifyUnitDeliveryContractFileIsPresent();
   });
 });

@@ -431,4 +431,62 @@ export class UnitsDeliveryPage {
     });
     return await this.page.locator(UnitsDeliveryObjects.commentsHistorySection.xpath).isVisible();
   }
+  async verifyTheRejectionLimitIsPresent() {
+    await this.page.locator(UnitsDeliveryObjects.maximumNumberOfRejectionsErrorMessage.xpath).waitFor({
+      state: 'visible',
+      timeout: DEFAULT_TIMEOUT,
+    });
+    return await this.page.locator(UnitsDeliveryObjects.maximumNumberOfRejectionsErrorMessage.xpath).isVisible();
+  }
+  async clickOnUnitDeliveryManagementButton() {
+    const unitDeliveryManagementLink = this.page.getByRole(UnitsDeliveryObjects.unitDeliveryManagementLink.role, { name: UnitsDeliveryObjects.unitDeliveryManagementLink.name });
+    await unitDeliveryManagementLink.waitFor({
+      state: 'visible',
+      timeout: DEFAULT_TIMEOUT,
+    });
+    await unitDeliveryManagementLink.click();
+  }
+  async clickOnEditButton() {
+    await this.page.locator(UnitsDeliveryObjects.editButton.xpath).waitFor({
+      state: 'visible',
+      timeout: DEFAULT_TIMEOUT,
+    });
+    await this.page.locator(UnitsDeliveryObjects.editButton.xpath).click();
+  }
+  async fillRejectionLimitTime(max: string) {
+    await this.commonMethod.press(UnitsDeliveryObjects.rejectionLimitTimeInputfield, 'Control+A');
+    await this.page.locator(UnitsDeliveryObjects.rejectionLimitTimeInputfield.xpath).waitFor({
+      state: 'visible',
+      timeout: DEFAULT_TIMEOUT,
+    });
+    await this.page.locator(UnitsDeliveryObjects.rejectionLimitTimeInputfield.xpath).fill(max);
+  }
+  async clickOnSaveButton() {
+    await this.page.locator(UnitsDeliveryObjects.saveButton.xpath).waitFor({
+      state: 'visible',
+      timeout: DEFAULT_TIMEOUT,
+    });
+    await this.page.locator(UnitsDeliveryObjects.saveButton.xpath).click();
+  }
+  async verifyEditRejectionLimitIsSaved() {
+    await this.page.locator(UnitsDeliveryObjects.editSuccessfulMessage.text).waitFor({
+      state: 'visible',
+      timeout: DEFAULT_TIMEOUT,
+    });
+    return await this.page.locator(UnitsDeliveryObjects.editSuccessfulMessage.text).isVisible();
+  }
+  async clickOPpreviewUnitDeliveryContractFileButton() {
+    await this.page.locator(UnitsDeliveryObjects.previewUnitDeliveryContractFileButton.xpath).waitFor({
+      state: 'visible',
+      timeout: DEFAULT_TIMEOUT,
+    });
+    await this.page.locator(UnitsDeliveryObjects.previewUnitDeliveryContractFileButton.xpath).click();
+  }
+  async verifyUnitDeliveryContractFileIsPresent() {
+    await this.page.locator(UnitsDeliveryObjects.previewUnitDeliveryContractPopup.text).waitFor({
+      state: 'visible',
+      timeout: DEFAULT_TIMEOUT,
+    });
+    return await this.page.locator(UnitsDeliveryObjects.previewUnitDeliveryContractPopup.text).isVisible();
+  }
 }

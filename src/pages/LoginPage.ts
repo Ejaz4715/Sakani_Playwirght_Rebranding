@@ -143,4 +143,24 @@ export class LoginPage {
       // Privacy policy popup not present; continue with the flow.
     }
   }
+
+  async acceptPreBetaCookies() {
+    const acceptCookiesButton = this.page.getByRole(LoginObjects.acceptCookiesButton.role, { name: LoginObjects.acceptCookiesButton.name });
+
+    try {
+      await acceptCookiesButton.waitFor({ state: 'visible', timeout: 10000 });
+    } catch {
+      return;
+    }
+    await expect(async () => {
+      if (await acceptCookiesButton.isVisible()) {
+        await acceptCookiesButton.click({ timeout: 10000 });
+      }
+      await expect(acceptCookiesButton).toBeHidden({ timeout: 5000 });
+    }).toPass({ timeout: 60000 });
+  }
+
+  async verifyPreBetaLoginPageDisplayed() {
+    await expect(this.page.locator(LoginObjects.preBetaContinueWithNafathButton).first()).toBeVisible({ timeout: 30000 });
+  }
 }

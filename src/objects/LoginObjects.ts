@@ -4,6 +4,7 @@ export const LoginObjects = {
     role: 'button',
     name: 'قبول ملفات تعريف الارتباط',
   },
+  preBetaContinueWithNafathButton: "//button[contains(.,'المتابعة مع نفاذ')]",
   closeCookiesModal: '.svg-icon.icon-close-dark',
   loginButton: "//span[contains (text(), 'تسجيل الدخول')]/parent::a",
   preBetaLoginButton: "//button[contains(text(),' تسجيل الدخول ')]",
