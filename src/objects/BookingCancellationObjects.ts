@@ -21,7 +21,7 @@ export const BookingCancellationObjects = {
     xpath: "(//button[text()=' عرض التفاصيل '])[1]",
   },
   cancelBookingButton: {
-    xpath: "//button[contains(text(),'إلغاء الحجز')]",
+    xpath: '//app-cancel-booking-button-v6/child::button',
   },
   continueButton: {
     xpath: "//button[contains(text(),'متابعة إلغاء الحجز')]",
@@ -40,8 +40,7 @@ export const BookingCancellationObjects = {
     name: 'تأكيد الإلغاء',
   },
   yesButton: {
-    role: 'button',
-    name: 'نعم',
+    xpath: "//button[normalize-space() = 'نعم']",
   },
   cancellationSuccessHeading: {
     text: 'تم إلغاء الحجز بنجاح!',
@@ -78,45 +77,45 @@ export const BookingCancellationObjects = {
   //ReadyMade View project and unit
   //project + some in unit
   projectInfoSection: {
-    xpath: 'app-dx-project-information-tpl',
+    xpath: '//app-project-information-tpl-v6',
   },
   brochureAndMasterplanSection: {
-    xpath: '//app-dx-brochure-masterplan-tpl',
+    xpath: '//app-brochure-masterplan-tpl-v6',
   },
   projectUnitsTypesSection: {
-    xpath: '//app-dx-project-unit-types',
+    xpath: '//app-project-unit-types-v6-tpl',
   },
   projectFacilitiesSection: {
-    xpath: '//app-dx-project-facilities',
+    xpath: '//app-project-facilities-v6-tpl',
   },
   projectInsightSection: {
-    xpath: '//app-dx-insight-project-wrapper',
+    xpath: '//app-insight-project-wrapper-v6',
   },
   participatinBanksSection: {
-    xpath: '//app-dx-project-participating-banks',
+    xpath: '//app-project-participating-banks-v6',
   },
   projectContactsSection: {
-    xpath: '//app-dx-project-contacts-tpl',
+    xpath: '//app-project-contacts-tpl-v6',
   },
   projectUnitsSection: {
-    xpath: '//app-dx-project-units',
+    xpath: '//app-project-units-v6',
   },
 
   //unit page
   licenseAndAdvertismentSection: {
-    xpath: '//app-dx-advertisement-license-tpl',
+    xpath: '//app-advertisement-license-tpl-v6',
   },
   unitDetailsSection: {
-    xpath: '//app-dx-propery-unit-details-tpl',
+    xpath: '//app-property-unit-details-v6-tpl',
   },
   husngAssistancentSection: {
-    xpath: '//app-dx-housing-assistance-tpl',
+    xpath: '//app-housing-assistance-tpl-v6',
   },
   brochureCard: {
-    xpath: "//span[text()='الكتيب']",
+    xpath: "//div[contains (text(), 'كتيب')]",
   },
   masterplanCard: {
-    xpath: "//span[text()='المخطط العام']",
+    xpath: "(//div[normalize-space()='المخطط الرئيسي'])[1]",
   },
 
   //Card deatails

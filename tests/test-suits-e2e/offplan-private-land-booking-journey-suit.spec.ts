@@ -11,7 +11,7 @@ const readEnvironments = () => DataHelper.readData().environments;
 const readPreBetaEnvironments = () => DataHelper.readData().environments['preBeta'].userPortalUrl;
 
 test.describe('Offplan private land booking journey', () => {
-  test('TC-01 Admin adds new offplan private land project', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+  test('SAKANI-51224-01 Admin adds new offplan private land project', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     await logStep('Step 00: Read data from json relative to the service');
     const data = readServiceData();
     const environments = readEnvironments();
@@ -133,7 +133,7 @@ test.describe('Offplan private land booking journey', () => {
     await app.adminProjectPage.validateProjectSavedToastMessage();
   });
 
-  test('TC-02 Developer adds cash and lending payment schedules to the project (Offplan Private Land)', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+  test('SAKANI-51224-02 Developer adds cash and lending payment schedules to the project (Offplan Private Land)', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     await logStep('Step 00: Read data from json relative to the service');
     const data = readServiceData();
     const environments = readEnvironments();
@@ -174,7 +174,7 @@ test.describe('Offplan private land booking journey', () => {
     });
   });
 
-  test('TC-03 Developer approves sales contract of project (Offplan Private Land)', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+  test('SAKANI-51224-03 Developer approves sales contract of project (Offplan Private Land)', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     await logStep('Step 00: Read data from json relative to the service');
     const data = readServiceData();
     const environments = readEnvironments();
@@ -202,17 +202,16 @@ test.describe('Offplan private land booking journey', () => {
     await app.developerProjectPage.verifyApprovalSuccessMessage();
   });
 
-  test('TC-04 User books unit (Offplan Private Land)', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+  test('SAKANI-51224-04 User books unit (Offplan Private Land)', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     const app = new WebApp(page);
     await logStep('Step 00: Read data from json relative to the service');
     const data = readServiceData();
-    const environments = readEnvironments();
+    const environments = readPreBetaEnvironments();
     const sakaniUserId = data.sakaniUserId;
-    const userPortalUrl = environments.userPortalUrl;
     const projectName = data.projectName;
 
     await logStep('Step 01: Open the user portal and login');
-    await app.loginPage.gotoHomePage(userPortalUrl);
+    await app.loginPage.gotoHomePage(environments);
     await app.commonMethods.unifiedSakaniLogin(sakaniUserId);
 
     await logStep('Step 02: Find the project and open its unit model');
@@ -245,35 +244,30 @@ test.describe('Offplan private land booking journey', () => {
     }
   });
 
-  test('TC-05 User cancels a booking', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+  test('SAKANI-51224-05 User cancels a booking', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+    const app = new WebApp(page);
     await logStep('Step 00: Read data from json relative to the service');
     const data = readServiceData();
-    const environments = readEnvironments();
-    const app = new WebApp(page);
+    const environments = readPreBetaEnvironments();
     const sakaniUserId = data.sakaniUserId;
-    const userPortalUrl = environments.userPortalUrl;
 
-    await logStep('Step 01: Open user portal');
-    await app.loginPage.gotoHomePage(userPortalUrl);
-    await app.loginPage.acceptCookies();
-
-    await logStep('Step 02: Log in with Nafath');
-    await app.loginPage.gotoHomePage(userPortalUrl);
+    await logStep('Step 01: Open the user portal and login');
+    await app.loginPage.gotoHomePage(environments);
     await app.commonMethods.unifiedSakaniLogin(sakaniUserId);
 
-    await logStep('Step 03: Open active bookings');
+    await logStep('Step 02: Open active bookings');
     await app.bookingPage.openActiveBookings();
 
-    await logStep('Step 04: Open booking details');
+    await logStep('Step 03: Open booking details');
     await app.bookingPage.openBookingDetails();
 
-    await logStep('Step 05: Cancel the booking and validate cancellation success message');
+    await logStep('Step 04: Cancel the booking and validate cancellation success message');
     await app.bookingPage.cancelBooking();
     await app.bookingPage.expectCancellationSuccess();
   });
 
   // Rebranding test cases below
-  test('TC-06 User books a second unit Offplan Private Land', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+  test('SAKANI-51224-06 User books a second unit Offplan Private Land', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     const app = new WebApp(page);
     await logStep('Step 00: Read data from json relative to the service');
     const data = readServiceData();
@@ -298,7 +292,7 @@ test.describe('Offplan private land booking journey', () => {
     const page2Promise = page1.waitForEvent('popup');
     {
       const unitApp = new WebApp(page1);
-      await unitApp.projectUnitsPage.openUnitInPopup(1);
+      await unitApp.projectUnitsPage.openUnitInPopup(2);
     }
     const page2 = await page2Promise;
     {
@@ -311,12 +305,13 @@ test.describe('Offplan private land booking journey', () => {
 
       await logStep('Step 05: Pay booking fees and validate payment success');
       await bookingApp.paymentGatewayPage.fillCardDetails();
+      await page.pause();
       await bookingApp.paymentConfirmationPage.closePayment();
       await bookingApp.paymentConfirmationPage.expectSuccessMessage();
     }
   });
 
-  test('TC-07 User rejects the sales contract and verify the booking is cancelled', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+  test('SAKANI-51224-07 User rejects the sales contract and verify the booking is cancelled', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     await logStep('Step 00: Read data from json relative to the service');
     const data = readServiceData();
     const environments = readPreBetaEnvironments();

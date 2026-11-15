@@ -10,12 +10,12 @@
   },
   "services": {
     "offplan-booking": {
-      "projectName": "Automation Project 20261104102801",
+      "projectName": "Automation Project Offplan 20261115123103",
       "adminUsername": "super_admin@test1-admin-sakani.housingapps.sa",
       "adminPassword": "admin",
       "developerUserId": "1023129537",
       "sakaniUserId": "1300061022",
-      "bookedUnitCode": "01-01-0826-22-118"
+      "bookedUnitCode": "02-01-0223-6-102"
     },
     "auction-journey": {
       "projectName": "",
@@ -134,7 +134,8 @@
       "developerUserId": "1023129537",
       "projectName": "Automation Project 20261112121634",
       "sakaniUserId": "1772087118",
-      "deliveryUnitCode": "01-01-0857-5-101"
+      "deliveryUnitCode": "01-01-0857-5-101",
+      "existingReqUser": "1074829753"
     },
     "payments-and-transactions": {
       "sakaniUserId": "1019075926"
@@ -205,7 +206,7 @@
       "sakaniUserId": "1300070834"
     },
     "ready-made-project": {
-      "projectNameView": "readymade private land",
+      "projectNameView": "readymade private land_1",
       "projectNameBooking": "ReadyMade Project Automation Only",
       "sakaniUserId": "1300061236"
     },

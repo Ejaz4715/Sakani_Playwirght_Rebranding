@@ -185,7 +185,7 @@ export const DeveloperObjects = {
     role: 'button',
     name: 'نعم',
   },
-  confirmBookingSuccessText: "//p[normalize-space() = 'تهانينا']",
+  confirmBookingSuccessText: "//p[contains(text(), 'تهانينا')]",
   cancelBookingReasonDropdown: '//app-sapa-dropdown-v2/descendant::input',
   cancelBookingReasonOption(option: string) {
     return `//div[@role='option']/descendant::span[normalize-space() = '${option}']`;

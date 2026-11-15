@@ -14,30 +14,22 @@ const writeServiceData = (key: string, value: any) => DataHelper.updateServiceDa
 const DEFAULT_TIMEOUT = 30_000;
 const LONG_TIMEOUT = 90_000;
 
-async function waitAndClick(locator: Locator, timeout = DEFAULT_TIMEOUT) {
-  await locator.waitFor({ state: 'visible', timeout });
-  await locator.click();
-}
-
-async function waitAndFill(locator: Locator, value: string, timeout = DEFAULT_TIMEOUT) {
-  await locator.waitFor({ state: 'visible', timeout });
-  await locator.fill(value);
-}
-
 test.describe('Unit Delivery', () => {
   let deliveryUnitCode: string;
-  test('TC-01 Admin adds new offplan project for unit delivery', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+  test('SAKANI-51040-01 Admin adds new offplan project for unit delivery', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+    await logStep('Step 00: Read data from json relative to the service');
     const data = readServiceData();
     const environments = readEnvironments();
     const app = new WebApp(page);
-    const projectName = `Automation Project ${new Date()
+    const projectName = `Automation Project Offplan ${new Date()
       .toISOString()
       .replace(/[-:T.]/g, '')
       .slice(0, 14)}`;
-    writeServiceData('projectName', projectName);
+    DataHelper.updateServiceData('test-data.json', 'offplan-booking', 'projectName', projectName);
 
     await logStep('Step 01: Login to admin portal as a super admin');
     await app.adminProjectPage.login(environments.adminPortalUrl, data.adminUsername, data.adminPassword);
+
     await logStep('Step 02: Navigate to add new project');
     await app.adminProjectPage.clickInternalInventory();
     await app.adminProjectPage.clickProjectsLink();
@@ -158,7 +150,7 @@ test.describe('Unit Delivery', () => {
     await expect(page.locator(AdminProjectObjects.maxBookingsPerNonBeneInput)).toHaveValue('5');
   });
 
-  test('TC-02 Developer approves sales contract for unit delivery project', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+  test('SAKANI-51040-02 Developer approves sales contract for unit delivery project', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     const data = readServiceData();
     const environments = readEnvironments();
     const app = new WebApp(page);
@@ -182,7 +174,7 @@ test.describe('Unit Delivery', () => {
     await app.developerProjectPage.verifyApprovalSuccessMessage();
   });
 
-  test('TC-03 Developer books one unit for delivery', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+  test('SAKANI-51040-03 Developer books one unit for delivery', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     await logStep('Step 00: Read data from json relative to the service');
     const data = readServiceData();
     const environments = readEnvironments();
@@ -215,7 +207,7 @@ test.describe('Unit Delivery', () => {
     await app.developerProjectPage.validateSuccessReservationPopup();
   });
 
-  test('TC-04 User Pays the invoice of the booked unit for delivery', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+  test('SAKANI-51040-04 User Pays the invoice of the booked unit for delivery', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     const data = readServiceData();
     const environments = readEnvironments();
     const app = new WebApp(page);
@@ -245,7 +237,7 @@ test.describe('Unit Delivery', () => {
     await page.waitForTimeout(12000);
   });
 
-  test('TC-05 User Signs sale contract of booked unit for delivery', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+  test('SAKANI-51040-05 User Signs sale contract of booked unit for delivery', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     const data = readServiceData();
     const environments = readEnvironments();
     const app = new WebApp(page);
@@ -275,7 +267,7 @@ test.describe('Unit Delivery', () => {
     await expect.poll(() => app.offPlanBasketMultipleBookingPage.isSuccessfulContractSignMessage(), { timeout: LONG_TIMEOUT }).toBe(true);
   });
 
-  test('TC-06 Developer confirms the cash payment for unit delivery', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+  test('SAKANI-51040-06 Developer confirms the cash payment for unit delivery', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     const data = readServiceData();
     const environments = readEnvironments();
     const app = new WebApp(page);
@@ -300,7 +292,7 @@ test.describe('Unit Delivery', () => {
     await app.cashPaymentPage.expectCashPaymentSuccess();
   });
 
-  test('TC-07 Unit delivery preparation by the developer', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+  test('SAKANI-51040-07 Unit delivery preparation by the developer', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     const data = readServiceData();
     const environments = readEnvironments();
     const projectName = data.projectName;
@@ -330,7 +322,7 @@ test.describe('Unit Delivery', () => {
     expect(await app.unitsDeliveryPage.isUnitReadyForDelivery()).toBe(true);
   });
 
-  test('TC-08 Delivery of the ready units from Partner', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+  test('SAKANI-51040-08 Delivery of the ready units from Partner', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     const data = readServiceData();
     const environments = readEnvironments();
     const app = new WebApp(page);
@@ -352,7 +344,8 @@ test.describe('Unit Delivery', () => {
     await app.unitsDeliveryPage.sendToCustomerForDelivery();
     expect(await app.unitsDeliveryPage.isUnitDelivered()).toBe(true);
   });
-  test('TC-09 Verify user filter by unit delivery status', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+
+  test('SAKANI-51040-09 Verify user filter by unit delivery status', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     const data = readServiceData();
     const environments = readEnvironments();
     const app = new WebApp(page);
@@ -369,7 +362,8 @@ test.describe('Unit Delivery', () => {
     await app.unitsDeliveryPage.clickOnUnitDeliveryFromSakani();
     await app.unitsDeliveryPage.verifyUnitDeliveryStatusAreSelected();
   });
-  test('TC-10 Validate the message of the date with out of range', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+
+  test('SAKANI-51040-10 Validate the message of the date with out of range', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     const data = readServiceData();
     const environments = readEnvironments();
     const app = new WebApp(page);
@@ -399,7 +393,8 @@ test.describe('Unit Delivery', () => {
     await app.unitsDeliveryPage.fillFinalUnitRedeliveryDate(-2, 0);
     await app.unitsDeliveryPage.verifyDateErrorMessageIsPresent();
   });
-  test('TC-11 Admin edit the limitation rejection times > Set to one time', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+
+  test('SAKANI-51040-11 Admin edit the limitation rejection times > Set to one time', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     test.setTimeout(0);
     await logStep('Step 00: Read data from json relative to the service');
     const data = readServiceData();
@@ -422,7 +417,7 @@ test.describe('Unit Delivery', () => {
     await app.unitsDeliveryPage.verifyEditRejectionLimitIsSaved();
   });
 
-  test('TC-12 User reject the form', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+  test('SAKANI-51040-12 User reject the form', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     const data = readServiceData();
     const environments = readEnvironments();
     const app = new WebApp(page);
@@ -460,7 +455,8 @@ test.describe('Unit Delivery', () => {
     await app.unitsDeliveryPage.clickOnVerify();
     await app.unitsDeliveryPage.verifyUnitRejectionMessage();
   });
-  test('TC-13 Developer redelivery the unit', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+
+  test('SAKANI-51040-13 Developer redelivery the unit', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     const data = readServiceData();
     const environments = readEnvironments();
     const app = new WebApp(page);
@@ -486,7 +482,8 @@ test.describe('Unit Delivery', () => {
     await app.unitsDeliveryPage.clickOnConfirmButton();
     await app.unitsDeliveryPage.verifyUnitRedeliverySuccessMessage();
   });
-  test('TC-14 Verify the rejection limit message and accept the unit delivery form', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+
+  test('SAKANI-51040-14 Verify the rejection limit message and accept the unit delivery form', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     const data = readServiceData();
     const environments = readEnvironments();
     const app = new WebApp(page);
@@ -520,7 +517,8 @@ test.describe('Unit Delivery', () => {
     await app.unitsDeliveryPage.clickOnVerify();
     expect(await app.unitsDeliveryPage.isUnitDeliveredAndAcceptedFromSakani()).toBe(true);
   });
-  test('TC-15 User view comments history from request details', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+
+  test('SAKANI-51040-15 User view comments history from request details', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     const data = readServiceData();
     const environments = readEnvironments();
     const app = new WebApp(page);
@@ -541,16 +539,17 @@ test.describe('Unit Delivery', () => {
     await app.unitsDeliveryPage.clickOnShowDeliveryUnitModel(data.deliveryUnitCode);
     await app.unitsDeliveryPage.verifyCommentsHistorySectionIsPresent();
   });
-  test('TC-16 User view unit delivery contract file from request details', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+
+  test('SAKANI-51040-16 User view unit delivery contract file from request details', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     const data = readServiceData();
     const environments = readEnvironments();
     const app = new WebApp(page);
-    const sakaniUserId = data.sakaniUserId;
+    const sakaniUserId = data.existingReqUser;
     const preBeta = environments['preBeta'].userPortalUrl;
 
     await logStep('Step 01: Navigate to user portal > Login');
     await app.loginPage.gotoHomePage(preBeta);
-    await app.commonMethods.unifiedSakaniLogin('1074829753');
+    await app.commonMethods.unifiedSakaniLogin(sakaniUserId);
 
     await logStep('Step 02: Navigate to my activities > Units delivery > Accepted units');
     await app.marketplaceLandingPage.openProfileManagement();

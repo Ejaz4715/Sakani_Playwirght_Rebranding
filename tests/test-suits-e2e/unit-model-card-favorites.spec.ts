@@ -28,7 +28,7 @@ test.describe('Unit model card favorites', () => {
     await app.favoritesPage.openProjectUnitsTab();
   }
 
-  test('SAKANI-48617-01 Add a unit to favorites and verify it is listed in the user favorites', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+  test('SAKANI-48617-01 Add a unit to favorites and verify it is listed in the user favorites', { annotation: [{ product: 'Rebranding', type: 'non-critical' }] as any }, async ({ page }) => {
     await loginAndOpenProjectUnits(page);
     await logStep('Step 03: Add the first unit to favorites');
     const unitName = await app.favoritesPage.markFirstUnitAsFavorite();
@@ -41,7 +41,7 @@ test.describe('Unit model card favorites', () => {
     await app.favoritesPage.verifyUnitInFavorites(unitName);
   });
 
-  test('SAKANI-48617-02 Verify user can Unfavorite a Unit Model card on the Project page', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+  test('SAKANI-48617-02 Verify user can Unfavorite a Unit Model card on the Project page', { annotation: [{ product: 'Rebranding', type: 'non-critical' }] as any }, async ({ page }) => {
     await loginAndOpenProjectUnits(page);
 
     await logStep('Step 03: Click the heart on the first unit to add it to favorites (heart turns red)');
@@ -58,7 +58,7 @@ test.describe('Unit model card favorites', () => {
     await app.favoritesPage.verifyUnitNotInFavorites(unitName);
   });
 
-  test('SAKANI-48617-03 Verify user can Unfavorite a Unit Model from the unit details page', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+  test('SAKANI-48617-03 Verify user can Unfavorite a Unit Model from the unit details page', { annotation: [{ product: 'Rebranding', type: 'non-critical' }] as any }, async ({ page }) => {
     await loginAndOpenProjectUnits(page);
 
     await logStep('Step 03: Click the heart on the first unit to add it to favorites (heart turns red)');
@@ -74,7 +74,7 @@ test.describe('Unit model card favorites', () => {
     await app.favoritesPage.unfavoriteUnitFromDetailsPage();
   });
 
-  test('SAKANI-48617-04 Verify guest user is prompted to log in when tapping Favorite on a Unit Model', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+  test('SAKANI-48617-04 Verify guest user is prompted to log in when tapping Favorite on a Unit Model', { annotation: [{ product: 'Rebranding', type: 'non-critical' }] as any }, async ({ page }) => {
     await logStep('Step 00: Read data from json relative to the service');
     const data = readServiceData();
     userPortalUrl = readEnvironments()['preBeta'].userPortalUrl;

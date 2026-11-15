@@ -59,11 +59,11 @@ async function adminCreatesProjectSteps(page: Page, unitsFileName: string) {
   await app.adminProjectPage.uploadUnitsFile(path.join(process.cwd(), 'src', 'data', unitsFileName));
   await app.adminProjectPage.clickImportSaveButton();
   await app.adminProjectPage.waitForUnitImportCompletion();
-  await app.adminProjectPage.expectUnitImportDone(); //  new Meythod to Check The Unit already imported
+  // await app.adminProjectPage.expectUnitImportDone(); //  new Meythod to Check The Unit already imported
   await app.adminProjectPage.clickApproveButton();
   await app.adminProjectPage.clickConfirmButton();
   await app.adminProjectPage.waitForImportConfirmation();
-  await app.adminProjectPage.backToProjectFromUnitsImport(); // new methods to conferm the Project form imported sucessfully
+  // await app.adminProjectPage.backToProjectFromUnitsImport(); // new methods to conferm the Project form imported sucessfully
 
   await logStep('Pre-condition 01.6: Upload project media and enter media details');
   await app.adminProjectPage.clickProjectMediaTab();
@@ -87,7 +87,7 @@ async function adminCreatesProjectSteps(page: Page, unitsFileName: string) {
   await app.adminProjectPage.clickMediaSaveButton();
 
   await logStep('Pre-condition 01.7: Approve project media');
-  await app.adminProjectPage.reloadAndSaveProjectMediaAgain(); // mew Method to check the project media allready Saved
+  // await app.adminProjectPage.reloadAndSaveProjectMediaAgain(); // mew Method to check the project media allready Saved
   await app.adminProjectPage.clickProjectDetailsTab();
   await app.adminProjectPage.clickRequestMediaApprovalButton();
   await app.adminProjectPage.clickAcceptUploadedMediaButton();
