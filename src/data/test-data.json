@@ -107,7 +107,7 @@
       "adminUsername": "super_admin@test1-admin-sakani.housingapps.sa",
       "adminPassword": "admin",
       "developerUserId": "1023129537",
-      "projectName": "Doctor test 20261107115221",
+      "projectName": "Doctor test 20261116182903",
       "beneUser": "1300061216",
       "nonBeneUser": "1300061210",
       "unitBasketUser": "1300061207",
@@ -115,9 +115,9 @@
       "companyBeneCR": "7001234342",
       "companyNonBeneUser": "1000000002",
       "companyNonBeneCR": "7001234342",
-      "scheduleTitleAr": "جدول دفع مرن لخدمات أتمتة الاختبارات 20261104130449",
-      "scheduleTitleEn": "Automation Flexible Payment Schedule 20261104130449",
-      "companyProjectName": "Doctor test 20261104125743"
+      "scheduleTitleAr": "جدول دفع مرن لخدمات أتمتة الاختبارات 20261116205623",
+      "scheduleTitleEn": "Automation Flexible Payment Schedule 20261116205623",
+      "companyProjectName": "Doctor test 20261116205201"
     },
     "selling-to-companies": {
       "adminUsername": "super_admin@test1-admin-sakani.housingapps.sa",
