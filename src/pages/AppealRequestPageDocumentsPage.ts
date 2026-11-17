@@ -45,13 +45,16 @@ export class AppealRequestPageDocumentsPage {
     await this.commonMethod.clickElement(AppealRequestDocuments.addAndFollowButton);
   }
   async VerifyCloseButton() {
-    await this.commonMethod.verifyElementVisible(AppealRequestDocuments.closeButton);
+    await this.commonMethod.verifyElementVisible(AppealRequestDocuments.closeButtonFrist);
   }
   async ClickonSubmitRequestButton() {
     await this.commonMethod.clickElement(AppealRequestDocuments.submitRequestButtonforApproveRequest);
   }
-  async ClickonClosePopupButton() {
-    await this.commonMethod.clickElement(AppealRequestDocuments.closePopupButton);
+  async ClickonClosePopupButtonsecond() {
+    await this.commonMethod.clickElement(AppealRequestDocuments.closePopupButtonSecond);
+  }
+  async ClickonClosePopupButtonTherd() {
+    await this.commonMethod.clickElement(AppealRequestDocuments.closePopupButtonTherd);
   }
   async ClickonMultiSelectInput() {
     await this.commonMethod.clickElement(AppealRequestDocuments.multiSelectInput);
@@ -78,6 +81,7 @@ export class AppealRequestPageDocumentsPage {
   async ClickonUploadDocumentsButton() {
     await this.commonMethod.clickElement(AppealRequestDocuments.uploadDocumentsButton);
   }
+
   async uploadACopyOfNationalId(upload: string) {
     await this.commonMethod.uploadFile(AppealRequestDocuments.uploadNationalId, upload);
     await this.page.waitForTimeout(5000);
@@ -107,12 +111,24 @@ export class AppealRequestPageDocumentsPage {
   }
   async ClickonClosePopupButtonIfPresent() {
     try {
-      await this.commonMethod.clickIfVisible(AppealRequestDocuments.closePopupButton, { timeout: 5000 });
+      await this.commonMethod.clickIfVisible(AppealRequestDocuments.closePopupButtonTherd, { timeout: 5000 });
     } catch {}
   }
   async ClickonThirdButtonOfPopup() {
     const thirdButton = this.page.getByRole('button').nth(2);
     await thirdButton.waitFor({ state: 'visible' });
     await thirdButton.click();
+  }
+
+  async VerifyUnderProceesingLapleDisplay() {
+    await this.commonMethod.verifyElementVisible(AppealRequestDocuments.underProcessingLabel);
+  }
+
+  async VerifyRequiredDocumentsLabel() {
+    await this.commonMethod.verifyElementVisible(AppealRequestDocuments.requiredDocumentsLabel);
+  }
+
+  async VerifyDocumentsSentSuccessMessage() {
+    await this.commonMethod.verifyElementVisible(AppealRequestDocuments.documentsSentSuccessMessage);
   }
 }

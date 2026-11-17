@@ -1,13 +1,17 @@
 import { AdminProjectObjects } from '@objects/AdminProjectsObjects';
 import { expect, Page } from '@playwright/test';
+import path from 'node:path';
+import fs from 'fs';
 
 export class AdminProjectPage {
   page: Page;
+  private authFile = path.join(process.cwd(), '.auth', 'admin-auth-session.json');
+
   constructor(page: Page) {
     this.page = page;
   }
 
-  async login(url: string, username: string, password: string, otp = '1234') {
+  async loginOld(url: string, username: string, password: string, otp = '1234') {
     await this.page.goto(url);
     await this.page.locator(AdminProjectObjects.loginUsernameInput).fill(username);
     await this.page.locator(AdminProjectObjects.loginPasswordInput).fill(password);
@@ -24,6 +28,86 @@ export class AdminProjectPage {
         name: AdminProjectObjects.otpConfirmButton.name,
       })
       .click();
+  }
+
+  async login(url: string, username: string, password: string, otp = '1234') {
+    const dir = path.dirname(this.authFile);
+
+    // Define the selector for a reliable element that only appears when logged in (e.g., admin menu link)
+    const adminMenuLink = this.page.locator(AdminProjectObjects.internalInventoryLink.selector).filter({ hasText: AdminProjectObjects.internalInventoryLink.hasText });
+
+    // 1. Fail-safe: Ensure the local directory for storing session files exists
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+
+    // 2. Check if a previously saved session state file exists
+    if (fs.existsSync(this.authFile)) {
+      try {
+        const storageState = JSON.parse(fs.readFileSync(this.authFile, 'utf-8'));
+
+        // Validate that the JSON file contains actual cookies or localStorage credentials
+        const hasCookies = Array.isArray(storageState.cookies) && storageState.cookies.length > 0;
+        const hasLocalStorage = Array.isArray(storageState.origins) && storageState.origins.some((origin: { localStorage?: unknown[] }) => Array.isArray(origin.localStorage) && origin.localStorage.length > 0);
+
+        // If stored data exists, try applying it to bypass manual login
+        if (hasCookies || hasLocalStorage) {
+          await this.page.context().setStorageState(storageState);
+          await this.page.goto(url);
+
+          // Check if the session is still active by waiting for an authenticated UI element to appear
+          const isAuthenticated = await adminMenuLink
+            .waitFor({ state: 'visible', timeout: 15000 })
+            .then(() => true)
+            .catch(() => false);
+
+          // If valid, exit early and skip the credential/OTP flow entirely
+          if (isAuthenticated) {
+            return;
+          }
+
+          console.log('Session expired or invalid. Re-authenticating...');
+        }
+      } catch (error) {
+        console.warn('Could not load session file, proceeding with fresh login.', error);
+      }
+
+      // If the session file was corrupted or expired, clean it up
+      if (fs.existsSync(this.authFile)) {
+        fs.unlinkSync(this.authFile);
+      }
+    }
+
+    // 3. Fallback: Perform standard manual login (username + password)
+    await this.page.goto(url);
+    await this.page.locator(AdminProjectObjects.loginUsernameInput).fill(username);
+    await this.page.locator(AdminProjectObjects.loginPasswordInput).fill(password);
+    await this.page
+      .getByRole(AdminProjectObjects.loginButton.role, {
+        name: AdminProjectObjects.loginButton.name,
+      })
+      .click();
+
+    // 4. Handle the OTP verification step
+    const otpInput = this.page.locator(AdminProjectObjects.otpInput);
+    await expect(otpInput).toBeVisible({ timeout: 30000 });
+    await otpInput.fill(otp);
+    await this.page
+      .getByRole(AdminProjectObjects.otpConfirmButton.role, {
+        name: AdminProjectObjects.otpConfirmButton.name,
+      })
+      .click();
+
+    // 5. Verify successful login completion and dashboard arrival
+    await expect(otpInput, 'OTP step should close after successful confirmation').toBeHidden({
+      timeout: 40000,
+    });
+    await expect(adminMenuLink, 'Admin navigation should appear after login').toBeVisible({
+      timeout: 40000,
+    });
+
+    // 6. Capture and save the fresh, fully authenticated session state for future test runs
+    await this.page.context().storageState({ path: this.authFile });
   }
 
   async openProjectCreation() {
@@ -251,38 +335,28 @@ export class AdminProjectPage {
       .click();
   }
 
-  async expectImportNewUnitButtonVisible() {
-    await expect(
-      this.page.getByRole(AdminProjectObjects.importNewUnitButton.role, {
-        name: AdminProjectObjects.importNewUnitButton.name,
-      })
-    ).toBeVisible({ timeout: 30000 });
-  }
-
   async clickImportNewUnitButton() {
-    await this.page
-      .getByRole(AdminProjectObjects.importNewUnitButton.role, {
-        name: AdminProjectObjects.importNewUnitButton.name,
-      })
-      .click();
-  }
-
-  async expectResidentialUnitTypeVisible() {
-    this.page.waitForTimeout(3000);
-    await expect(
-      this.page.getByRole(AdminProjectObjects.residentialUnitType.role, {
-        name: AdminProjectObjects.residentialUnitType.name,
-      })
-    ).toBeVisible({ timeout: 30000 });
+    const newImportButton = this.page.getByRole(AdminProjectObjects.importNewUnitButton.role, {
+      name: AdminProjectObjects.importNewUnitButton.name,
+    });
+    await newImportButton.waitFor({ state: 'visible', timeout: 20000 });
+    await newImportButton.click();
   }
 
   async openResidentialUnitTypeDropdown() {
-    this.page.waitForTimeout(7000);
+    await this.page.waitForTimeout(7000);
     await this.page
-      .getByRole(AdminProjectObjects.residentialUnitType.role, {
-        name: AdminProjectObjects.residentialUnitType.name,
+      .getByRole(AdminProjectObjects.importSaveButton.role, {
+        name: AdminProjectObjects.importSaveButton.name,
       })
-      .click();
+      .waitFor({ state: 'visible', timeout: 20000 });
+
+    const unitTypeDropdown = await this.page.getByRole(AdminProjectObjects.residentialUnitType.role, {
+      name: AdminProjectObjects.residentialUnitType.name,
+    });
+
+    await unitTypeDropdown.waitFor({ state: 'visible', timeout: 20000 });
+    await unitTypeDropdown.click();
   }
 
   async selectApartmentUnitType() {
@@ -307,28 +381,24 @@ export class AdminProjectPage {
       .click();
   }
 
+  async expectUnitImportDone() {
+    await expect(this.page.getByText(AdminProjectObjects.importDoneStatus.text, { exact: true }).first()).toBeVisible({ timeout: 30000 });
+  }
+
   async waitForUnitImportCompletion() {
     await this.page.waitForTimeout(12000);
     let completed = false;
     while (!completed) {
       await this.page.reload();
       await this.page.waitForTimeout(3000);
-      const importCompleteVisible = await this.page;
-
-      const importInProgressVisible = await this.page
-        .getByText(AdminProjectObjects.importInProgressStatus.text)
-        .first()
+      completed = await this.page
+        .getByText(AdminProjectObjects.importCompleteMessage.text)
         .isVisible()
         .catch(() => false);
-      completed = importCompleteVisible && !importInProgressVisible;
       if (!completed) {
         await this.page.waitForTimeout(3000);
       }
     }
-  }
-
-  async expectUnitImportDone() {
-    await expect(this.page.getByText(AdminProjectObjects.importDoneStatus.text, { exact: true }).first()).toBeVisible({ timeout: 30000 });
   }
 
   async clickApproveButton() {
@@ -361,25 +431,6 @@ export class AdminProjectPage {
 
   async clickProjectMediaTab() {
     await this.page.locator(AdminProjectObjects.visualContentTab.selector).filter({ hasText: AdminProjectObjects.visualContentTab.text }).first().click();
-  }
-
-  async backToProjectFromUnitsImport() {
-    const backButton = this.page.getByRole(AdminProjectObjects.backButton.role, { name: AdminProjectObjects.backButton.name });
-    const projectMediaTab = this.page.locator(AdminProjectObjects.visualContentTab.selector).filter({ hasText: AdminProjectObjects.visualContentTab.text }).first();
-    await expect(async () => {
-      if (await backButton.isVisible()) {
-        await backButton.click();
-      }
-      await expect(projectMediaTab).toBeVisible({ timeout: 10000 });
-    }).toPass({ timeout: 120000 });
-  }
-
-  async reloadAndSaveProjectMediaAgain() {
-    await this.page.waitForTimeout(3000);
-    await this.page.reload();
-    await this.clickProjectMediaTab();
-    await this.clickMediaSaveButton();
-    await this.page.waitForTimeout(3000);
   }
 
   async uploadBannerImage(filePath: string) {
@@ -798,9 +849,7 @@ export class AdminProjectPage {
   async fillDeveloperPhoneNumber(developerPhoneNumber: string) {
     const developerPhoneNumberInputfiled = this.page.locator(AdminProjectObjects.developerPhoneNumberInputfiled.xpath);
 
-    await expect(developerPhoneNumberInputfiled).toBeVisible({
-      timeout: 90000,
-    });
+    await expect(developerPhoneNumberInputfiled).toBeVisible({ timeout: 90000 });
     await developerPhoneNumberInputfiled.fill(developerPhoneNumber);
   }
 

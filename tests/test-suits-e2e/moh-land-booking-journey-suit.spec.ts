@@ -42,7 +42,6 @@ test.describe('MOH land full booking journey', () => {
 
     await logStep('Step 06: Import and commit project units');
     await app.adminProjectPage.clickUnitsTab();
-    await app.adminProjectPage.expectImportNewUnitButtonVisible();
     await app.adminProjectPage.clickImportNewUnitButton();
     const unitsImportFilePath = path.join(process.cwd(), 'src', 'data', 'MOHLand.xlsx');
     await app.adminProjectPage.uploadUnitsFile(unitsImportFilePath);

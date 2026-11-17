@@ -46,7 +46,6 @@ test.describe('Self-Build Land Project Creation', () => {
 
     await logStep('Step 04: Import and commit project units');
     await app.adminProjectPage.clickUnitsTab();
-    await app.adminProjectPage.expectImportNewUnitButtonVisible();
     await app.adminProjectPage.clickImportNewUnitButton();
     const unitsImportFilePath = path.join(process.cwd(), 'src', 'data', 'Self_Construction_sample.xlsx');
     await app.adminProjectPage.uploadUnitsFile(unitsImportFilePath);

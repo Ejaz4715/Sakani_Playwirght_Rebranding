@@ -125,7 +125,7 @@ export class CommonMethods {
       })
       .first();
 
-    const isLoginVisible = await loginButton.isVisible({ timeout: 3000 }).catch(() => false);
+    const isLoginVisible = await loginButton.isVisible({ timeout: 25000 }).catch(() => false);
     const isLoginEnabled = isLoginVisible ? await loginButton.isEnabled().catch(() => false) : false;
 
     if (isLoginVisible && isLoginEnabled) {

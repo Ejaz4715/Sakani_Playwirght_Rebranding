@@ -10,7 +10,7 @@ const readServiceData = () => DataHelper.readData().services[SERVICE];
 const readEnvironments = () => DataHelper.readData().environments;
 
 test.describe('Offplan MOH land booking journey', () => {
-  test('OFMLJ-01 Admin creates new offplan Moh land project', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+  test('SAKANI-51076-01 Admin creates new offplan Moh land project', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     await logStep('Step 00: Read data from json relative to the service');
     const data = readServiceData();
     const environments = readEnvironments();
@@ -65,10 +65,9 @@ test.describe('Offplan MOH land booking journey', () => {
 
     await logStep('Step 06: Import and commit project units');
     await app.adminProjectPage.clickUnitsTab();
-    await app.adminProjectPage.expectImportNewUnitButtonVisible();
     await app.adminProjectPage.clickImportNewUnitButton();
-    await app.adminProjectPage.expectResidentialUnitTypeVisible();
     await app.adminProjectPage.openResidentialUnitTypeDropdown();
+
     await app.adminProjectPage.selectApartmentUnitType();
     const unitsImportFilePath = path.join(process.cwd(), 'src', 'data', 'Offplan_MOH.xlsx');
     await app.adminProjectPage.uploadUnitsFile(unitsImportFilePath);
@@ -133,7 +132,7 @@ test.describe('Offplan MOH land booking journey', () => {
     await app.adminProjectPage.validateProjectSavedToastMessage();
   });
 
-  test('OFMLJ-02 Developer adds cash and lending payment schedules to the project-Offplan Moh Land', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+  test('SAKANI-51076-02 Developer adds cash and lending payment schedules to the project-Offplan Moh Land', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     await logStep('Step 00: Read data from json relative to the service');
     const data = readServiceData();
     const environments = readEnvironments();
@@ -174,7 +173,7 @@ test.describe('Offplan MOH land booking journey', () => {
     });
   });
 
-  test('OFMLJ-03 Developer approves sales contract of project-Offplan Moh Land', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+  test('SAKANI-51076-03 Developer approves sales contract of project-Offplan Moh Land', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     const app = new WebApp(page);
     await logStep('Step 00: Read data from json relative to the service');
     const data = readServiceData();
@@ -202,7 +201,7 @@ test.describe('Offplan MOH land booking journey', () => {
     await app.developerProjectPage.verifyApprovalSuccessMessage();
   });
 
-  test('OFMLJ-04 User books unit-Offplan Moh Land', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+  test('SAKANI-51076-04 User books unit-Offplan Moh Land', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     await logStep('Step 00: Read data from json relative to the service');
     const data = readServiceData();
     const environments = readEnvironments();
@@ -245,7 +244,7 @@ test.describe('Offplan MOH land booking journey', () => {
     }
   });
 
-  test('OFMLJ-05 User signs sales contract of booked unit-Offplan Moh Land', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+  test('SAKANI-51076-05 User signs sales contract of booked unit-Offplan Moh Land', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     await logStep('Step 00: Read data from json relative to the service');
     const data = readServiceData();
     const environments = readEnvironments();
@@ -276,7 +275,7 @@ test.describe('Offplan MOH land booking journey', () => {
     await app.unitBookingPage.expectSalesContractSuccess();
   });
 
-  test('OFMLJ-06 Developer adds annex to the booked unit-Offplan Moh Land', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+  test('SAKANI-51076-06 Developer adds annex to the booked unit-Offplan Moh Land', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     await logStep('Step 00: Read data from json relative to the service');
     const data = readServiceData();
     const environments = readEnvironments();
@@ -311,7 +310,7 @@ test.describe('Offplan MOH land booking journey', () => {
     await app.developerProjectPage.expectAnnexSuccess();
   });
 
-  test('OFMLJ-07 User signs annex contract of the booked unit-Offplan Moh Land', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+  test('SAKANI-51076-07 User signs annex contract of the booked unit-Offplan Moh Land', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     await logStep('Step 00: Read data from json relative to the service');
     const data = readServiceData();
     const environments = readEnvironments();
@@ -338,7 +337,7 @@ test.describe('Offplan MOH land booking journey', () => {
     await app.unitBookingPage.expectAnnexContractSuccess();
   });
 
-  test('OFMLJ-08 Developer adds a 2nd annex to the booked unit-Offplan Moh Land', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+  test('SAKANI-51076-08 Developer adds a 2nd annex to the booked unit-Offplan Moh Land', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     await logStep('Step 00: Read data from json relative to the service');
     const data = readServiceData();
     const environments = readEnvironments();
@@ -373,7 +372,7 @@ test.describe('Offplan MOH land booking journey', () => {
     await app.developerProjectPage.expectAnnexSuccess();
   });
 
-  test('OFMLJ-09 User rejects the 2nd annex contract of the booked unit-Offplan Moh Land', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+  test('SAKANI-51076-09 User rejects the 2nd annex contract of the booked unit-Offplan Moh Land', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     await logStep('Step 00: Read data from json relative to the service');
     const data = readServiceData();
     const environments = readEnvironments();
@@ -399,7 +398,7 @@ test.describe('Offplan MOH land booking journey', () => {
     await app.unitBookingPage.expectAnnexRejectionSuccess();
   });
 
-  test('OFMLJ-10 Developer confirms the booking-Offplan Moh Land', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+  test('SAKANI-51076-10 Developer confirms the booking-Offplan Moh Land', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     await logStep('Step 00: Read data from json relative to the service');
     const data = readServiceData();
     const environments = readEnvironments();
@@ -417,7 +416,7 @@ test.describe('Offplan MOH land booking journey', () => {
     await app.developerProjectPage.confirmBooking(bookedUnitCode);
   });
 
-  test('OFMLJ-11 Check the user is able to view and close the annex contract pdf document', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
+  test('SAKANI-51076-11 Check the user is able to view and close the annex contract pdf document', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     await logStep('Step 00: Read data from json relative to the service');
     const data = readServiceData();
     const environments = readEnvironments();

@@ -2,8 +2,8 @@ export const PaymentConfirmationObjects = {
   closeButton: {
     xpath: "//button[text()=' إلغاء ']",
   },
-  //h4
+
   successMessage: {
-    xpath: "//p[text()='تهانينا!']",
+    xpath: "//p[contains(text(), 'تهانينا')]",
   },
 } as const;
