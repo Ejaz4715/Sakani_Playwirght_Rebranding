@@ -553,10 +553,11 @@ test.describe('Unit Delivery', () => {
     await app.marketplaceLandingPage.openProfileManagement();
     await app.offPlanBasketMultipleBookingPage.clickMyActivities();
     await app.unitsDeliveryPage.clickOnUnitDeliveryFromSakani();
-    await app.unitsDeliveryPage.clickOnAcceptedStatusUnitDelivery();
+    await page.pause();
+    await app.unitsDeliveryPage.clickOnAcceptedByDeveloperStatusUnitDelivery();
 
     await logStep('Step 03: Show the delivery unit details > Click on preview unit delivery contract file');
-    await app.unitsDeliveryPage.clickOnShowDeliveryUnitModel(data.deliveryUnitCode);
+    await app.unitsDeliveryPage.clickOnShowDeliveryUnitModel('01-01-0387-2-6');
     await app.unitsDeliveryPage.clickOPpreviewUnitDeliveryContractFileButton();
 
     await logStep('Step 04: Verify unit delivery contract file is present');

@@ -87,7 +87,7 @@ export const UnitsDeliveryObjects = {
     xpath: "//div[@role='tab']/span[contains(text(),'مرفوض')]",
   },
   showDeliveryUnitModelButton: {
-    xpath: (unitCode: string) => `//article[.//span[normalize-space(.)='رمز الوحدة']/following-sibling::span[normalize-space(.)='${unitCode}']]//button[contains(normalize-space(.),'عرض نموذج تسليم الوحدة')]`,
+    xpath: (unitCode: string) => `//span[normalize-space()='${unitCode}']/ancestor::article/descendant::button[normalize-space() = 'عرض نموذج تسليم الوحدة']`,
   },
   yesRadioButton: {
     xpath: "//input[@aria-label='نعم']/parent::label",
