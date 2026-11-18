@@ -54,8 +54,8 @@ export const PaymentTrackingObjects = {
   searchButtonForUnit: {
     xpath: "//button[contains(text(),'بحث')]",
   },
-  searchedresult: {
-    xpath: '//datatable-body-row',
+  searchedResult: {
+    xpath: '(//datatable-body-row)[1]',
   },
   bookingDetailsTab: {
     xpath: "//a[contains(text(),'تفاصيل الحجوزات')]",

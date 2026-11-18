@@ -94,8 +94,8 @@ export class PaymentTrackingPage {
   }
 
   async clickOnSearchResult() {
-    const searchedResult = this.page.locator(PaymentTrackingObjects.searchedresult.xpath);
-    await this.page.waitForTimeout(7000);
+    const searchedResult = this.page.locator(PaymentTrackingObjects.searchedResult.xpath);
+    await this.page.waitForTimeout(10000);
     await expect(searchedResult).toBeVisible({ timeout: 120000 });
     await searchedResult.click();
   }

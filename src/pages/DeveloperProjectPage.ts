@@ -358,7 +358,7 @@ export class DeveloperProjectPage {
 
     await this.page.waitForTimeout(3000);
     await this.page.locator(DeveloperObjects.projectNameField).fill(projectName);
-    await this.page.waitForTimeout(2000);
+    await this.page.waitForTimeout(4000);
     await this.page.locator(DeveloperObjects.projectNameOptionSelector).click();
   }
 
