@@ -451,6 +451,14 @@
     },
     "eligibility-waiver": {
       "sakaniUserId": "1077897947"
+    },
+    "social-guarantee-status": {
+      "adminUsername": "super_admin@test1-admin-sakani.housingapps.sa",
+      "adminPassword": "admin",
+      "developerUserId": "1023129537",
+      "projectName": "Automation Project Offplan 20261115133855",
+      "includedUserId": "1040192153",
+      "notIncludedUserId": "1772087118"
     }
   }
 }
