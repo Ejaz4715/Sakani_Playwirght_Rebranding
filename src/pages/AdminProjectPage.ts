@@ -201,12 +201,15 @@ export class AdminProjectPage {
     await this.page.locator(AdminProjectObjects.maxSubsidyAmountField).fill(amount);
   }
 
+  private dateInputByLabel(role: 'textbox', label: string) {
+    return this.page
+      .getByRole(role, { name: label })
+      .or(this.page.locator(`(//*[normalize-space(text())='${label}']/ancestor::div[.//input][1]//input)[1]`))
+      .first();
+  }
+
   async fillProjectAgreementDate(date: string) {
-    await this.page
-      .getByRole(AdminProjectObjects.projectAgreementDate.role, {
-        name: AdminProjectObjects.projectAgreementDate.name,
-      })
-      .fill(date);
+    await this.dateInputByLabel(AdminProjectObjects.projectAgreementDate.role, AdminProjectObjects.projectAgreementDate.name).fill(date);
   }
 
   async fillProjectLicenseNumber(licenseNumber: string) {
@@ -218,11 +221,7 @@ export class AdminProjectPage {
   }
 
   async fillProjectLicenseDate(date: string) {
-    await this.page
-      .getByRole(AdminProjectObjects.projectLicenseDate.role, {
-        name: AdminProjectObjects.projectLicenseDate.name,
-      })
-      .fill(date);
+    await this.dateInputByLabel(AdminProjectObjects.projectLicenseDate.role, AdminProjectObjects.projectLicenseDate.name).fill(date);
   }
 
   async fillEscrowAccountName(accountName: string) {
@@ -268,11 +267,7 @@ export class AdminProjectPage {
   }
 
   async fillDeedDate(date: string) {
-    await this.page
-      .getByRole(AdminProjectObjects.deedDate.role, {
-        name: AdminProjectObjects.deedDate.name,
-      })
-      .fill(date);
+    await this.page.locator('form-field-component').filter({ hasText: 'تاريخ تسليم الأرض للمطور' }).getByPlaceholder(AdminProjectObjects.deedDate.name).fill(date);
   }
 
   async clickSaveButton() {
@@ -326,6 +321,15 @@ export class AdminProjectPage {
       .click();
   }
 
+  async expectSelectAllRowsChecked() {
+    await expect(
+      this.page.getByRole(AdminProjectObjects.selectAllRowsCheckbox.role, {
+        name: AdminProjectObjects.selectAllRowsCheckbox.name,
+      }),
+      'Select all participating banks is not checked'
+    ).toBeChecked({ timeout: 30000 });
+  }
+
   async clickUnitsTab() {
     await this.page
       .getByRole(AdminProjectObjects.unitsTab.role, {
@@ -335,12 +339,29 @@ export class AdminProjectPage {
       .click();
   }
 
+  async expectImportNewUnitButtonVisible() {
+    await expect(
+      this.page.getByRole(AdminProjectObjects.importNewUnitButton.role, {
+        name: AdminProjectObjects.importNewUnitButton.name,
+      })
+    ).toBeVisible({ timeout: 30000 });
+  }
+
   async clickImportNewUnitButton() {
     const newImportButton = this.page.getByRole(AdminProjectObjects.importNewUnitButton.role, {
       name: AdminProjectObjects.importNewUnitButton.name,
     });
     await newImportButton.waitFor({ state: 'visible', timeout: 20000 });
     await newImportButton.click();
+  }
+
+  async expectResidentialUnitTypeVisible() {
+    this.page.waitForTimeout(3000);
+    await expect(
+      this.page.getByRole(AdminProjectObjects.residentialUnitType.role, {
+        name: AdminProjectObjects.residentialUnitType.name,
+      })
+    ).toBeVisible({ timeout: 30000 });
   }
 
   async openResidentialUnitTypeDropdown() {
@@ -419,6 +440,17 @@ export class AdminProjectPage {
 
   async waitForImportConfirmation() {
     await this.page.waitForTimeout(3000);
+  }
+
+  async backToProjectFromUnitsImport() {
+    const backButton = this.page.getByRole(AdminProjectObjects.backButton.role, { name: AdminProjectObjects.backButton.name });
+    const projectMediaTab = this.page.locator(AdminProjectObjects.visualContentTab.selector).filter({ hasText: AdminProjectObjects.visualContentTab.text }).first();
+    await expect(async () => {
+      if (await backButton.isVisible()) {
+        await backButton.click();
+      }
+      await expect(projectMediaTab).toBeVisible({ timeout: 10000 });
+    }).toPass({ timeout: 120000 });
   }
 
   async clickBackButton() {
@@ -567,6 +599,14 @@ export class AdminProjectPage {
 
   async clickMediaSaveButton() {
     await this.page.locator(AdminProjectObjects.mediaSaveButton).click();
+    await this.page.waitForTimeout(3000);
+  }
+
+  async reloadAndSaveProjectMediaAgain() {
+    await this.page.waitForTimeout(3000);
+    await this.page.reload();
+    await this.clickProjectMediaTab();
+    await this.clickMediaSaveButton();
     await this.page.waitForTimeout(3000);
   }
 

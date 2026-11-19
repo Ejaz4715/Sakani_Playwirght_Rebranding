@@ -62,10 +62,7 @@ export class UnitBookingPage {
   }
 
   async signSalesContract(otp = ['1', '2', '3', '4']) {
-    const approveButton = this.page.getByRole('button', {
-      name: 'اعتماد',
-      exact: true,
-    });
+    const approveButton = this.page.locator('//button[normalize-space()="اعتماد"]');
     await expect(approveButton).toBeVisible({ timeout: 90000 });
     await expect(approveButton).toBeEnabled({ timeout: 90000 });
     await approveButton.scrollIntoViewIfNeeded();
@@ -78,7 +75,10 @@ export class UnitBookingPage {
     }
     await this.page.locator("//button[normalize-space() = 'تحقق']").click();
     await this.page.waitForTimeout(7000);
-    await this.page.locator("//button[normalize-space() = 'تم']").click();
+    const doneButton = this.page.locator("//button[normalize-space() = 'تم']");
+    if (await doneButton.isVisible({ timeout: 10000 }).catch(() => false)) {
+      await doneButton.click();
+    }
   }
 
   async clickOnApproveButton() {

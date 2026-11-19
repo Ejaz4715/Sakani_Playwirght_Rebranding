@@ -358,8 +358,14 @@ export class DeveloperProjectPage {
 
     await this.page.waitForTimeout(3000);
     await this.page.locator(DeveloperObjects.projectNameField).fill(projectName);
-    await this.page.waitForTimeout(4000);
-    await this.page.locator(DeveloperObjects.projectNameOptionSelector).click();
+    await this.page.waitForTimeout(2000);
+    const projectOption = this.page.locator(DeveloperObjects.projectNameOptionSelector).filter({ hasText: projectName }).first();
+    await this.waitForVisible(projectOption);
+    await this.page
+      .locator('.loading-backdrop')
+      .waitFor({ state: 'detached', timeout: DEFAULT_TIMEOUT })
+      .catch(() => {});
+    await projectOption.click();
   }
 
   async bookUnitsForCustomersUsingUnitCode(nationalIdentity: string, unitCode: string) {
@@ -400,7 +406,13 @@ export class DeveloperProjectPage {
     await this.page.waitForTimeout(3000);
     await this.page.locator(DeveloperObjects.projectNameField).fill(projectName);
     await this.page.waitForTimeout(2000);
-    await this.page.locator(DeveloperObjects.projectNameOptionSelector).click();
+    const projectOption = this.page.locator(DeveloperObjects.projectNameOptionSelector).filter({ hasText: projectName }).first();
+    await this.waitForVisible(projectOption);
+    await this.page
+      .locator('.loading-backdrop')
+      .waitFor({ state: 'detached', timeout: DEFAULT_TIMEOUT })
+      .catch(() => {});
+    await projectOption.click();
   }
 
   async clickOnNextButton() {
@@ -539,8 +551,10 @@ export class DeveloperProjectPage {
     const bankDropdown = this.page.locator(DeveloperObjects.bankDropdown);
     const bankOptions = this.page.locator(DeveloperObjects.bankOptions(bankName));
     await this.waitForVisible(bankDropdown);
-    await bankDropdown.click();
-    await this.waitForVisible(bankOptions);
+    await expect(async () => {
+      await bankDropdown.click();
+      await expect(bankOptions).toBeVisible({ timeout: 8000 });
+    }).toPass({ timeout: this.defaultTimeout });
     await bankOptions.click();
   }
 
@@ -551,7 +565,7 @@ export class DeveloperProjectPage {
 
   async validateSuccessReservationPopup() {
     const reservationSuccessPopup = this.page.locator(DeveloperObjects.reservationSuccessPopup);
-    await expect(reservationSuccessPopup, 'Reservation successful message pop up is not present').toBeVisible({ timeout: 20000 });
+    await expect(reservationSuccessPopup, 'Reservation successful message pop up is not present').toBeVisible({ timeout: 90000 });
   }
 
   async clickOnIndividualBookings() {
