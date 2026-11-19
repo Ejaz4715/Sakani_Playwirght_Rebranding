@@ -21,6 +21,11 @@ export class PaymentTrackingPage {
     await useGeneralSettingSwitch.click();
   }
 
+  async clickonpaymentCollectionCompanySwitch() {
+    const paymentCollectionCompanySwitch = this.page.locator(PaymentTrackingObjects.PaymentCollectionCompanyswitch.xpath);
+    await paymentCollectionCompanySwitch.click();
+  }
+
   async clickOnPaymentCollectionAutomationSwitch() {
     const paymentCollectionAutomationSwitch = this.page.getByRole(PaymentTrackingObjects.paymentCollectionAutomationSwitch.role, {
       name: PaymentTrackingObjects.paymentCollectionAutomationSwitch.name,

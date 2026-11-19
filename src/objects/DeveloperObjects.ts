@@ -10,7 +10,7 @@ export const DeveloperObjects = {
     name: 'قبول ملفات تعريف الارتباط',
   },
   loginButton: {
-    xpath: "(//*[contains(text(),'تسجيل الدخول')])[1]",
+    xpath: "(//*[contains(text(),'تسجيل الدخول') and not(self::title)])[1]",
   },
   nafathModel: '//app-nafath-login-modal',
   continueButton: {
@@ -166,7 +166,7 @@ export const DeveloperObjects = {
     role: 'button',
     name: /^\s*التحديد والاستمرار\s*$/,
   },
-  reservationSuccessPopup: "//span[normalize-space() = 'تأكيد الحجز']",
+  reservationSuccessPopup: "(//*[normalize-space(text()) = 'تأكيد الحجز'])[1]",
   bookingSearchInput: {
     role: 'textbox',
     name: 'ابحث برمز الوحدة أو رقم الهوية',

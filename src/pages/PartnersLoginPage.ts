@@ -100,9 +100,15 @@ export class PartnersLoginPage {
   }
 
   async loginToSapaPortal(nationalId: string) {
-    await this.fillNationalId(nationalId);
-    await this.clickContinueButton();
-    await this.confirmIdentityIfRequired();
+    const usernameInput = this.page.getByRole(DeveloperObjects.usernameInput.role, { name: DeveloperObjects.usernameInput.name });
+    const profileIcon = this.page.locator(DeveloperObjects.profileIcon);
+    await usernameInput.or(profileIcon).first().waitFor({ state: 'visible', timeout: this.defaultTimeout });
+
+    if (await usernameInput.isVisible()) {
+      await this.fillNationalId(nationalId);
+      await this.clickContinueButton();
+      await this.confirmIdentityIfRequired();
+    }
     await this.waitForProfileIcon();
     await this.page.waitForTimeout(3000);
     await this.dismissNewServiceAlertPopUp();
@@ -110,19 +116,39 @@ export class PartnersLoginPage {
 
   async loginToSapaPortalBeta(nationalId: string) {
     const loginButton = this.page.locator(DeveloperObjects.loginButton.xpath);
-    await this.waitForVisible(loginButton);
-    await loginButton.click();
-
     const acceptCookiesButton = this.page
       .getByRole(DeveloperObjects.acceptCookiesButton.role, {
         name: DeveloperObjects.acceptCookiesButton.name,
       })
       .first();
-    await acceptCookiesButton.waitFor({ state: 'visible', timeout: 120000 });
-    await this.page.waitForTimeout(2000);
-    await acceptCookiesButton.click();
+    await this.waitForVisible(loginButton);
 
-    // The cookie modal fades out; wait for it and its backdrop so they don't block the next click
+    const cookiesShownFirst = await acceptCookiesButton
+      .waitFor({ state: 'visible', timeout: 10000 })
+      .then(() => true)
+      .catch(() => false);
+    if (cookiesShownFirst) {
+      await this.page.waitForTimeout(2000);
+      await acceptCookiesButton.click();
+    } else {
+      const loginFormShown = await this.page
+        .locator(DeveloperObjects.usernameInput.xpath)
+        .waitFor({ state: 'visible', timeout: 5000 })
+        .then(() => true)
+        .catch(() => false);
+      if (!loginFormShown) {
+        await loginButton.click();
+      }
+      const cookiesShownAfterLogin = await acceptCookiesButton
+        .waitFor({ state: 'visible', timeout: 20000 })
+        .then(() => true)
+        .catch(() => false);
+      if (cookiesShownAfterLogin) {
+        await this.page.waitForTimeout(2000);
+        await acceptCookiesButton.click();
+      }
+    }
+
     await this.page
       .locator(DeveloperObjects.acceptCookiesModal)
       .waitFor({ state: 'hidden', timeout: 15000 })
@@ -151,7 +177,10 @@ export class PartnersLoginPage {
       await this.page.waitForTimeout(3000);
     }
     await this.page.waitForTimeout(3000);
-    const profileIcon = this.page.locator(DeveloperObjects.profileIcon);
+    const profileIcon = this.page
+      .locator(DeveloperObjects.profileIcon)
+      .or(this.page.getByRole('button', { name: /\sفردي$/ }).first())
+      .first();
     await this.waitForVisible(profileIcon);
     await this.page.waitForTimeout(3000);
     const cancelButton = this.page.getByRole('button', { name: 'إلغاء' });

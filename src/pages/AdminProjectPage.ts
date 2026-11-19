@@ -117,12 +117,15 @@ export class AdminProjectPage {
     await this.page.locator(AdminProjectObjects.maxSubsidyAmountField).fill(amount);
   }
 
+  private dateInputByLabel(role: 'textbox', label: string) {
+    return this.page
+      .getByRole(role, { name: label })
+      .or(this.page.locator(`(//*[normalize-space(text())='${label}']/ancestor::div[.//input][1]//input)[1]`))
+      .first();
+  }
+
   async fillProjectAgreementDate(date: string) {
-    await this.page
-      .getByRole(AdminProjectObjects.projectAgreementDate.role, {
-        name: AdminProjectObjects.projectAgreementDate.name,
-      })
-      .fill(date);
+    await this.dateInputByLabel(AdminProjectObjects.projectAgreementDate.role, AdminProjectObjects.projectAgreementDate.name).fill(date);
   }
 
   async fillProjectLicenseNumber(licenseNumber: string) {
@@ -134,11 +137,7 @@ export class AdminProjectPage {
   }
 
   async fillProjectLicenseDate(date: string) {
-    await this.page
-      .getByRole(AdminProjectObjects.projectLicenseDate.role, {
-        name: AdminProjectObjects.projectLicenseDate.name,
-      })
-      .fill(date);
+    await this.dateInputByLabel(AdminProjectObjects.projectLicenseDate.role, AdminProjectObjects.projectLicenseDate.name).fill(date);
   }
 
   async fillEscrowAccountName(accountName: string) {
@@ -184,11 +183,7 @@ export class AdminProjectPage {
   }
 
   async fillDeedDate(date: string) {
-    await this.page
-      .getByRole(AdminProjectObjects.deedDate.role, {
-        name: AdminProjectObjects.deedDate.name,
-      })
-      .fill(date);
+    await this.page.locator('form-field-component').filter({ hasText: 'تاريخ تسليم الأرض للمطور' }).getByPlaceholder(AdminProjectObjects.deedDate.name).fill(date);
   }
 
   async clickSaveButton() {
@@ -240,6 +235,15 @@ export class AdminProjectPage {
         name: AdminProjectObjects.selectAllRowsCheckbox.name,
       })
       .click();
+  }
+
+  async expectSelectAllRowsChecked() {
+    await expect(
+      this.page.getByRole(AdminProjectObjects.selectAllRowsCheckbox.role, {
+        name: AdminProjectObjects.selectAllRowsCheckbox.name,
+      }),
+      'Select all participating banks is not checked'
+    ).toBeChecked({ timeout: 30000 });
   }
 
   async clickUnitsTab() {

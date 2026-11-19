@@ -6,6 +6,11 @@ export const PaymentTrackingObjects = {
     role: 'switch',
     name: 'Use General setting for',
   },
+
+  PaymentCollectionCompanyswitch: {
+    xpath: '//label[normalize-space()="استخدم الإعدادات العامة لتفعيل الرحلة الشاملة للبيع للشركات"]',
+  },
+
   paymentCollectionAutomationSwitch: {
     role: 'switch',
     name: 'تفعيل أتمتة تحصيل المدفوعات',
