@@ -108,7 +108,7 @@ export class UnitBookingPage {
   }
 
   async expectSalesContractSuccess() {
-    await expect(this.page.getByRole('heading', { name: 'تهانينا' })).toBeVisible({ timeout: 30000 });
+    await expect(this.page.getByRole('heading', { name: /تهانينا/ })).toBeVisible({ timeout: 30000 });
   }
 
   /**---------------------------------------- sign and reject annex---------------------------------------- */
@@ -120,8 +120,9 @@ export class UnitBookingPage {
   }
 
   async expectAnnexContractSuccess() {
-    await expect(this.page.getByRole('status').filter({ hasText: 'تم التوقيع على الوثيقة الملحقة!' })).toBeVisible({ timeout: 30000 });
+    await expect(this.page.getByRole('status').filter({ hasText: /تم التوقيع على الوثيقة الملحقة/ })).toBeVisible({ timeout: 30000 });
   }
+
   async clickAnnexRejectButton() {
     const rejectButton = this.page.locator(UnitBookingObjects.annexRejectButton.xpath);
     await rejectButton.waitFor({ state: 'visible', timeout: 30000 });

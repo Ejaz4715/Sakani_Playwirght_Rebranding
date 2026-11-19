@@ -95,6 +95,9 @@ export class PartnersLoginPage {
   }
 
   async dismissNewServiceAlertPopUp() {
+    const profileIcon = this.page.locator(DeveloperObjects.profileIcon);
+    await this.waitForVisible(profileIcon);
+    await this.page.waitForTimeout(3000);
     const cancelButton = this.page.getByRole(DeveloperObjects.cancelButtonOnPopUp.role, { name: DeveloperObjects.cancelButtonOnPopUp.name });
     await this.clickIfVisible(cancelButton.first());
   }
@@ -188,6 +191,7 @@ export class PartnersLoginPage {
   }
 
   async switchRoleToDeveloper() {
+    await this.dismissNewServiceAlertPopUp();
     await this.clickProfileIcon();
     await this.clickSwitchRoleButton();
     await this.clickDeveloperRole();

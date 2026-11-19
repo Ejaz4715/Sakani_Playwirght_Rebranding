@@ -43,7 +43,7 @@ export class DeveloperProjectPage {
     const developerRole = this.page.getByText(DeveloperObjects.developerRoleText);
     await this.waitForVisible(developerRole);
     await developerRole.click();
-    await this.page.waitForTimeout(3000); // Wait for 3 seconds to ensure the page is fully loaded
+    await this.page.waitForTimeout(3000);
     await this.clickIfVisible(cancelButton.first());
   }
 

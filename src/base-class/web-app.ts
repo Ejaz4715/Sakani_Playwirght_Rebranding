@@ -59,6 +59,8 @@ import { BusinessLandingPagePage } from '@pages/BusinessLandingPagePage';
 import { WebProfilePage } from '@pages/WebProfilePage';
 import { PaymentflexiblePhaseThree } from '@pages/PaymentflexiblePhaseThree';
 import { AppealRequestPageDocumentsPage } from '@pages/AppealRequestPageDocumentsPage';
+import { EligibilityWaiverPage } from '@pages/EligibilityWaiverPage';
+import { SocialGuaranteeStatusPage } from '@pages/SocialGuaranteeStatusPage';
 
 export class WebApp {
   page: Page;
@@ -122,6 +124,8 @@ export class WebApp {
   businessLandingPage: InstanceType<typeof BusinessLandingPagePage>;
   webProfilePage: InstanceType<typeof WebProfilePage>;
   AppealRequestPageDocumentsPage: InstanceType<typeof AppealRequestPageDocumentsPage>;
+  eligibilityWaiverPage: InstanceType<typeof EligibilityWaiverPage>;
+  socialGuaranteeStatusPage: InstanceType<typeof SocialGuaranteeStatusPage>;
 
   constructor(page: Page) {
     this.page = page;
@@ -235,5 +239,7 @@ export class WebApp {
     this.conveyancePage = new ConveyancePage(page);
     this.newMortgageCalculatorPage = new NewMortgageCalculatorPage(page);
     this.PaymentflexiblePhaseThree = new PaymentflexiblePhaseThree(page);
+    this.eligibilityWaiverPage = new EligibilityWaiverPage(page);
+    this.socialGuaranteeStatusPage = new SocialGuaranteeStatusPage(page);
   }
 }

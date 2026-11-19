@@ -25,14 +25,17 @@ test.describe('Appeal Request', () => {
     await logStep('Step 01: Open the user portal and login');
     await app.loginPage.gotoHomePage(userPortalUrl);
     await app.commonMethods.unifiedSakaniLogin(sakaniUserId);
+
     await logStep('Step 02: Navigate to user profile > Click on appeal request');
     await app.marketplaceLandingPage.expandProfileDropDownMenu();
     await app.marketplaceLandingPage.openProfileManagement();
     await app.appealRequestPage.clickOnAppealRequestCard();
+
     await logStep('Step 03: Select reason > Enter comments > Click on next button');
     await app.appealRequestPage.selectReason();
     await app.appealRequestPage.enterComments(comments);
     await app.appealRequestPage.clickOnNextButton();
+
     await logStep('Step 04: Upload a copy of national id and family card > Click on send button');
     await app.appealRequestPage.uploadACopyOfNationalId(filePath);
     await app.appealRequestPage.uploadACopyOfFamilyCard(filePath);
@@ -40,6 +43,7 @@ test.describe('Appeal Request', () => {
     await app.paymentConfirmationPage.closePayment();
     await app.appealRequestPage.verifyUserSubmitTheRequest();
   });
+
   test('TC-02 Admin approve the appeal request', { annotation: [{ product: 'Rebranding', type: 'critical' }] as any }, async ({ page }) => {
     await logStep('Step 00: Read data from json relative to the service');
     const environments = readEnvironments();
@@ -57,15 +61,18 @@ test.describe('Appeal Request', () => {
     await app.appealRequestPage.enterBeneficiaryId(sakaniUserId);
     await app.appealRequestPage.clickOnSearchButton();
     await app.appealRequestPage.selectTheSearchedResult();
+
     await logStep('Step 03: Click on reassign > Select team and user');
     await app.appealRequestPage.clickOnReassignButton();
     await app.appealRequestPage.selectTeam();
     await app.appealRequestPage.selectUser();
+
     await logStep('Step 04: Click on reassign from popup > Click on confirm > Close popups message');
     await app.appealRequestPage.clickOnReassignButtonFromPopup();
     await app.appealRequestPage.clickOnConfirmButton();
     await app.appealRequestPage.clickOnCloseButtonFromPopup();
     await app.appealRequestPage.clickOnCloseButtonOfNotePopup();
+
     await logStep('Step 05: Click on approve > Click on confirm > Verify is approved');
     await app.appealRequestPage.clickOnApproveButton();
     await app.appealRequestPage.clickOnConfirmButton();

@@ -10,11 +10,11 @@ const readEnvironments = () => DataHelper.readData().environments;
 
 test.describe('Sakani Offers', () => {
   test(
-    'TC-01 Verify Sorting Sakani Offers',
+    'SAKANI-48532-01 Verify Sorting Sakani Offers',
     {
       annotation: [
         {
-          product: 'Real Estate Data',
+          product: 'Rebranding',
           type: 'non-critical',
         } as any,
       ],
@@ -45,11 +45,11 @@ test.describe('Sakani Offers', () => {
   );
 
   test(
-    'TC-02 Verify Filtering Sakani Offers',
+    'SAKANI-48532-02 Verify Filtering Sakani Offers',
     {
       annotation: [
         {
-          product: 'Real Estate Data',
+          product: 'Rebranding',
           type: 'non-critical',
         } as any,
       ],
@@ -87,11 +87,11 @@ test.describe('Sakani Offers', () => {
   );
 
   test(
-    'TC-03 Verify Clearing Sakani Offers Filters',
+    'SAKANI-48532-03 Verify Clearing Sakani Offers Filters',
     {
       annotation: [
         {
-          product: 'Real Estate Data',
+          product: 'Rebranding',
           type: 'non-critical',
         } as any,
       ],

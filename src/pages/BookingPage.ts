@@ -106,8 +106,11 @@ export class BookingPage {
     // const confirmCancelButton = this.page.getByRole(BookingCancellationObjects.confirmCancelButton.role, { name: BookingCancellationObjects.confirmCancelButton.name });
     // await this.click(confirmCancelButton);
 
-    // const yesButton = this.page.getByRole(BookingCancellationObjects.yesButton.role, { name: BookingCancellationObjects.yesButton.name });
-    // await this.click(yesButton);
+    await this.page.waitForTimeout(3000);
+    const yesButton = this.page.locator(BookingCancellationObjects.yesButton.xpath);
+    if (await yesButton.isVisible()) {
+      await yesButton.click();
+    }
   }
 
   async expectCancellationSuccess() {

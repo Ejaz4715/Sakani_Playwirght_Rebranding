@@ -10,12 +10,12 @@
   },
   "services": {
     "offplan-booking": {
-      "projectName": "Automation Project 20261104102801",
+      "projectName": "Automation Project Offplan 20261115133855",
       "adminUsername": "super_admin@test1-admin-sakani.housingapps.sa",
       "adminPassword": "admin",
       "developerUserId": "1023129537",
       "sakaniUserId": "1300061022",
-      "bookedUnitCode": "01-01-0826-22-118"
+      "bookedUnitCode": "02-01-0223-6-102"
     },
     "auction-journey": {
       "projectName": "",
@@ -132,9 +132,10 @@
       "adminUsername": "super_admin@test1-admin-sakani.housingapps.sa",
       "adminPassword": "admin",
       "developerUserId": "1023129537",
-      "projectName": "Automation Project 20261112121634",
+      "projectName": "Automation Project Offplan 20261115134339",
       "sakaniUserId": "1772087118",
-      "deliveryUnitCode": "01-01-0857-5-101"
+      "deliveryUnitCode": "01-01-0863-5-101",
+      "existingReqUser": "1074829753"
     },
     "payments-and-transactions": {
       "sakaniUserId": "1019075926"
@@ -205,8 +206,8 @@
       "sakaniUserId": "1300070834"
     },
     "ready-made-project": {
-      "projectNameView": "readymade private land",
-      "projectNameBooking": "مشروع مساكن طيبة 5",
+      "projectNameView": "readymade private land_1",
+      "projectNameBooking": "ReadyMade Project Automation Only",
       "sakaniUserId": "1300061236"
     },
     "update-unit": {
@@ -447,6 +448,17 @@
     },
     "register-interest-filters": {
       "sakaniUserId": "1119880072"
+    },
+    "eligibility-waiver": {
+      "sakaniUserId": "1077897947"
+    },
+    "social-guarantee-status": {
+      "adminUsername": "super_admin@test1-admin-sakani.housingapps.sa",
+      "adminPassword": "admin",
+      "developerUserId": "1023129537",
+      "projectName": "Automation Project Offplan 20261115133855",
+      "includedUserId": "1040192153",
+      "notIncludedUserId": "1772087118"
     }
   }
 }

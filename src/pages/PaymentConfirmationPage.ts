@@ -1,19 +1,20 @@
-// @ts-nocheck
-import { expect } from '@playwright/test';
+import { expect, Locator, Page } from '@playwright/test';
 import { PaymentConfirmationObjects } from '@objects/PaymentConfirmationObjects';
 
 export class PaymentConfirmationPage {
-  constructor(page) {
+  page: Page;
+
+  constructor(page: Page) {
     this.page = page;
   }
 
-  async click(locator) {
-    await expect(locator).toBeVisible(90000);
+  async click(locator: any) {
+    await expect(locator).toBeVisible({ timeout: 90000 });
     await locator.click();
   }
 
-  async check(locator) {
-    await expect(locator).toBeVisible(90000);
+  async check(locator: any) {
+    await expect(locator).toBeVisible({ timeout: 90000 });
     await locator.check();
   }
 
@@ -23,7 +24,7 @@ export class PaymentConfirmationPage {
   }
 
   async expectSuccessMessage() {
-    const successMessage = this.page.locator(PaymentConfirmationObjects.successMessage);
-    await expect(successMessage).toBeVisible(); //'تم اكتمال الحجز بنجاح! - it was contains
+    const successMessage = this.page.locator(PaymentConfirmationObjects.successMessage.xpath);
+    await expect(successMessage).toBeVisible();
   }
 }

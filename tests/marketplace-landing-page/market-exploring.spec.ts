@@ -10,7 +10,7 @@ const readEnvironments = () => DataHelper.readData().environments;
 
 test.describe('Market Exploring', () => {
   test(
-    'TC-01 Verify the NHC destination section is present',
+    'SAKANI-47800-01 Verify the NHC destination section is present',
     {
       annotation: [
         {
@@ -27,7 +27,6 @@ test.describe('Market Exploring', () => {
 
       await logStep('Step 01: Navigate to user portal > Login');
       await app.loginPage.gotoHomePage(userPortalUrl);
-      //await app.loginPage.acceptCookies();
       await app.loginPage.openPreBetaLogin();
       await app.loginPage.preBetaLoginWithNafath(data.sakaniUserId);
       await app.loginPage.waitForNafathPromptToDisappear();
@@ -40,7 +39,7 @@ test.describe('Market Exploring', () => {
   );
 
   test(
-    'TC-02 Verify user navigate to any NHC destination cards',
+    'SAKANI-47800-02 Verify user navigate to any NHC destination cards',
     {
       annotation: [
         {
@@ -57,7 +56,6 @@ test.describe('Market Exploring', () => {
 
       await logStep('Step 01: Navigate to user portal > Login');
       await app.loginPage.gotoHomePage(userPortalUrl);
-      //await app.loginPage.acceptCookies();
       await app.loginPage.openPreBetaLogin();
       await app.loginPage.preBetaLoginWithNafath(data.sakaniUserId);
       await app.loginPage.waitForNafathPromptToDisappear();
@@ -80,7 +78,7 @@ test.describe('Market Exploring', () => {
   );
 
   test(
-    'TC-03 Verify the cards slider navigation (left, right)',
+    'SAKANI-47800-03 Verify the cards slider navigation (left, right)',
     {
       annotation: [
         {
@@ -126,7 +124,7 @@ test.describe('Market Exploring', () => {
   );
 
   test(
-    'TC-04 Verify insight and trends section is present',
+    'SAKANI-47800-04 Verify insight and trends section is present',
     {
       annotation: [
         {
@@ -143,7 +141,6 @@ test.describe('Market Exploring', () => {
 
       await logStep('Step 01: Navigate to user portal > Login');
       await app.loginPage.gotoHomePage(userPortalUrl);
-      //await app.loginPage.acceptCookies();
       await app.loginPage.openPreBetaLogin();
       await app.loginPage.preBetaLoginWithNafath(data.sakaniUserId);
       await app.loginPage.waitForNafathPromptToDisappear();
@@ -156,7 +153,7 @@ test.describe('Market Exploring', () => {
   );
 
   test(
-    'TC-05 Verify filtering the projects on the landing page',
+    'SAKANI-47800-05 Verify filtering the projects on the landing page',
     {
       annotation: [
         {
@@ -194,7 +191,7 @@ test.describe('Market Exploring', () => {
   );
 
   test(
-    'TC-06 Verify sorting the projects on the landing page',
+    'SAKANI-47800-06 Verify sorting the projects on the landing page',
     {
       annotation: [
         {
