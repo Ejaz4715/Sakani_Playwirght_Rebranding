@@ -1,5 +1,7 @@
 {
   "environments": {
+    "sapaPartiner": "https://pre-sakani-partners.housingapps.sa/",
+    "SakaniSTG": "https://stg-sakani.housingapps.sa/",
     "sapaPortalUrl": "https://pre-sakani-partners.housingapps.sa/auth",
     "userPortalUrl": "https://pre-sakani.housingapps.sa",
     "adminPortalUrl": "https://pre-sakani-admin.housingapps.sa/auth",
