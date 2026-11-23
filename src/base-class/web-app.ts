@@ -62,6 +62,7 @@ import { AppealRequestPageDocumentsPage } from '@pages/AppealRequestPageDocument
 import { EligibilityWaiverPage } from '@pages/EligibilityWaiverPage';
 import { SocialGuaranteeStatusPage } from '@pages/SocialGuaranteeStatusPage';
 import { ApplicationPendingPopupPage } from '@pages/ApplicationPendingPopupPage';
+import { RegisterInterestasaRealEstateDeveloperPage } from '@pages/RegisterInterestasaRealEstateDeveloperPage';
 
 export class WebApp {
   page: Page;
@@ -128,6 +129,7 @@ export class WebApp {
   eligibilityWaiverPage: InstanceType<typeof EligibilityWaiverPage>;
   socialGuaranteeStatusPage: InstanceType<typeof SocialGuaranteeStatusPage>;
   applicationPendingPopupPage: InstanceType<typeof ApplicationPendingPopupPage>;
+  registerInterestasaRealEstateDeveloperPage: InstanceType<typeof RegisterInterestasaRealEstateDeveloperPage>;
 
   constructor(page: Page) {
     this.page = page;
@@ -244,5 +246,6 @@ export class WebApp {
     this.eligibilityWaiverPage = new EligibilityWaiverPage(page);
     this.socialGuaranteeStatusPage = new SocialGuaranteeStatusPage(page);
     this.applicationPendingPopupPage = new ApplicationPendingPopupPage(page);
+    this.registerInterestasaRealEstateDeveloperPage = new RegisterInterestasaRealEstateDeveloperPage(page);
   }
 }

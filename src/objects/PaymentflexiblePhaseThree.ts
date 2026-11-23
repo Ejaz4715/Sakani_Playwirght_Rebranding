@@ -47,4 +47,20 @@ export const PaymentflexiblePhaseThreeObjects = {
     role: 'button',
     name: /\sفردي$/,
   },
+
+  paidStatusRequest: {
+    xpath: '(//span[normalize-space()="تم الدفع"])[1]',
+  },
+
+  viewDetailsButton: {
+    xpath: '(//button[normalize-space()="عرض التفاصيل"])[1]',
+  },
+
+  PaymentPlanButton: {
+    xpath: '//button[normalize-space()="عرض خطة الدفع"]',
+  },
+
+  paymentScheduleDetails: {
+    xpath: '//span[normalize-space()="تفاصيل جدول الدفع"]',
+  },
 } as const;

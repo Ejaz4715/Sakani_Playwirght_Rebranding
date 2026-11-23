@@ -165,6 +165,15 @@ export class CommonMethods {
     while (await nafathModal.isVisible().catch(() => false)) {
       await this.page.waitForTimeout(3000);
     }
+
+    const nafathWaitingScreen = this.page.getByText('افتح تطبيق نفاذ').first();
+    const nafathScreenShown = await nafathWaitingScreen
+      .waitFor({ state: 'visible', timeout: 10000 })
+      .then(() => true)
+      .catch(() => false);
+    if (nafathScreenShown) {
+      await nafathWaitingScreen.waitFor({ state: 'hidden', timeout: 90000 }).catch(() => {});
+    }
   }
 
   async fillAllMatchingFields(fieldObject: { readonly xpath: string }, value: string | readonly string[]) {

@@ -124,6 +124,26 @@ export class PaymentflexiblePhaseThree {
     await this.click(paymentScheduleCard.locator('label').first());
   }
 
+  async VerifyPaiedstatusRequest() {
+    const PaiedStatusRequest = this.page.locator(PaymentflexiblePhaseThreeObjects.paidStatusRequest.xpath);
+    await expect(PaiedStatusRequest.first()).toBeVisible;
+  }
+
+  async ClickonrequestDetailes() {
+    const DetailesButtonRequest = this.page.locator(PaymentflexiblePhaseThreeObjects.viewDetailsButton.xpath);
+    await this.click(DetailesButtonRequest.first());
+  }
+
+  async ClickonpaymentplanButton() {
+    const paymentplanButton = this.page.locator(PaymentflexiblePhaseThreeObjects.PaymentPlanButton.xpath);
+    await this.click(paymentplanButton.first());
+  }
+
+  async VerifypaymentScheduleDetails() {
+    const paymentScheduleDetails = this.page.locator(PaymentflexiblePhaseThreeObjects.paymentScheduleDetails.xpath);
+    await expect(paymentScheduleDetails.first()).toBeVisible;
+  }
+
   async clickSaveAndContinueButton() {
     const saveAndContinueButton = this.page.getByRole(PaymentflexiblePhaseThreeObjects.saveAndContinueButton.role, { name: PaymentflexiblePhaseThreeObjects.saveAndContinueButton.name });
     await this.click(saveAndContinueButton);
@@ -131,6 +151,16 @@ export class PaymentflexiblePhaseThree {
 
   async openSignContractFromBookingDetails() {
     const signContractLink = this.page.getByRole(PaymentflexiblePhaseThreeObjects.signContractLink.role, { name: PaymentflexiblePhaseThreeObjects.signContractLink.name });
+    for (let attempt = 1; attempt <= 10; attempt++) {
+      const isDisplayed = await signContractLink
+        .waitFor({ state: 'visible', timeout: 30000 })
+        .then(() => true)
+        .catch(() => false);
+      if (isDisplayed) {
+        break;
+      }
+      await this.page.reload();
+    }
     await this.click(signContractLink);
   }
 
