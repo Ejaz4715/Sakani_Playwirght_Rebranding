@@ -6,7 +6,7 @@ import { DataHelper } from '@helpers/DataHelper';
 const readEnvironments = () => DataHelper.readData().environments;
 
 test.describe('Register Interest as a Real estate Developer', () => {
-  test('TC-01 Verify that the user can submit the form successfully with valid data from Sakani', { annotation: [{ product: 'STG', type: 'critical' }] as any }, async ({ page }) => {
+  test('SAK-2120-01 Verify that the user can submit the form successfully with valid data from Sakani', { annotation: [{ product: 'Marketplace', type: 'critical' }] as any }, async ({ page }) => {
     test.setTimeout(0);
     await logStep('Step 00: Read data from json relative to the service');
     const environment = readEnvironments();
@@ -32,7 +32,7 @@ test.describe('Register Interest as a Real estate Developer', () => {
     await app.registerInterestasaRealEstateDeveloperPage.SubmitButtion();
     await app.registerInterestasaRealEstateDeveloperPage.VerifypiSucessfullymassage();
   });
-  test('TC-02 Verify that the user can submit the form successfully with valid data from partiner', { annotation: [{ product: 'STG', type: 'critical' }] as any }, async ({ page }) => {
+  test('SAK-2120-02 Verify that the user can submit the form successfully with valid data from partners', { annotation: [{ product: 'Marketplace', type: 'critical' }] as any }, async ({ page }) => {
     test.setTimeout(0);
     await logStep('Step 00: Read data from json relative to the service');
     const environment = readEnvironments();
@@ -46,12 +46,12 @@ test.describe('Register Interest as a Real estate Developer', () => {
     await app.registerInterestasaRealEstateDeveloperPage.NavigatetoDevelopersSection();
 
     await logStep('Step 01: Faill Register Formi Section');
-    await app.registerInterestasaRealEstateDeveloperPage.InsertpideveloperName('دوكتور تيست');
-    await app.registerInterestasaRealEstateDeveloperPage.InsertpiPhonenumber('509404040');
-    await app.registerInterestasaRealEstateDeveloperPage.InsertpiapplicantName('دوكتور تيست');
+    await app.registerInterestasaRealEstateDeveloperPage.InsertpideveloperName('دوكتور testtt');
+    await app.registerInterestasaRealEstateDeveloperPage.InsertpiPhonenumber('509405040');
+    await app.registerInterestasaRealEstateDeveloperPage.InsertpiapplicantName('test تيست');
     await app.registerInterestasaRealEstateDeveloperPage.selectpiprojectinfo();
-    await app.registerInterestasaRealEstateDeveloperPage.Inserttotalpiprojectnumber('5');
-    await app.registerInterestasaRealEstateDeveloperPage.Insertpiunitnumber('500');
+    await app.registerInterestasaRealEstateDeveloperPage.Inserttotalpiprojectnumber('4');
+    await app.registerInterestasaRealEstateDeveloperPage.Insertpiunitnumber('555');
     await app.registerInterestasaRealEstateDeveloperPage.SubmitpiButtion();
     await app.registerInterestasaRealEstateDeveloperPage.VerifypiSucessfullymassage();
   });
