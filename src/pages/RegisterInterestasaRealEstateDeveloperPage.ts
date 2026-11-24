@@ -68,7 +68,7 @@ export class RegisterInterestasaRealEstateDeveloperPage {
   }
 
   async InsertpiPhonenumber(phonenumber: string) {
-    await this.page.locator(RegisterInterestasaRealEstateDeveloperObjects.pinumberOfProjectsInput.xpath).fill(phonenumber);
+    await this.page.locator(RegisterInterestasaRealEstateDeveloperObjects.piphoneNumberInput.xpath).fill(phonenumber);
   }
   async InsertpiapplicantName(applicantName: string) {
     await this.page.locator(RegisterInterestasaRealEstateDeveloperObjects.piapplicantNameInput.xpath).fill(applicantName);

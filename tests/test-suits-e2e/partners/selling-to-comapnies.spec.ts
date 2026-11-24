@@ -62,7 +62,7 @@ test.describe('Selling to companies', () => {
     }
 
     await expect(projectTypeOption).toBeVisible({ timeout: 30000 });
-    await projectTypeOption.click();
+    await waitAndClick(projectTypeOption);
     await page.locator("//ng-select[@formcontrolname='region_id']").getByRole('combobox').click();
     await page.getByText('الرياض').click();
     await page.locator("//input[@id='inputCity']").click();
