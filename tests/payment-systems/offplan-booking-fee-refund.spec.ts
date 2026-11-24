@@ -5,10 +5,11 @@ import { WebApp } from '@base-class/web-app';
 import { DataHelper } from '@helpers/DataHelper';
 import { logStep } from '@helpers/LogSteps';
 
-const SERVICE = 'offplan-booking';
+const SERVICE = 'sadad-wallet';
 const readServiceData = () => DataHelper.readData().services[SERVICE];
 const readEnvironments = () => DataHelper.readData().environments;
-test.describe('Offplan booking fees refund', () => {
+
+test.describe('Sadad Wallet Process', () => {
   test('TC-01 Admin creates new offplan Moh land project', { annotation: [{ product: 'Marketplace', type: 'critical' }] as any }, async ({ page }) => {
     test.setTimeout(120000);
     await logStep('Step 00: Read data from json relative to the service');

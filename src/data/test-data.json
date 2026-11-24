@@ -461,6 +461,31 @@
       "projectName": "Automation Project Offplan 20261115133855",
       "includedUserId": "1040192153",
       "notIncludedUserId": "1772087118"
+    },
+    "sadad-wallet": {
+      "projectName": "Automation Project Offplan 20261115133855",
+      "adminUsername": "super_admin@test1-admin-sakani.housingapps.sa",
+      "adminPassword": "admin",
+      "developerUserId": "1023129537",
+      "sakaniUserId": "1300067088",
+      "bookedUnitCode": "02-01-0223-6-102",
+      "sadadInvoiceNumber": "2611240000108579",
+      "developerCancelReason": "الانتقال لمشروع آخر",
+      "walletUserId": "1300061022"
+    },
+    "online-lending": {
+      "failingUserId": "1138785918",
+      "failingUserBookingNumber": "23942",
+      "failingUserProjectName": "مشروع مساكن طيبة المدائن",
+      "successUserId": "",
+      "successUserBookingNumber": "",
+      "successUserProjectName": "",
+      "iban": "SA0380000000608010167519",
+      "employerName": "Automation Employer",
+      "jobTitle": "QA Engineer",
+      "basicSalary": "15000",
+      "downPayment": "20000",
+      "loanTermMonths": "240"
     }
   }
 }
